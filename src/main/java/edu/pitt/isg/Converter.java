@@ -2,6 +2,7 @@ package edu.pitt.isg;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import edu.pitt.isg.mdc.v1_0.Software;
 import edu.pitt.isg.objectserializer.XMLDeserializer;
 import edu.pitt.isg.objectserializer.XMLSerializer;
@@ -15,11 +16,14 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
+import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -27,8 +31,9 @@ import java.util.List;
  */
 public class Converter {
 
-    public Software convertToJava(String str) {
-        Software targetObject = new Gson().fromJson(str, Software.class);
+    public Object convertToJava(String str) {
+        Type type = new TypeToken<Map<String, Software>>(){}.getType();
+        Object targetObject = new Gson().fromJson(str, type);
         return targetObject;
 
 
