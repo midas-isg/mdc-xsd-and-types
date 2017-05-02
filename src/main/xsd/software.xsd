@@ -7,11 +7,9 @@
             <element name="Product" type="string" maxOccurs="1"
                 minOccurs="0" />
             <element name="title" type="string" maxOccurs="1" minOccurs="1" />
-            <element name="generalInfo" type="string" maxOccurs="1"
+            <element name="humanReadableSynopsis" type="string" maxOccurs="1"
                 minOccurs="1" />
             <element name="doi" type="string" maxOccurs="1" minOccurs="0" />
-            <element name="userGuidesAndManuals" type="string" maxOccurs="unbounded"
-                minOccurs="0" />
             <element name="dataInputFormats" type="string" maxOccurs="unbounded"
                 minOccurs="0" />
             <element name="sourceCodeRelease" type="string" maxOccurs="1"
@@ -23,7 +21,7 @@
             <element name="source" type="string" maxOccurs="1" minOccurs="0" />
             <element name="developers" type="string" maxOccurs="unbounded"
                 minOccurs="0" />
-            <element name="site" type="string" maxOccurs="1" minOccurs="0" />
+            <element name="website" type="string" maxOccurs="1" minOccurs="0" />
             <element name="documentation" type="string" maxOccurs="1"
                 minOccurs="0" />
             <element name="publicationsThatUsedRelease" type="string"
