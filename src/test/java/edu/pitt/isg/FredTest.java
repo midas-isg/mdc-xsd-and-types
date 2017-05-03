@@ -26,8 +26,9 @@ public class FredTest extends TestCase {
 
         for (Software sw : softwareList) {;
             String xml = converter.convertToXml(sw);
+            assertTrue(converter.validate(xml));
             String json = converter.xmlToJson(xml);
-            System.out.println(json);
+            //System.out.println(json);
         }
     }
 }

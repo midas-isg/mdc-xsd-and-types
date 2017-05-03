@@ -92,6 +92,8 @@ public class Converter {
             //System.out.println(xmlFile.getSystemId() + " is valid");
         } catch (Exception e) {
             System.out.println(xmlFile.getSystemId() + " is NOT valid reason:" + e);
+            System.out.println("\nXML is:\n"+xml);
+
             return false;
         }
         return true;
@@ -103,7 +105,7 @@ public class Converter {
         classList.add(Software.class);
         XMLSerializer xmlSerializer = new XMLSerializer(classList);
         String xml = xmlSerializer.serializeObject(software);
-        System.out.println(xml);
+        //System.out.println(xml);
         return xml;
 
     }
