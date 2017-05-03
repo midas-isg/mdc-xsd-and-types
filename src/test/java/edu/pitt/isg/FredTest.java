@@ -1,5 +1,6 @@
 package edu.pitt.isg;
 
+import com.google.gson.Gson;
 import edu.pitt.isg.mdc.v1_0.Software;
 import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
@@ -10,6 +11,7 @@ import org.junit.Test;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,16 +20,14 @@ import java.util.Map;
 public class FredTest extends TestCase {
     @Test
     public void testHello() throws IOException, SerializationException, DeserializationException {
-        String file = FileUtils.readFileToString(new File("./src/main/resources/fred.json"));
+        String file = FileUtils.readFileToString(new File("./src/main/resources/software.json"));
         Converter converter = new Converter();
-        Object software = converter.convertToJava(file);
-        Map<String, Software> myMap = (Map<String, Software>) software;
-        assertEquals(myMap.get("aaa").getProduct(), "FRED (3 versions)");
-        String xml = converter.convertToXml(myMap.get("aaa"));
-        software = converter.convertFromXml(xml);
-        assertEquals(myMap.get("aaa").getProduct(), "FRED (3 versions)");
-        //assertTrue(converter.validate(xml));
+        List<Software> softwareList = converter.convertToJava(file);
 
-
+        for (Software sw : softwareList) {;
+            String xml = converter.convertToXml(sw);
+            String json = converter.xmlToJson(xml);
+            System.out.println(json);
+        }
     }
 }

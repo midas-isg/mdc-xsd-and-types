@@ -11,7 +11,11 @@
                      minOccurs="0" />
             <element name="title" type="string" maxOccurs="1" minOccurs="1" />
             <element name="humanReadableSynopsis" type="string" maxOccurs="1"
+
                      minOccurs="1" />
+
+
+
             <element name="doi" type="string" maxOccurs="1" minOccurs="0" />
             <element name="dataInputFormats" type="string" maxOccurs="unbounded"
                      minOccurs="0" />
