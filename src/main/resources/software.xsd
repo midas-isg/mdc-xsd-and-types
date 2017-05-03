@@ -1,47 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://mdc.isg.pitt.edu/v1_0"
-    xmlns:tns="http://mdc.isg.pitt.edu/v1_0" elementFormDefault="qualified">
+        xmlns:tns="http://mdc.isg.pitt.edu/v1_0" elementFormDefault="qualified" attributeFormDefault="qualified">
+
+    <element name="Software" type="tns:Software"/>
+    <element name="DiseaseTransmissionModel" type="tns:DiseaseTransmissionModel"/>
 
     <complexType name="Software">
         <sequence>
             <element name="Product" type="string" maxOccurs="1"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="title" type="string" maxOccurs="1" minOccurs="1" />
-            <element name="generalInfo" type="string" maxOccurs="1"
-                minOccurs="1" />
+            <element name="humanReadableSynopsis" type="string" maxOccurs="1"
+                     minOccurs="1" />
             <element name="doi" type="string" maxOccurs="1" minOccurs="0" />
-            <element name="userGuidesAndManuals" type="string" maxOccurs="unbounded"
-                minOccurs="0" />
             <element name="dataInputFormats" type="string" maxOccurs="unbounded"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="sourceCodeRelease" type="string" maxOccurs="1"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="webApplication" type="string" maxOccurs="unbounded"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="license" type="string" maxOccurs="1"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="source" type="string" maxOccurs="1" minOccurs="0" />
             <element name="developers" type="string" maxOccurs="unbounded"
-                minOccurs="0" />
-            <element name="site" type="string" maxOccurs="1" minOccurs="0" />
+                     minOccurs="0" />
+            <element name="website" type="string" maxOccurs="1" minOccurs="0" />
             <element name="documentation" type="string" maxOccurs="1"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="publicationsThatUsedRelease" type="string"
-                maxOccurs="unbounded" minOccurs="0" />
+                     maxOccurs="unbounded" minOccurs="0" />
             <element name="executables" type="string" maxOccurs="unbounded"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="publicationsAboutRelease" type="string"
-                maxOccurs="unbounded" minOccurs="0" />
+                     maxOccurs="unbounded" minOccurs="0" />
             <element name="grants" type="string" maxOccurs="unbounded"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="availableOnOlympus" type="boolean" maxOccurs="1"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="availableOnUIDS" type="boolean" maxOccurs="1"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="signInRequired" type="boolean" maxOccurs="1"
-                minOccurs="0" />
+                     minOccurs="0" />
             <element name="redirect" type="boolean" maxOccurs="1"
-                minOccurs="0" />
+                     minOccurs="0" />
         </sequence>
     </complexType>
 
@@ -51,13 +52,13 @@
             <extension base="tns:Software">
                 <sequence>
                     <element name="controlMeasures" type="string" maxOccurs="unbounded"
-                        minOccurs="0" />
+                             minOccurs="0" />
                     <element name="hostSpeciesIncluded" type="string"
-                        maxOccurs="unbounded" minOccurs="1" />
+                             maxOccurs="unbounded" minOccurs="1" />
                     <element name="locationCoverage" type="string" maxOccurs="unbounded"
-                        minOccurs="1" />
+                             minOccurs="1" />
                     <element name="pathogenCoverage" type="string" maxOccurs="unbounded"
-                        minOccurs="1" />
+                             minOccurs="1" />
                 </sequence>
             </extension>
         </complexContent>
@@ -68,9 +69,9 @@
             <extension base="tns:Software">
                 <sequence>
                     <element name="populationSpeciesIncluded" type="string"
-                        maxOccurs="unbounded" minOccurs="1" />
+                             maxOccurs="unbounded" minOccurs="1" />
                     <element name="locationCoverage" type="string" maxOccurs="unbounded"
-                        minOccurs="0" />
+                             minOccurs="0" />
                 </sequence>
             </extension>
         </complexContent>
@@ -81,18 +82,18 @@
             <extension base="tns:Software">
                 <sequence>
                     <element name="diseases" type="string" maxOccurs="unbounded"
-                        minOccurs="0" />
+                             minOccurs="0" />
                     <element name="nowcasts" type="string" maxOccurs="unbounded"
-                        minOccurs="0" />
+                             minOccurs="0" />
                     <element name="outcomes" type="string" maxOccurs="unbounded"
-                        minOccurs="0" />
+                             minOccurs="0" />
                     <element name="forecastFrequency" type="string" maxOccurs="1"
-                        minOccurs="0" />
+                             minOccurs="0" />
                     <element name="type" type="string" maxOccurs="1" minOccurs="0" />
                     <element name="forecasts" type="string" maxOccurs="unbounded"
-                        minOccurs="1" />
+                             minOccurs="1" />
                     <element name="region" type="string" maxOccurs="unbounded"
-                        minOccurs="0" />
+                             minOccurs="0" />
                 </sequence>
             </extension>
         </complexContent>
@@ -104,14 +105,14 @@
             <extension base="tns:Software">
                 <sequence>
                     <element name="visualizationType" type="string" maxOccurs="unbounded"
-                        minOccurs="0" />
+                             minOccurs="0" />
                 </sequence>
             </extension>
         </complexContent>
     </complexType>
 
-    <!-- The following six software subtypes do not have any distinguishing elements from 
-        their parent 'Software: -->  
+    <!-- The following six software subtypes do not have any distinguishing elements from
+        their parent 'Software: -->
 
     <complexType name="SyntheticEcosystemConstructors">
         <complexContent>
@@ -122,8 +123,8 @@
             </extension>
         </complexContent>
     </complexType>
-    
-        <complexType name="DiseaseTransmissionTreeEstimators">
+
+    <complexType name="DiseaseTransmissionTreeEstimators">
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
@@ -132,8 +133,8 @@
             </extension>
         </complexContent>
     </complexType>
-    
-        <complexType name="PhylogeneticTreeConstructors">
+
+    <complexType name="PhylogeneticTreeConstructors">
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
@@ -142,9 +143,9 @@
             </extension>
         </complexContent>
     </complexType>
-    
-    
-        <complexType name="DataFormatConverters">
+
+
+    <complexType name="DataFormatConverters">
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
@@ -153,8 +154,8 @@
             </extension>
         </complexContent>
     </complexType>
-    
-            <complexType name="PathogenEvolutionModels">
+
+    <complexType name="PathogenEvolutionModels">
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
@@ -163,8 +164,8 @@
             </extension>
         </complexContent>
     </complexType>
-    
-            <complexType name="ModelingPlatforms">
+
+    <complexType name="ModelingPlatforms">
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
@@ -175,4 +176,3 @@
     </complexType>
 
 </schema>
-
