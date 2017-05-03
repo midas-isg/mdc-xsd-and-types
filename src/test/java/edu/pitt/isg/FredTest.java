@@ -23,12 +23,19 @@ public class FredTest extends TestCase {
         String file = FileUtils.readFileToString(new File("./src/main/resources/software.json"));
         Converter converter = new Converter();
         List<Software> softwareList = converter.convertToJava(file);
+        List<String> invalidSoftwareList = new ArrayList<String>();
 
         for (Software sw : softwareList) {;
             String xml = converter.convertToXml(sw);
-            assertTrue(converter.validate(xml));
-            String json = converter.xmlToJson(xml);
+            boolean isValid = converter.validate(xml);
+
+            if(!isValid) {
+                invalidSoftwareList.add(sw.getTitle());
+            }
+            //String json = converter.xmlToJson(xml);
             //System.out.println(json);
         }
+
+        System.out.println(invalidSoftwareList);
     }
 }

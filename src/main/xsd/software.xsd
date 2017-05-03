@@ -168,7 +168,10 @@
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
-
+                    <element name="pathogens" type="string" maxOccurs="unbounded"
+                             minOccurs="0"/>
+                    <element name="locations" type="string" maxOccurs="unbounded"
+                             minOccurs="0"/>
                 </sequence>
             </extension>
         </complexContent>
