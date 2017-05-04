@@ -1,6 +1,7 @@
 {
   "FluTE":{
     "subtype":"Disease transmission models",
+    "humanReadableSynopsis":"FluTE is a stochastic model of the spread of influenza across a large population. Individuals in this model have realistic social contact networks, and transmission and infections are based on the current state of knowledge of the natural history of influenza. The model has been calibrated so that outcomes are consistent with the 1957/1958 Asian A(H2N2) and 2009 pandemic A(H1N1) influenza viruses.",
     "product":"FluTE (4 versions)",
     "pathogenCoverage":["Influenza"],
     "locationCoverage":["Los Angeles", "Seattle"],
@@ -28,7 +29,7 @@
   "Skeeter Buster":{
     "subtype":"Population dynamics models",
     "humanReadableSynopsis":"<p>Skeeter Buster is a detailed model of Aedes aegypti populations, developed at NC State University by a team led by Fred Gould (Entomology Dept.) and Alun Lloyd (Mathematics Dept.)</p> It is a stochastic, spatially-explicit model that models cohorts of mosquitoes at a very fine spatial scale, down to the level of individual breeding sites for immature cohorts, or individual houses for adults. The biology of Ae. aegypti is described with great detail on the previously developed CIMSiM model (Focks et al., 1993). Skeeter Buster additionally includes a detailed genetic component, and can therefore model the genetics of Ae. aegypti populations, making it a crucial tool in the evaluation and development of genetic control strategies.",
-    "populationSpecies":["Aedes aegypti"],
+    "populationSpeciesIncluded":["Aedes aegypti"],
     "website":"http://www.skeeterbuster.net/",
     "sourceCodeRelease":"on request.  E-mail <a href=\"mailto:info@skeeterbuster.net?Subject=Source%20code%20release\" target=\"_top\" style=\"text-decoration: underline\">info@skeeterbuster.net</a>",
     "license":"<a class=\"underline\" href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GPLv3</a>",
@@ -172,41 +173,56 @@
   },
   "ZIKA Modeling":{
     "subtype":"Disease forecasters",
+    "forecasts":["Number of Zika-attributable microcephaly cases"],
     "developers":["Northeastern University", "Bruno Kessler Foundation", "ISI Foundation", "Fred Hutchinson Cancer Research Center", "University of Florida"],
     "webApplication":["http://www.zika-model.org/"],
     "humanReadableSynopsis":"This web application uses a data-driven global stochastic and spatial vector-host epidemic model to provide a quantitative analysis of the spreading pattern of ZIKV in Latin America. The model divides the world population into geographic census areas that are defined around transportation hubs and connected by mobility fluxes. The model integrates real world demographic and transportation data.  It also consider the dependence with local weather data of ZIKV transmission drivers such as the mosquito lifespan and abundance. The basic calibration of the model is performed by a Markov Chain Monte Carlo analysis of specific Zika outbreaks. The model generates microsimulations that provide stochastic ensemble output of possible epidemic evolutions, and statistical estimates of newly generated cases, importation events, probability of autochthonous transmission as a function of time. The number of potential microcephaly cases related to Zika is projected on the basis of the epidemic incidence by using a model-based approach used for French Polynesia.",
     "diseases":["Zika"],
-    "region":["South America <br>", "Latin America <br>", "Caribbean"],
-    "outcomes": ["Number of Zika-attributable microcephaly cases <br>", "Attack rate"]
+    "region":["South America <br>", "Latin America <br>", "Caribbean"]
   },
   "HyPhy":{
     "subtype":"Pathogen evolution models",
-    "developers":["iGEM/UCSD evolutionary biology and bioinformatics group"],
+    "humanReadableSynopsis":"HyPhy is an open-source software package for the analysis of genetic sequences using techniques in phylogenetics, molecular evolution, and machine learning. It features a complete graphical user interface (GUI) and a rich scripting language for limitless customization of analyses. Additionally, HyPhy features support for parallel computing environments (via message passing interface) and it can be compiled as a shared library and called from other programming environments such as Python or R. HyPhy has over 8000 registered users and has been cited in over 900 peer-reviewed publications (Google Scholar). Continued development of HyPhy is currently supported in part by an NIGMS R01 award 1R01GM093939.",
+    "developers":["Sergei Pond", "Steven Weaver"],
     "website":"http://www.hyphy.org/w/index.php/Main_Page",
-    "source":"https://github.com/veg/hyphy/releases/tag/2.2.7",
+    "source":"https://github.com/veg/hyphy",
     "version":["2.2.6"],
     "availableOnOlympus": true,
-    "redirect":true
+    "grants":["NIH/NIGMS R01GM093939"]
   },
   "SEEDY":{
     "subtype":"Pathogen evolution models",
-    "developers":["Colin Worby, Harvard T.H. Chan School of Public Health"],
-    "source":"https://cran.r-project.org/web/packages/seedy/index.html",
+    "humanReadableSynopsis":"SEEDY is an R package that contains a suite of functions for the simulation, visualisation and analysis of bacterial evolution within- and between-hosts",
+    "developers":["Colin Worby"],
+    "website":"https://CRAN.R-project.org/package=seedy",
+    "documentation":"<a href=\"https://cran.r-project.org/web/packages/seedy/seedy.pdf\" class=\"underline\">https://cran.r-project.org/web/packages/seedy/seedy.pdf</a>",
     "version":["1.3"],
-    "redirect":true
+    "executables":["Windows binaries: r-devel: seedy_1.3.zip, r-release: seedy_1.3.zip, r-oldrel: seedy_1.3.zip<br>", "OS X El Capitan binaries: r-release: seedy_1.3.tgz<br>", "OS X Mavericks binaries: r-oldrel: seedy_1.3.tgz"]
   },
-  "nextflu/H3N2":{
+  "nextflu":{
     "subtype":"Pathogen evolution models",
-    "developers":["Trevor Bedford", "Richard Neher"],
-    "source":"https://github.com/blab/nextflu",
-    "website":"http://nextflu.org/h3n2/3y/",
-    "redirect":true
+    "product":"NextStrain (2 versions)",
+    "humanReadableSynopsis":"nextflu v1.0 is the release of the Nextstrain project described in a 2015 Bioinformatics article. Nextstrain is an open-source project to harness the scientific and public health potential of pathogen genome data. We provide a continually-updated view of publicly available data with powerful analytics and visualizations showing pathogen evolution and epidemic spread. The goal is to aid epidemiological understanding and improve outbreak response.",
+    "dataInputFormats":["FASTA"],
+    "version":["1.0"],
+    "website":"http://nextflu.org/",
+    "source":"https://github.com/blab/nextflu/releases",
+    "developers":["Richard Neher", "Trevor Bedford", "Colin Megill", "James Hadfield", "Charlton Callender", "Sidney Bell", "Barney Potter", "Sarah Murata"],
+    "publicationsAboutRelease":["Neher, R. A., & Bedford, T. (2015). nextflu: real-time tracking of seasonal influenza virus evolution in humans. Bioinformatics, 31(21), 3546–3548. <a href=\"http://doi.org/10.1093/bioinformatics/btv381\" class=\"underline\">http://doi.org/10.1093/bioinformatics/btv381</a>"],
+    "license":"<a href=\"https://www.gnu.org/licenses/agpl-3.0.en.html\" class=\"underline\">GNU Affero General Public License</a>",
+    "grants":["ERC Stg-260686", "NIH U54 GM111274"],
+    "pathogens":["H1N1 Influenza", "H3N2 Influenza"]
   },
-  "nextstrain/Zika":{
+  "nextstrain.org":{
     "subtype":"Pathogen evolution models",
-    "developers":["Trevor Bedford", "Richard Neher"],
+    "product":"NextStrain (2 versions)",
+    "humanReadableSynopsis":"Nextstrain is an open-source project to harness the scientific and public health potential of pathogen genome data. We provide a continually-updated view of publicly available data with powerful analytics and visualizations showing pathogen evolution and epidemic spread. Our goal is to aid epidemiological understanding and improve outbreak response.",
+    "developers":["Richard Neher", "James Hadfield", "Trevor Bedford", "Sidney Bell"],
+    "locations":["Worldwide"],
+    "pathogens":["Zika virus", "ebola virus", "avian influenza virus A/H7N9", "h1n1 influenza", "h3n2 influenza", "Dengue virus"],
+    "dataInputFormats":["FASTA"],
     "website":"http://nextstrain.org/zika/",
-    "redirect":true
+    "license":"<a href=\"https://www.gnu.org/licenses/agpl-3.0.en.html\" class=\"underline\">GNU Affero General Public License</a>"
   },
   "EpiCaseMap":{
     "subtype":"Data visualizers",
@@ -233,11 +249,6 @@
     "documentation":"<a href=\"https://research.rods.pitt.edu/Galapagos.pdf\" class=\"underline\">https://research.rods.pitt.edu/Galapagos.pdf</a>",
     "signInRequired":true
   },
-  "FluScores":{
-    "subtype":"Data visualizers",
-    "website":"http://delphi.midas.cs.cmu.edu/misc/fluscores/",
-    "redirect":true
-  },
   "EpiVis":{
     "subtype":"Data visualizers",
     "version":["v38"],
@@ -252,14 +263,19 @@
   },
   "outbreaker":{
     "subtype":"Disease transmission tree estimators",
+    "humanReadableSynopsis":"The R-package outbreaker implements a Bayesian approach for reconstructing outbreak data from pathogen genome sequences. It also implements a tool for outbreak simulation.",
+    "dataInputFormat":"DNAbin matrix format",
+    "license":"<a class=\"underline\" href=\"https://www.gnu.org/licenses/gpl-3.0.en.html\">GPL</a>",
     "version":["1.1-7"],
-    "developers":["Thibaut Jombart, Imperial College"],
-    "source":"https://github.com/thibautjombart/outbreaker/releases/tag/1.1-7",
+    "developers":["Thibaut Jombart"],
+    "source":"https://github.com/thibautjombart/outbreaker",
+    "documentation":"<a href=\"https://cran.r-project.org/web/packages/outbreaker/outbreaker.pdf\" class=\"underline\">https://cran.r-project.org/web/packages/outbreaker/outbreaker.pdf</a><br><a href=\"https://sites.google.com/site/therepiproject/outbreaker-intro.pdf\" class=\"underline\">https://sites.google.com/site/therepiproject/outbreaker-intro.pdf</a>",
     "website":"https://sites.google.com/site/therepiproject/r-pac/outbreaker",
-    "redirect":true
+    "publicationsAboutRelease":["Jombart T, Cori A, Didelot X, Cauchemez S, Fraser C & Ferguson N (2014) Bayesian Reconstruction of Disease Outbreaks by Combining Epidemiologic and Genomic Data. PLoS Comput Biol 10(1): e1003457. (<a href=\"http://dx.doi.org/10.1371/journal.pcbi.1003457\" class=\"underline\">doi:10.1371/journal.pcbi.1003457</a>)"]
   },
   "FluOutlook":{
     "subtype":"Disease forecasters",
+    "humanReadableSynopsis":"Fluoutlook is a web platform for the exploration of influenza forecasts.  It provides a visual interface to numerical forecasts of the current influenza season in North America and Europe through maps and charts. Activity data and forecasts are updated weekly, based on the reports of the official influenza surveillance systems in each country.",
     "type":"prospective 2013-2016",
     "forecastFrequency":"weekly",
     "diseases":["Influenza"],
@@ -280,6 +296,7 @@
   },
   "ILI-nearby":{
     "subtype":"Disease forecasters",
+    "humanReadableSynopsis":"ILI Nearby is a web application that displays real-time estimates of the prevalence of Influenza-like-illness activity at various administrative levels in the US. The analytic method is based on sensor fusion theory, which allows inference from multiple data sources.",
     "type":"prospective nowcast",
     "forecastFrequency":"weekly",
     "diseases":["Influenza"],
@@ -306,6 +323,7 @@
   },
   "FluSight: Seasonal Influenza Forecasting":{
     "subtype":"Disease forecasters",
+    "humanReadableSynopsis":"This beta website houses the weekly influenza activity forecasts provided by eight research teams. It’s important to note that these are not CDC forecasts and that the forecasts on this website are not endorsed by CDC. These forecasts are based on different models, can vary significantly, and may be inaccurate.",
     "forecastFrequency":"weekly",
     "type":"prospective 2015-2016",
     "diseases":["Influenza"],
@@ -328,6 +346,7 @@
   },
   "Columbia Prediction of Infectious Diseases":{
     "subtype":"Disease forecasters",
+    "humanReadableSynopsis":"This web application displays (1) the weekly Influenza Like Illness (ILI) in US cities reported throughout an influenza season, and (2) detailed ILI forecasts.",
     "forecastFrequency":"weekly",
     "type":"prospective 2016-2017",
     "diseases":["Influenza"],
@@ -335,8 +354,9 @@
     "forecasts":["Weekly count of observed influenza like illness"],
     "website":"http://cpid.iri.columbia.edu/"
   },
-  "CDCEpi Dengue competition":{
+  "Dengue Forecasting Project":{
     "subtype":"Disease forecasters",
+    "humanReadableSynopsis":"The Dengue Forecasting Project is a collaboration of several departments in the U.S. Federal Government (Department of Health and Human Services, Department of Defense, Department of Commerce, and the Department of Homeland Security), with the support of the Pandemic Prediction and Forecasting Science and Technology Interagency Working Group under the National Science and Technology Council.  Its goal is to design an infectious disease forecasting project with the aim of galvanizing efforts to predict epidemics of dengue.This interagency project will assess forecasts using historical data from Iquitos, Peru and San Juan, Puerto Rico. On this webpage you can find the forecast targets, dengue data, environmental data, submission procedure evaluation criteria, and a detailed description of the project. Information about dengue is available from the Centers for Disease Control and Prevention (CDC).Any updates will be posted here and on the the NOAA Dengue Forecasting Page where these materials are also available. For submissions or questions about the project contact <a href=\"mailto:predict@cdc.gov\" class=\"underline\">predict@cdc.gov</a>.",
     "type":"Retrospective 2009-2013",
     "diseases":["Dengue"],
     "region":["San Juan, Puerto Rico <br>", "Iquitos, Peru"],
@@ -408,7 +428,7 @@
   "Dynamic Mosquito Simulation Model (DyMSiM)":{
     "subtype":"Population dynamics models",
     "humanReadableSynopsis":"<p>The Dynamic Mosquito Simulation Model (DyMSiM) enables the simulation of mosquito populations driven by climate data. DyMSiM provides a useful tool for researchers investigating a number of mosquito-borne diseases.</p> <p>DyMSiM was created using STELLA 9.02 software. You must have STELLA installed on your computer to run DyMSiM.</p>",
-    "populationSpecies":["Mosquitoes"],
+    "populationSpeciesIncluded":["Mosquitoes"],
     "website":"https://sites.google.com/site/dymsimmodel/home",
     "executables":["<a class=\"underline\" href=\"https://sites.google.com/site/dymsimmodel/download\">Windows, OS X</a> (registration required)"],
     "documentation":"<a class=\"underline\" href=\"https://sites.google.com/site/dymsimmodel/about\">https://sites.google.com/site/dymsimmodel/about</a>",

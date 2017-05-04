@@ -16,7 +16,7 @@
 
     <complexType name="Software">
         <sequence>
-            <element name="Product" type="string" maxOccurs="1"
+            <element name="product" type="string" maxOccurs="1"
                      minOccurs="0"/>
             <element name="title" type="string" maxOccurs="1" minOccurs="1"/>
             <element name="humanReadableSynopsis" type="string" maxOccurs="1"
@@ -49,8 +49,6 @@
             <element name="availableOnUIDS" type="boolean" maxOccurs="1"
                      minOccurs="0"/>
             <element name="signInRequired" type="boolean" maxOccurs="1"
-                     minOccurs="0"/>
-            <element name="redirect" type="boolean" maxOccurs="1"
                      minOccurs="0"/>
         </sequence>
     </complexType>
