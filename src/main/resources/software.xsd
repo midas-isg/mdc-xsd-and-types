@@ -13,7 +13,7 @@
     <element name="PathogenEvolutionModels" type="tns:PathogenEvolutionModels"/>
     <element name="PhylogeneticTreeConstructors" type="tns:PhylogeneticTreeConstructors"/>
     <element name="SyntheticEcosystemConstructors" type="tns:SyntheticEcosystemConstructors"/>
-    <element name="WebService" type="tns:WebService"></element>
+    <element name="DataService" type="tns:DataService"></element>
 
     <complexType name="Software">
         <sequence>
@@ -57,7 +57,7 @@
     </complexType>
 
 
-    <simpleType name="WebServiceAccessPointType">
+    <simpleType name="DataServiceAccessPointType">
 
         <restriction base="string">
             <enumeration value="REST"></enumeration>
@@ -66,19 +66,19 @@
         </restriction>
     </simpleType>
 
-    <complexType name="WebServiceDescription">
+    <complexType name="DataServiceDescription">
         <sequence>
-            <element name="accessPointType" type="tns:WebServiceAccessPointType" minOccurs="1" maxOccurs="1"></element>
+            <element name="accessPointType" type="tns:DataServiceAccessPointType" minOccurs="1" maxOccurs="1"></element>
             <element name="accessPointDescription" type="token" minOccurs="1" maxOccurs="1"></element>
             <element name="accessPointUrl" type="anyURI" minOccurs="1" maxOccurs="1"></element>
         </sequence>
     </complexType>
 
-    <complexType name="WebService">
+    <complexType name="DataService">
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
-                    <element name="webServiceDescription" type="tns:WebServiceDescription" minOccurs="1" maxOccurs="unbounded"></element>
+                    <element name="DataServiceDescription" type="tns:DataServiceDescription" minOccurs="1" maxOccurs="unbounded"></element>
                 </sequence>
             </extension>
         </complexContent>
