@@ -33,15 +33,14 @@ import java.util.Map;
 public class Converter {
 
     public List<Software> convertToJava(String str) {
-        Map<String, Object> javaMap = new Gson().fromJson(
-                str, new TypeToken<HashMap<String, HashMap<String, Object>>>() {}.getType()
+        List<HashMap<String,Object>> softwareListFromJson = new Gson().fromJson(
+                str, new TypeToken<List<HashMap<String,Object>>>() {}.getType()
         );
 
         List softwareList = new ArrayList<Software>();
-        for ( String key : javaMap.keySet() ) {
-            Map<String, Object> innerMapping = ((Map) javaMap.get(key));
-            String subtype = (String) innerMapping.get("subtype");
-            String representation = new Gson().toJson(javaMap.get(key));
+        for ( HashMap<String,Object> map : softwareListFromJson ) {
+            String subtype = (String) map.get("subtype");
+            String representation = new Gson().toJson(map);
 
             boolean hasSubtype = true;
             Software sw = new Software();
@@ -53,7 +52,7 @@ public class Converter {
                 sw = new Gson().fromJson(representation, PathogenEvolutionModels.class);
             } else if(subtype.equals("Population dynamics models")) {
                 sw = new Gson().fromJson(representation, PopulationDynamicsModel.class);
-            } else if(subtype.equals("Synthetic ecosystem constructor")) {
+            } else if(subtype.equals("Synthetic ecosystem constructors")) {
                 sw = new Gson().fromJson(representation, SyntheticEcosystemConstructors.class);
             } else if(subtype.equals("Disease transmission tree estimators")) {
                 sw = new Gson().fromJson(representation, DiseaseTransmissionTreeEstimators.class);
@@ -70,7 +69,6 @@ public class Converter {
             }
 
             if(hasSubtype) {
-                sw.setTitle(key);
                 softwareList.add(sw);
             }
         }
@@ -100,7 +98,7 @@ public class Converter {
     }
 
 
-    String convertToXml(Software software) throws JsonProcessingException, SerializationException {
+    public String convertToXml(Software software) throws JsonProcessingException, SerializationException {
         List<Class> classList = new ArrayList<>();
         classList.add(Software.class);
         XMLSerializer xmlSerializer = new XMLSerializer(classList);
@@ -110,13 +108,13 @@ public class Converter {
 
     }
 
-    Software convertFromXml(String xml) throws DeserializationException {
+    public Software convertFromXml(String xml) throws DeserializationException {
         XMLDeserializer xmlDeserializer = new XMLDeserializer();
         Software software = xmlDeserializer.getObjectFromMessage(xml, Software.class);
         return software;
     }
 
-    String xmlToJson(String xml) throws DeserializationException {
+    public String xmlToJson(String xml) throws DeserializationException {
         XMLDeserializer xmlDeserializer = new XMLDeserializer();
         Software software = xmlDeserializer.getObjectFromMessage(xml, Software.class);
 

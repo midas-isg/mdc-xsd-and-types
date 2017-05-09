@@ -41,6 +41,8 @@
                      maxOccurs="unbounded" minOccurs="0"/>
             <element name="executables" type="string" maxOccurs="unbounded"
                      minOccurs="0"/>
+            <element name="version" type="string" maxOccurs="unbounded"
+                     minOccurs="0"/>
             <element name="publicationsAboutRelease" type="string"
                      maxOccurs="unbounded" minOccurs="0"/>
             <element name="grants" type="string" maxOccurs="unbounded"

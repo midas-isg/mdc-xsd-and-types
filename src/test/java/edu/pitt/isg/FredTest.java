@@ -21,12 +21,15 @@ public class FredTest extends TestCase {
     @Test
     public void testHello() throws IOException, SerializationException, DeserializationException {
         String file = FileUtils.readFileToString(new File("./src/main/resources/software.json"));
+
         Converter converter = new Converter();
+
         List<Software> softwareList = converter.convertToJava(file);
         List<String> invalidSoftwareList = new ArrayList<String>();
 
-        for (Software sw : softwareList) {;
+        for (Software sw : softwareList) {
             String xml = converter.convertToXml(sw);
+            System.out.println(xml);
             boolean isValid = converter.validate(xml);
 
             if(!isValid) {
