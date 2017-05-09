@@ -40,6 +40,8 @@
                      maxOccurs="unbounded" minOccurs="0"/>
             <element name="executables" type="string" maxOccurs="unbounded"
                      minOccurs="0"/>
+            <element name="version" type="string" maxOccurs="unbounded"
+                     minOccurs="0"/>
             <element name="publicationsAboutRelease" type="string"
                      maxOccurs="unbounded" minOccurs="0"/>
             <element name="grants" type="string" maxOccurs="unbounded"
@@ -49,6 +51,8 @@
             <element name="availableOnUIDS" type="boolean" maxOccurs="1"
                      minOccurs="0"/>
             <element name="signInRequired" type="boolean" maxOccurs="1"
+                     minOccurs="0"/>
+            <element name="redirect" type="boolean" maxOccurs="1"
                      minOccurs="0"/>
         </sequence>
     </complexType>
@@ -166,10 +170,7 @@
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
-                    <element name="pathogens" type="string" maxOccurs="unbounded"
-                             minOccurs="0"/>
-                    <element name="locations" type="string" maxOccurs="unbounded"
-                             minOccurs="0"/>
+
                 </sequence>
             </extension>
         </complexContent>

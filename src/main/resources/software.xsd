@@ -16,7 +16,7 @@
 
     <complexType name="Software">
         <sequence>
-            <element name="Product" type="string" maxOccurs="1"
+            <element name="product" type="string" maxOccurs="1"
                      minOccurs="0"/>
             <element name="title" type="string" maxOccurs="1" minOccurs="1"/>
             <element name="humanReadableSynopsis" type="string" maxOccurs="1"
@@ -39,6 +39,8 @@
             <element name="publicationsThatUsedRelease" type="string"
                      maxOccurs="unbounded" minOccurs="0"/>
             <element name="executables" type="string" maxOccurs="unbounded"
+                     minOccurs="0"/>
+            <element name="version" type="string" maxOccurs="unbounded"
                      minOccurs="0"/>
             <element name="publicationsAboutRelease" type="string"
                      maxOccurs="unbounded" minOccurs="0"/>
