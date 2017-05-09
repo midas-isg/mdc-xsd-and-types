@@ -78,7 +78,7 @@
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
-                    <element name="webServiceDescription" type="tns:WebServiceDescription" minOccurs="0" maxOccurs="unbounded"></element>
+                    <element name="webServiceDescription" type="tns:WebServiceDescription" minOccurs="1" maxOccurs="unbounded"></element>
                 </sequence>
             </extension>
         </complexContent>
