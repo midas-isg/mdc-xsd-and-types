@@ -15,40 +15,43 @@
     <element name="SyntheticEcosystemConstructors" type="tns:SyntheticEcosystemConstructors"/>
     <element name="DataService" type="tns:DataService"></element>
 
-
-    <
+    <simpleType name="nonZeroLengthString">
+        <restriction base="string">
+            <pattern value="[a-z]+"/>
+        </restriction>
+    </simpleType>
 
     <complexType name="Software">
         <sequence>
-            <element name="product" type="string" maxOccurs="1"
+            <element name="product" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="0"/>
-            <element name="title" type="string" maxOccurs="1" minOccurs="1"/>
-            <element name="humanReadableSynopsis" type="string" maxOccurs="1"
+            <element name="title" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="1"/>
+            <element name="humanReadableSynopsis" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="1"/>
-            <element name="doi" type="string" maxOccurs="1" minOccurs="0"/>
-            <element name="dataInputFormats" type="string" maxOccurs="unbounded"
+            <element name="doi" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
+            <element name="dataInputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
-            <element name="sourceCodeRelease" type="string" maxOccurs="1"
+            <element name="sourceCodeRelease" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="0"/>
-            <element name="webApplication" type="string" maxOccurs="unbounded"
+            <element name="webApplication" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
-            <element name="license" type="string" maxOccurs="1"
+            <element name="license" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="0"/>
-            <element name="source" type="string" maxOccurs="1" minOccurs="0"/>
-            <element name="developers" type="string" maxOccurs="unbounded"
+            <element name="source" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
+            <element name="developers" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
-            <element name="website" type="string" maxOccurs="1" minOccurs="0"/>
-            <element name="documentation" type="string" maxOccurs="1"
+            <element name="website" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
+            <element name="documentation" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="0"/>
-            <element name="publicationsThatUsedRelease" type="string"
+            <element name="publicationsThatUsedRelease" type="tns:nonZeroLengthString"
                      maxOccurs="unbounded" minOccurs="0"/>
-            <element name="executables" type="string" maxOccurs="unbounded"
+            <element name="executables" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
-            <element name="version" type="string" maxOccurs="unbounded"
+            <element name="version" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
-            <element name="publicationsAboutRelease" type="string"
+            <element name="publicationsAboutRelease" type="tns:nonZeroLengthString"
                      maxOccurs="unbounded" minOccurs="0"/>
-            <element name="grants" type="string" maxOccurs="unbounded"
+            <element name="grants" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
             <element name="availableOnOlympus" type="boolean" maxOccurs="1"
                      minOccurs="0"/>
@@ -91,13 +94,13 @@
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
-                    <element name="controlMeasures" type="string" maxOccurs="unbounded"
+                    <element name="controlMeasures" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
-                    <element name="hostSpeciesIncluded" type="string"
+                    <element name="hostSpeciesIncluded" type="tns:nonZeroLengthString"
                              maxOccurs="unbounded" minOccurs="1"/>
-                    <element name="locationCoverage" type="string" maxOccurs="unbounded"
+                    <element name="locationCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="1"/>
-                    <element name="pathogenCoverage" type="string" maxOccurs="unbounded"
+                    <element name="pathogenCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="1"/>
                 </sequence>
             </extension>
@@ -108,9 +111,9 @@
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
-                    <element name="populationSpeciesIncluded" type="string"
+                    <element name="populationSpeciesIncluded" type="tns:nonZeroLengthString"
                              maxOccurs="unbounded" minOccurs="1"/>
-                    <element name="locationCoverage" type="string" maxOccurs="unbounded"
+                    <element name="locationCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
                 </sequence>
             </extension>
@@ -121,18 +124,18 @@
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
-                    <element name="diseases" type="string" maxOccurs="unbounded"
+                    <element name="diseases" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
-                    <element name="nowcasts" type="string" maxOccurs="unbounded"
+                    <element name="nowcasts" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
-                    <element name="outcomes" type="string" maxOccurs="unbounded"
+                    <element name="outcomes" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
-                    <element name="forecastFrequency" type="string" maxOccurs="1"
+                    <element name="forecastFrequency" type="tns:nonZeroLengthString" maxOccurs="1"
                              minOccurs="0"/>
-                    <element name="type" type="string" maxOccurs="1" minOccurs="0"/>
-                    <element name="forecasts" type="string" maxOccurs="unbounded"
+                    <element name="type" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
+                    <element name="forecasts" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="1"/>
-                    <element name="region" type="string" maxOccurs="unbounded"
+                    <element name="region" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
                 </sequence>
             </extension>
@@ -144,7 +147,7 @@
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
-                    <element name="visualizationType" type="string" maxOccurs="unbounded"
+                    <element name="visualizationType" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
                 </sequence>
             </extension>
@@ -199,9 +202,9 @@
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
-                    <element name="pathogens" type="string" maxOccurs="unbounded"
+                    <element name="pathogens" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
-                    <element name="locations" type="string" maxOccurs="unbounded"
+                    <element name="locations" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
                 </sequence>
             </extension>
