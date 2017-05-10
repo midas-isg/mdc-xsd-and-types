@@ -17,7 +17,7 @@
 
     <simpleType name="nonZeroLengthString">
         <restriction base="string">
-            <pattern value="[a-z]+"/>
+            <minLength value="1"/>
         </restriction>
     </simpleType>
 

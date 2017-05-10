@@ -39,32 +39,37 @@ public class Converter {
 
         List softwareList = new ArrayList<Software>();
         for ( HashMap<String,Object> map : softwareListFromJson ) {
+            GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
+            Gson gson = gsonBuilder.create();
+
             String subtype = (String) map.get("subtype");
             String representation = new Gson().toJson(map);
 
             boolean hasSubtype = true;
             Software sw = new Software();
             if(subtype.equals("Disease transmission models")) {
-                sw = new Gson().fromJson(representation, DiseaseTransmissionModel.class);
+                sw = gson.fromJson(representation, DiseaseTransmissionModel.class);
             } else if(subtype.equals("Disease forecasters")) {
-                sw = new Gson().fromJson(representation, DiseaseForecasters.class);
+                sw = gson.fromJson(representation, DiseaseForecasters.class);
             } else if(subtype.equals("Pathogen evolution models")) {
-                sw = new Gson().fromJson(representation, PathogenEvolutionModels.class);
+                sw = gson.fromJson(representation, PathogenEvolutionModels.class);
             } else if(subtype.equals("Population dynamics models")) {
-                sw = new Gson().fromJson(representation, PopulationDynamicsModel.class);
+                sw = gson.fromJson(representation, PopulationDynamicsModel.class);
             } else if(subtype.equals("Synthetic ecosystem constructors")) {
-                sw = new Gson().fromJson(representation, SyntheticEcosystemConstructors.class);
+                sw = gson.fromJson(representation, SyntheticEcosystemConstructors.class);
             } else if(subtype.equals("Disease transmission tree estimators")) {
-                sw = new Gson().fromJson(representation, DiseaseTransmissionTreeEstimators.class);
+                sw = gson.fromJson(representation, DiseaseTransmissionTreeEstimators.class);
             } else if(subtype.equals("Phylogenetic tree constructors")) {
-                sw = new Gson().fromJson(representation, PhylogeneticTreeConstructors.class);
+                sw = gson.fromJson(representation, PhylogeneticTreeConstructors.class);
             } else if(subtype.equals("Data visualizers")) {
-                sw = new Gson().fromJson(representation, DataVisualizers.class);
+                sw = gson.fromJson(representation, DataVisualizers.class);
             } else if(subtype.equals("Modeling platforms")) {
-                sw = new Gson().fromJson(representation, ModelingPlatforms.class);
+                sw = gson.fromJson(representation, ModelingPlatforms.class);
             } else if(subtype.equals("Data-format converters")) {
-                sw = new Gson().fromJson(representation, DataFormatConverters.class);
-            } else {
+                sw = gson.fromJson(representation, DataFormatConverters.class);
+            } else if(subtype.equals("Data services")) {
+                sw = gson.fromJson(representation, DataService.class);
+            }else {
                 hasSubtype = false;
             }
 
@@ -116,7 +121,7 @@ public class Converter {
 
     public String xmlToJson(String xml) throws DeserializationException {
         XMLDeserializer xmlDeserializer = new XMLDeserializer();
-        Software software = xmlDeserializer.getObjectFromMessage(xml, Software.class);
+        Software software = xmlDeserializer.getObjectFromMessage(xml, DataService.class);
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String json = gson.toJson(software);

@@ -1,6 +1,9 @@
 package edu.pitt.isg;
 
 import com.google.gson.Gson;
+import edu.pitt.isg.mdc.v1_0.DataService;
+import edu.pitt.isg.mdc.v1_0.DataServiceAccessPointType;
+import edu.pitt.isg.mdc.v1_0.DataServiceDescription;
 import edu.pitt.isg.mdc.v1_0.Software;
 import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
@@ -29,7 +32,7 @@ public class FredTest extends TestCase {
 
         for (Software sw : softwareList) {
             String xml = converter.convertToXml(sw);
-            System.out.println(xml);
+            //System.out.println(xml);
             boolean isValid = converter.validate(xml);
 
             if(!isValid) {
@@ -40,5 +43,15 @@ public class FredTest extends TestCase {
         }
 
         System.out.println(invalidSoftwareList);
+
+        /*DataService testDataService = new DataService();
+        DataServiceDescription testDataServiceDescription = new DataServiceDescription();
+
+        testDataServiceDescription.setAccessPointDescription("");
+        testDataServiceDescription.setAccessPointType(DataServiceAccessPointType.fromValue("SOAP"));
+        testDataServiceDescription.setAccessPointUrl("");
+
+        testDataService.getDataServiceDescription().add(testDataServiceDescription);
+        System.out.print(converter.xmlToJson(converter.convertToXml(testDataService)));*/
     }
 }
