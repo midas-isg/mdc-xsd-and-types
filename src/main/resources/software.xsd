@@ -54,11 +54,11 @@
             <element name="grants" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
             <element name="availableOnOlympus" type="boolean" maxOccurs="1"
-                     minOccurs="0"/>
+                     minOccurs="1"/>
             <element name="availableOnUIDS" type="boolean" maxOccurs="1"
-                     minOccurs="0"/>
+                     minOccurs="1"/>
             <element name="signInRequired" type="boolean" maxOccurs="1"
-                     minOccurs="0"/>
+                     minOccurs="1"/>
         </sequence>
     </complexType>
 
