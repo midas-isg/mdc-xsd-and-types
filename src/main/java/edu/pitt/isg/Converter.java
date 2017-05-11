@@ -10,6 +10,8 @@ import edu.pitt.isg.objectserializer.XMLSerializer;
 import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -25,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.w3c.dom.Document;
 
 
 /**
@@ -119,13 +123,20 @@ public class Converter {
         return software;
     }
 
-    public String xmlToJson(String xml) throws DeserializationException {
+    public String xmlToJson(String xml) throws Exception {
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+        Document doc = dBuilder.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
+        //String classType = doc.getDocumentElement().getTagName();
+        String classType = "DataService";
+
         XMLDeserializer xmlDeserializer = new XMLDeserializer();
-        Software software = xmlDeserializer.getObjectFromMessage(xml, DataService.class);
+        Software software = (Software)xmlDeserializer.getObjectFromMessage(xml, Class.forName(classType).getClass()); //TODO: Class.forName won't return DataService.class
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String json = gson.toJson(software);
         json.replace("&lt;", "<").replace("&gt;", ">");
+
         return gson.toJson(software);
     }
 
