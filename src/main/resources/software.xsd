@@ -28,7 +28,7 @@
             <element name="title" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="1"/>
             <element name="humanReadableSynopsis" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="1"/>
-            <element name="doi" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
+            <element name="identifier" type="tns:Identifier" maxOccurs="1" minOccurs="0"/>
             <element name="dataInputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
             <element name="sourceCodeRelease" type="tns:nonZeroLengthString" maxOccurs="1"
@@ -59,6 +59,14 @@
                      minOccurs="1"/>
             <element name="signInRequired" type="boolean" maxOccurs="1"
                      minOccurs="1"/>
+        </sequence>
+    </complexType>
+
+
+    <complexType name="Identifier">
+        <sequence>
+            <element name="identifier" type="token" minOccurs="1" maxOccurs="1"></element>
+            <element name="identifierSource" type="token" minOccurs="0" maxOccurs="1"></element>
         </sequence>
     </complexType>
 
