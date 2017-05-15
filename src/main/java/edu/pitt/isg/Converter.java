@@ -35,6 +35,7 @@ import org.w3c.dom.Document;
  * Created by jdl50 on 5/2/17.
  */
 public class Converter {
+    public static final String MDC_PACKAGE = "edu.pitt.isg.mdc.v1_0.";
 
     public List<Software> convertToJava(String str) {
         List<HashMap<String,Object>> softwareListFromJson = new Gson().fromJson(
@@ -127,11 +128,10 @@ public class Converter {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
-        //String classType = doc.getDocumentElement().getTagName();
-        String classType = "DataService";
+        String classType = doc.getDocumentElement().getTagName();
 
         XMLDeserializer xmlDeserializer = new XMLDeserializer();
-        Software software = (Software)xmlDeserializer.getObjectFromMessage(xml, Class.forName(classType).getClass()); //TODO: Class.forName won't return DataService.class
+        Software software = (Software)xmlDeserializer.getObjectFromMessage(xml, Class.forName(MDC_PACKAGE + classType));
 
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
         String json = gson.toJson(software);
