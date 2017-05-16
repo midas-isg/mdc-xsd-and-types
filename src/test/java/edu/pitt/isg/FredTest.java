@@ -59,9 +59,12 @@ public class FredTest extends TestCase {
 
     @Test
     public void testDats() throws IOException, SerializationException, DeserializationException {
-        String file = FileUtils.readFileToString(new File("./src/main/resources/test-dats.json"));
         Converter converter = new Converter();
-
-        Dataset dataset = converter.convertToJavaDataset(file);
+        File dir = new File("./src/main/resources/all-datasets");
+        List<File> files = (List<File>) FileUtils.listFiles(dir, null, false);
+        for (File file : files) {
+            String json = FileUtils.readFileToString(file);
+            Dataset dataset = converter.convertToJavaDataset(json);
+        }
     }
 }
