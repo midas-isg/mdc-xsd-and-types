@@ -37,6 +37,7 @@ import org.w3c.dom.Document;
  */
 public class Converter {
     public static final String MDC_PACKAGE = "edu.pitt.isg.mdc.v1_0.";
+    public static final String DATS_PACKAGE = "edu.pitt.isg.mdc.dats2_2.";
 
     public List<Software> convertToJava(String str) {
         List<HashMap<String,Object>> softwareListFromJson = new Gson().fromJson(
@@ -137,13 +138,22 @@ public class Converter {
         String classType = doc.getDocumentElement().getTagName();
 
         XMLDeserializer xmlDeserializer = new XMLDeserializer();
-        Software software = (Software)xmlDeserializer.getObjectFromMessage(xml, Class.forName(MDC_PACKAGE + classType));
-
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String json = gson.toJson(software);
+        String json;
+
+        if(classType.equals("Dataset")) {
+            Dataset dataset = (Dataset)xmlDeserializer.getObjectFromMessage(xml, Class.forName(DATS_PACKAGE + classType));
+            json = gson.toJson(dataset);
+        }
+        else {
+            Software software = (Software)xmlDeserializer.getObjectFromMessage(xml, Class.forName(MDC_PACKAGE + classType));
+            json = gson.toJson(software);
+        }
+
         json.replace("&lt;", "<").replace("&gt;", ">");
 
-        return gson.toJson(software);
+        //return gson.toJson(software);
+        return json;
     }
 
 
