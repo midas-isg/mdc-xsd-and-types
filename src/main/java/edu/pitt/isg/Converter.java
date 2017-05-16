@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import edu.pitt.isg.mdc.dats2_2.Dataset;
 import edu.pitt.isg.mdc.v1_0.*;
 import edu.pitt.isg.objectserializer.XMLDeserializer;
 import edu.pitt.isg.objectserializer.XMLSerializer;
@@ -84,6 +85,11 @@ public class Converter {
         }
 
         return softwareList;
+    }
+
+    public Dataset convertToJavaDataset(String str) {
+        Dataset dataset = new Gson().fromJson(str, Dataset.class);
+        return dataset;
     }
 
     public boolean validate(String xml) throws MalformedURLException {

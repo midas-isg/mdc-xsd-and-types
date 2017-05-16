@@ -1,6 +1,7 @@
 package edu.pitt.isg;
 
 import com.google.gson.Gson;
+import edu.pitt.isg.mdc.dats2_2.Dataset;
 import edu.pitt.isg.mdc.v1_0.DataService;
 import edu.pitt.isg.mdc.v1_0.DataServiceAccessPointType;
 import edu.pitt.isg.mdc.v1_0.DataServiceDescription;
@@ -11,6 +12,7 @@ import junit.framework.TestCase;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
+import javax.persistence.Convert;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -42,7 +44,7 @@ public class FredTest extends TestCase {
             //System.out.println(json);
         }
 
-        System.out.println(invalidSoftwareList);
+        //System.out.println(invalidSoftwareList);
 
         /*DataService testDataService = new DataService();
         DataServiceDescription testDataServiceDescription = new DataServiceDescription();
@@ -53,5 +55,13 @@ public class FredTest extends TestCase {
 
         testDataService.getDataServiceDescription().add(testDataServiceDescription);
         System.out.print(converter.xmlToJson(converter.convertToXml(testDataService)));*/
+    }
+
+    @Test
+    public void testDats() throws IOException, SerializationException, DeserializationException {
+        String file = FileUtils.readFileToString(new File("./src/main/resources/test-dats.json"));
+        Converter converter = new Converter();
+
+        Dataset dataset = converter.convertToJavaDataset(file);
     }
 }
