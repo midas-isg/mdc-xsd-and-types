@@ -20,6 +20,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,8 +37,12 @@ import org.w3c.dom.Document;
  * Created by jdl50 on 5/2/17.
  */
 public class Converter {
-    public static final String MDC_PACKAGE = "edu.pitt.isg.mdc.v1_0.";
-    public static final String DATS_PACKAGE = "edu.pitt.isg.mdc.dats2_2.";
+    private static final String MDC_PACKAGE = "edu.pitt.isg.mdc.v1_0.";
+    private static final String DATS_PACKAGE = "edu.pitt.isg.mdc.dats2_2.";
+    private static final String [] DATS_CLASSES = {
+        "Dataset",
+        "DataStandard"
+    };
 
     public List<Software> convertToJava(String str) {
         List<HashMap<String,Object>> softwareListFromJson = new Gson().fromJson(
@@ -135,24 +140,27 @@ public class Converter {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
-        String classType = doc.getDocumentElement().getTagName();
+        String className = doc.getDocumentElement().getTagName();
 
         XMLDeserializer xmlDeserializer = new XMLDeserializer();
         Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-        String json;
+        String packageNamespace = MDC_PACKAGE;
+        String json = "";
+        boolean packageFound = false;
 
-        if(classType.equals("Dataset")) {
-            Dataset dataset = (Dataset)xmlDeserializer.getObjectFromMessage(xml, Class.forName(DATS_PACKAGE + classType));
-            json = gson.toJson(dataset);
+        for(int i = 0; i < DATS_CLASSES.length; i++) {
+            if(className.equals(DATS_CLASSES[i])) {
+                packageNamespace = DATS_PACKAGE;
+                packageFound = true;
+                break;
+            }
         }
-        else {
-            Software software = (Software)xmlDeserializer.getObjectFromMessage(xml, Class.forName(MDC_PACKAGE + classType));
-            json = gson.toJson(software);
-        }
 
-        json.replace("&lt;", "<").replace("&gt;", ">");
+        Object item = xmlDeserializer.getObjectFromMessage(xml, Class.forName(packageNamespace + className));
+        json = gson.toJson((Class.forName(packageNamespace + className)).cast(item));
+        //TODO: Properly decode URL formats
+        //json.replace("&lt;", "<").replace("&gt;", ">");
 
-        //return gson.toJson(software);
         return json;
     }
 
