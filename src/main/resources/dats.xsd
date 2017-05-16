@@ -2,6 +2,12 @@
 <schema xmlns:tns="http://mdc.isg.pitt.edu/dats2_2/" xmlns="http://www.w3.org/2001/XMLSchema"
         targetNamespace="http://mdc.isg.pitt.edu/dats2_2/" elementFormDefault="qualified" attributeFormDefault="qualified">
 
+
+    <element name="Dataset" type="tns:Dataset"/>
+    <element name="DataStandard" type="tns:DataStandard"/>
+
+
+
     <simpleType name="nonZeroLengthString">
         <restriction base="string">
             <minLength value="1"/>
