@@ -54,10 +54,16 @@
             <element name="type" type="tns:Annotation"/>
         </sequence>
     </complexType>
+
+    <complexType name="Location">
+        <sequence>
+            <element name="postalAddress" type="tns:nonZeroLengthString"/>
+        </sequence>
+    </complexType>
     <complexType name="Study">
         <sequence>
             <element name="name" type="tns:nonZeroLengthString"></element>
-            <element name="location" type="tns:nonZeroLengthString"/>
+            <element name="location" type="tns:Location"/>
             <element name="startDate" type="tns:Date"/>
             <element name="endDate" type="tns:Date"/>
 
@@ -69,7 +75,7 @@
             <element name="identifier" type="tns:Identifier"/>
             <element name="name" type="tns:nonZeroLengthString"/>
             <element name="type" type="tns:Annotation"/>
-            <element name="licenses" type="tns:License" minOccurs="0" maxOccurs="unbounded"> </element>
+            <element name="licenses" type="tns:License" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="version" type="tns:nonZeroLengthString" minOccurs="0"/>
             <element name="extraProperties" type="tns:CategoryValuePair" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
@@ -94,7 +100,7 @@
         <sequence>
             <element name="name" type="tns:nonZeroLengthString"/>
             <element name="identifier" type="tns:Identifier"/>
-            <element name="licenses" type="tns:License"/>
+            <element name="licenses" type="tns:License" minOccurs="0" maxOccurs="unbounded"/>
             <element name="types" type="tns:Type" minOccurs="0" maxOccurs="unbounded"/>
             <element name="version" type="tns:nonZeroLengthString" minOccurs="0"/>
         </sequence>
@@ -105,7 +111,7 @@
             <element name="title" type="tns:nonZeroLengthString" minOccurs="0"></element>
             <element name="description" type="tns:nonZeroLengthString"></element>
             <element name="identifier" type="tns:Identifier"/>
-            <element name="creators" type="tns:Creator"></element>
+            <element name="creators" type="tns:Creator" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="types" type="tns:Type" maxOccurs="unbounded"/>
             <element name="isAbout" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="spatialCoverage" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"/>
