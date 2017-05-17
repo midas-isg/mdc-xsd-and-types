@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schema xmlns:tns="http://mdc.isg.pitt.edu/v1_0/" xmlns="http://www.w3.org/2001/XMLSchema"
         targetNamespace="http://mdc.isg.pitt.edu/v1_0/" elementFormDefault="qualified" attributeFormDefault="qualified">
-
-    <element name="Software" type="tns:Software"/>
+    
     <element name="DiseaseTransmissionModel" type="tns:DiseaseTransmissionModel"/>
     <element name="PopulationDynamicsModel" type="tns:PopulationDynamicsModel"/>
     <element name="DataFormatConverters" type="tns:DataFormatConverters"/>
