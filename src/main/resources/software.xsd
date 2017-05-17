@@ -64,7 +64,7 @@
 
     <complexType name="Identifier">
         <sequence>
-            <element name="identifier" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"></element>
+            <element name="identifier" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="identifierSource" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
         </sequence>
     </complexType>
