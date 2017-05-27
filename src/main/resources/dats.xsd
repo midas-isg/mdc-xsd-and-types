@@ -88,7 +88,7 @@
         <sequence>
             <element name="category" type="tns:nonZeroLengthString" minOccurs="0"/>
             <element name="categoryIRI" type="anyURI" minOccurs="0"/>
-            <element name="values" type="tns:Annotation" minOccurs="0"/>
+            <element name="values" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
     </complexType>
     <complexType name="License">
