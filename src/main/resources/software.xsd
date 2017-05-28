@@ -30,6 +30,8 @@
             <element name="identifier" type="tns:Identifier" maxOccurs="1" minOccurs="0"/>
             <element name="dataInputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
+            <element name="dataOutputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
+                     minOccurs="0"/>
             <element name="sourceCodeRelease" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="0"/>
             <element name="webApplication" type="tns:nonZeroLengthString" maxOccurs="unbounded"
