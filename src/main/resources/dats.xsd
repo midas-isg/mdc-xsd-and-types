@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns:tns="http://mdc.isg.pitt.edu/dats2_2/" xmlns="http://www.w3.org/2001/XMLSchema"
+<schema xmlns:tns="http://mdc.isg.pitt.edu/dats2_2/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:i="http://moten.david.org/xsd-forms"
         targetNamespace="http://mdc.isg.pitt.edu/dats2_2/" elementFormDefault="qualified" attributeFormDefault="qualified">
 
     <element name="Dataset" type="tns:Dataset"/>
@@ -119,7 +119,9 @@
             <element name="isAbout" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="spatialCoverage" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"/>
             <element name="producedBy" type="tns:Study" minOccurs="0" maxOccurs="1"/>
-            <element name="distributions" type="tns:Distribution" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="distributions" type="tns:Distribution" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="3"/>
+            </element>
         </sequence>
     </complexType>
 
@@ -135,7 +137,9 @@
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"/>
             <element name="dates" type="tns:Date" minOccurs="0" maxOccurs="unbounded"/>
             <element name="access" type="tns:Access" minOccurs="1" maxOccurs="1"/>
-            <element name="conformsTo" type="tns:DataStandard" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="conformsTo" type="tns:DataStandard" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="3"/>
+            </element>
             <element name="storedIn" type="tns:DataRepository" minOccurs="0" maxOccurs="1"></element>
             <element name="size" type="int" minOccurs="0" maxOccurs="1"/>
             <element name="unit" type="tns:Annotation" minOccurs="0" maxOccurs="1"/>
