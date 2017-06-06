@@ -3,6 +3,8 @@ package edu.pitt.isg;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
 import edu.pitt.isg.mdc.v1_0.*;
@@ -44,6 +46,23 @@ public class Converter {
         "DataStandard"
     };
 
+    private static final HashMap<String, String> classTypeToJsonType;
+    static
+    {
+        classTypeToJsonType = new HashMap<String, String>();
+        classTypeToJsonType.put("PhylogeneticTreeConstructors", "Phylogenetic tree constructors");
+        classTypeToJsonType.put("SyntheticEcosystemConstructors", "Synthetic ecosystem constructors");
+        classTypeToJsonType.put("DiseaseTransmissionModel", "Disease transmission models");
+        classTypeToJsonType.put("PathogenEvolutionModels", "Pathogen evolution models");
+        classTypeToJsonType.put("DataFormatConverters", "Data-format converters");
+        classTypeToJsonType.put("DataService", "Data services");
+        classTypeToJsonType.put("DataVisualizers", "Data visualizers");
+        classTypeToJsonType.put("ModelingPlatforms", "Modeling platforms");
+        classTypeToJsonType.put("DiseaseTransmissionTreeEstimators", "Disease transmission tree estimators");
+        classTypeToJsonType.put("DiseaseForecasters", "Disease forecasters");
+        classTypeToJsonType.put("PopulationDynamicsModel", "Population dynamics models");
+    }
+
     public List<Software> convertToJava(String str) {
         List<HashMap<String,Object>> softwareListFromJson = new Gson().fromJson(
                 str, new TypeToken<List<HashMap<String,Object>>>() {}.getType()
@@ -81,7 +100,7 @@ public class Converter {
                 sw = gson.fromJson(representation, DataFormatConverters.class);
             } else if(subtype.equals("Data services")) {
                 sw = gson.fromJson(representation, DataService.class);
-            }else {
+            } else {
                 hasSubtype = false;
             }
 
@@ -157,12 +176,18 @@ public class Converter {
         }
 
         Object item = xmlDeserializer.getObjectFromMessage(xml, Class.forName(packageNamespace + className));
-        json = gson.toJson((Class.forName(packageNamespace + className)).cast(item));
+        JsonObject jsonObject = gson.toJsonTree((Class.forName(packageNamespace + className)).cast(item)).getAsJsonObject();
+
+        if(!packageFound) {
+            jsonObject.addProperty("subtype", classTypeToJsonType.get(className));
+        }
+
+        jsonObject.addProperty("class", packageNamespace + className);
+        json = jsonObject.toString();
         //TODO: Properly decode URL formats
         //json.replace("&lt;", "<").replace("&gt;", ">");
 
         return json;
     }
-
 
 }
