@@ -120,7 +120,7 @@
             <element name="spatialCoverage" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"/>
             <element name="producedBy" type="tns:Study" minOccurs="0" maxOccurs="1"/>
             <element name="distributions" type="tns:Distribution" minOccurs="0" maxOccurs="unbounded">
-                <annotation i:maxRepeats="3"/>
+                <annotation i:maxRepeats="1"/>
             </element>
         </sequence>
     </complexType>
@@ -138,7 +138,7 @@
             <element name="dates" type="tns:Date" minOccurs="0" maxOccurs="unbounded"/>
             <element name="access" type="tns:Access" minOccurs="1" maxOccurs="1"/>
             <element name="conformsTo" type="tns:DataStandard" minOccurs="0" maxOccurs="unbounded">
-                <annotation i:maxRepeats="3"/>
+                <annotation i:maxRepeats="1"/>
             </element>
             <element name="storedIn" type="tns:DataRepository" minOccurs="0" maxOccurs="1"></element>
             <element name="size" type="int" minOccurs="0" maxOccurs="1"/>
