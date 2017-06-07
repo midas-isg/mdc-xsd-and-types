@@ -29,9 +29,9 @@
 
     <complexType name="Type">
         <sequence>
-            <element name="information" type="tns:Annotation"></element>
-            <element name="method" type="tns:Annotation"></element>
-            <element name="platform" type="tns:Annotation"></element>
+            <element name="information" type="tns:Annotation" minOccurs="0"></element>
+            <element name="method" type="tns:Annotation" minOccurs="0"></element>
+            <element name="platform" type="tns:Annotation" minOccurs="0"></element>
         </sequence>
     </complexType>
 
@@ -104,7 +104,7 @@
             <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"/>
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"/>
             <element name="licenses" type="tns:License" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="types" type="tns:Type" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="types" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"/>
             <element name="version" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
         </sequence>
     </complexType>
