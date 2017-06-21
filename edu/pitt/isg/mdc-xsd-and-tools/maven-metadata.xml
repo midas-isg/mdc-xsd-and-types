@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>edu.pitt.isg</groupId>
+  <artifactId>mdc-xsd-and-tools</artifactId>
+  <versioning>
+    <versions>
+      <version>1.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20170621205201</lastUpdated>
+  </versioning>
+</metadata>
