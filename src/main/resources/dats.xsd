@@ -45,25 +45,31 @@
     <complexType name="Place">
         <sequence>
             <element name="identifier" type="tns:Identifier" minOccurs="0"/>
-            <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="relatedIdentifiers" type="tns:RelatedIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="5"/>
+            </element>
+            <element name="relatedIdentifiers" type="tns:RelatedIdentifier" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="5"/>
+            </element>
             <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"></element>
-            <element name="description" type="tns:nonZeroLengthString" minOccurs="0"></element>
-            <element name="postalAddress" type="tns:nonZeroLengthString" minOccurs="0"/>
+            <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
+            <element name="postalAddress" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
             <element name="geometry" type="tns:Geometry" minOccurs="0" maxOccurs="1"/>
-            <element name="coordinates" type="tns:Coordinates" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="coordinates" type="tns:Coordinates" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="1"/>
+            </element>
         </sequence>
     </complexType>
 
     <complexType name="Organization">
         <sequence>
-            <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="relatedIdentifiers" type="tns:RelatedIdentifier" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="name" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
-            <element name="abbreviation" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
-            <element name="location" type="tns:Location" minOccurs="0" maxOccurs="1"/>
-            <element name="roles" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"></element>
+            <element name="identifier" type="tns:Identifier" minOccurs="0"/>
+            <!--<element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>-->
+            <!--<element name="relatedIdentifiers" type="tns:RelatedIdentifier" minOccurs="0" maxOccurs="unbounded"/>-->
+            <!--<element name="name" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>-->
+            <!--<element name="abbreviation" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>-->
+            <!--<element name="location" type="tns:Location" minOccurs="0" maxOccurs="1"/>-->
+            <!--<element name="roles" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"></element>-->
         </sequence>
     </complexType>
 
@@ -168,15 +174,23 @@
         </sequence>
     </complexType>
 
+    <complexType name="Creator">
+        <sequence>
+            <choice>
+                <element name="person" type="tns:Person" minOccurs="1" maxOccurs="1"/>
+                <element name="organization" type="tns:Organization" minOccurs="1" maxOccurs="1"></element>
+            </choice>
+        </sequence>
+    </complexType>
+
     <complexType name="Dataset">
         <sequence>
-            <element name="title" type="tns:nonZeroLengthString" minOccurs="1"></element>
+            <element name="title" type="tns:nonZeroLengthString" minOccurs="1"/>
             <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"/>
-            <choice>
-                <element name="person" type="tns:Person" minOccurs="1" maxOccurs="unbounded"/>
-                <element name="organization" type="tns:Organization" minOccurs="1" maxOccurs="unbounded"></element>
-            </choice>
+            <element name="creators" type="tns:Creator" minOccurs="1" maxOccurs="unbounded">
+                <annotation i:maxRepeats="5"/>
+            </element>
             <element name="types" type="tns:Type" minOccurs="1" maxOccurs="unbounded"/>
             <element name="isAbout" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="spatialCoverage" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"/>

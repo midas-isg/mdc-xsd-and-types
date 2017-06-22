@@ -13,6 +13,9 @@ import edu.pitt.isg.objectserializer.XMLSerializer;
 import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
 
+import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.XMLConstants;
@@ -22,6 +25,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
+import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
@@ -175,7 +179,9 @@ public class Converter {
             }
         }
 
-        Object item = xmlDeserializer.getObjectFromMessage(xml, Class.forName(packageNamespace + className));
+        Object item = JAXB.unmarshal(new StringReader(xml), Class.forName(packageNamespace + className));
+
+        //Object item = xmlDeserializer.getObjectFromMessage(xml, Class.forName(packageNamespace + className));
         JsonObject jsonObject = gson.toJsonTree((Class.forName(packageNamespace + className)).cast(item)).getAsJsonObject();
 
         if(!packageFound) {
