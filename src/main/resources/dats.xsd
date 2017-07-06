@@ -142,6 +142,7 @@
         <sequence>
             <element name="identifier" type="tns:Identifier"/>
             <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"/>
+            <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
             <element name="type" type="tns:Annotation" minOccurs="1" maxOccurs="1"/>
             <element name="licenses" type="tns:License" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="version" type="tns:nonZeroLengthString" minOccurs="0"/>
