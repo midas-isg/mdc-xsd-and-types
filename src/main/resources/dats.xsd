@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns:tns="http://mdc.isg.pitt.edu/dats2_2/" xmlns="http://www.w3.org/2001/XMLSchema"
+<schema xmlns:tns="http://mdc.isg.pitt.edu/dats2_2/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:i="http://moten.david.org/xsd-forms"
         targetNamespace="http://mdc.isg.pitt.edu/dats2_2/" elementFormDefault="qualified" attributeFormDefault="qualified">
 
     <element name="Dataset" type="tns:Dataset"/>
@@ -18,7 +18,72 @@
         </sequence>
     </complexType>
 
-    <complexType name="Creator">
+    <complexType name="Position">
+        <sequence>
+            <element name="position" type="float" minOccurs="2" maxOccurs="unbounded"></element>
+        </sequence>
+    </complexType>
+
+    <complexType name="Coordinates">
+        <sequence>
+            <element name="coordinate" type="tns:Position" minOccurs="2" maxOccurs="unbounded"></element>
+        </sequence>
+    </complexType>
+
+    <simpleType name="Geometry">
+        <restriction base="string">
+            <enumeration value="POINT"></enumeration>
+            <enumeration value="MULTIPOINT"></enumeration>
+            <enumeration value="LINESTRING"></enumeration>
+            <enumeration value="MULTILINESTRING"></enumeration>
+            <enumeration value="POLYGON"></enumeration>
+            <enumeration value="MULTIPOLYGON"></enumeration>
+            <enumeration value="GEOMETRYCOLLECTION"></enumeration>
+        </restriction>
+    </simpleType>
+
+    <complexType name="Place">
+        <sequence>
+            <element name="identifier" type="tns:Identifier" minOccurs="0"/>
+            <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="5"/>
+            </element>
+            <element name="relatedIdentifiers" type="tns:RelatedIdentifier" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="5"/>
+            </element>
+            <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"></element>
+            <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
+            <element name="postalAddress" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
+            <element name="geometry" type="tns:Geometry" minOccurs="0" maxOccurs="1"/>
+            <element name="coordinates" type="tns:Coordinates" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="1"/>
+            </element>
+        </sequence>
+    </complexType>
+
+    <complexType name="Organization">
+        <sequence>
+            <element name="identifier" type="tns:Identifier" minOccurs="0"/>
+            <!--<element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>-->
+            <!--<element name="relatedIdentifiers" type="tns:RelatedIdentifier" minOccurs="0" maxOccurs="unbounded"/>-->
+            <!--<element name="name" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>-->
+            <!--<element name="abbreviation" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>-->
+            <!--<element name="location" type="tns:Location" minOccurs="0" maxOccurs="1"/>-->
+            <!--<element name="roles" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"></element>-->
+        </sequence>
+    </complexType>
+
+    <complexType name="RelatedIdentifier">
+        <complexContent>
+            <extension base="tns:Identifier">
+                <sequence>
+                    <element name="relationType" type="tns:nonZeroLengthString" minOccurs="0"></element>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="Person">
         <sequence>
             <element name="firstName" type="tns:nonZeroLengthString"></element>
             <element name="lastName" type="tns:nonZeroLengthString"></element>
@@ -29,9 +94,9 @@
 
     <complexType name="Type">
         <sequence>
-            <element name="information" type="tns:Annotation"></element>
-            <element name="method" type="tns:Annotation"></element>
-            <element name="platform" type="tns:Annotation"></element>
+            <element name="information" type="tns:Annotation" minOccurs="0"></element>
+            <element name="method" type="tns:Annotation" minOccurs="0"></element>
+            <element name="platform" type="tns:Annotation" minOccurs="0"></element>
         </sequence>
     </complexType>
 
@@ -77,6 +142,7 @@
         <sequence>
             <element name="identifier" type="tns:Identifier"/>
             <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"/>
+            <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
             <element name="type" type="tns:Annotation" minOccurs="1" maxOccurs="1"/>
             <element name="licenses" type="tns:License" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="version" type="tns:nonZeroLengthString" minOccurs="0"/>
@@ -88,7 +154,7 @@
         <sequence>
             <element name="category" type="tns:nonZeroLengthString" minOccurs="0"/>
             <element name="categoryIRI" type="anyURI" minOccurs="0"/>
-            <element name="values" type="tns:Annotation" minOccurs="0"/>
+            <element name="values" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
     </complexType>
     <complexType name="License">
@@ -104,22 +170,35 @@
             <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"/>
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"/>
             <element name="licenses" type="tns:License" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="types" type="tns:Type" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="types" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"/>
             <element name="version" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="Creator">
+        <sequence>
+            <choice>
+                <element name="person" type="tns:Person" minOccurs="1" maxOccurs="1"/>
+                <element name="organization" type="tns:Organization" minOccurs="1" maxOccurs="1"></element>
+            </choice>
         </sequence>
     </complexType>
 
     <complexType name="Dataset">
         <sequence>
-            <element name="title" type="tns:nonZeroLengthString" minOccurs="1"></element>
+            <element name="title" type="tns:nonZeroLengthString" minOccurs="1"/>
             <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"/>
-            <element name="creators" type="tns:Creator" minOccurs="1" maxOccurs="unbounded"></element>
+            <element name="creators" type="tns:Creator" minOccurs="1" maxOccurs="unbounded">
+                <annotation i:maxRepeats="5"/>
+            </element>
             <element name="types" type="tns:Type" minOccurs="1" maxOccurs="unbounded"/>
             <element name="isAbout" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="spatialCoverage" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"/>
             <element name="producedBy" type="tns:Study" minOccurs="0" maxOccurs="1"/>
-            <element name="distributions" type="tns:Distribution" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="distributions" type="tns:Distribution" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="1"/>
+            </element>
         </sequence>
     </complexType>
 
@@ -135,7 +214,9 @@
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"/>
             <element name="dates" type="tns:Date" minOccurs="0" maxOccurs="unbounded"/>
             <element name="access" type="tns:Access" minOccurs="1" maxOccurs="1"/>
-            <element name="conformsTo" type="tns:DataStandard" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="conformsTo" type="tns:DataStandard" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="1"/>
+            </element>
             <element name="storedIn" type="tns:DataRepository" minOccurs="0" maxOccurs="1"></element>
             <element name="size" type="int" minOccurs="0" maxOccurs="1"/>
             <element name="unit" type="tns:Annotation" minOccurs="0" maxOccurs="1"/>

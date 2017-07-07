@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns:tns="http://mdc.isg.pitt.edu/v1_0/" xmlns="http://www.w3.org/2001/XMLSchema"
+<schema xmlns:tns="http://mdc.isg.pitt.edu/v1_0/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:i="http://moten.david.org/xsd-forms"
         targetNamespace="http://mdc.isg.pitt.edu/v1_0/" elementFormDefault="qualified" attributeFormDefault="qualified">
-    
+
     <element name="DiseaseTransmissionModel" type="tns:DiseaseTransmissionModel"/>
     <element name="PopulationDynamicsModel" type="tns:PopulationDynamicsModel"/>
-    <element name="DataFormatConverters" type="tns:DataFormatConverters"/>
-    <element name="DataVisualizers" type="tns:DataVisualizers"/>
-    <element name="DiseaseForecasters" type="tns:DiseaseForecasters"/>
-    <element name="DiseaseTransmissionTreeEstimators" type="tns:DiseaseTransmissionTreeEstimators"/>
-    <element name="ModelingPlatforms" type="tns:ModelingPlatforms"/>
-    <element name="PathogenEvolutionModels" type="tns:PathogenEvolutionModels"/>
-    <element name="PhylogeneticTreeConstructors" type="tns:PhylogeneticTreeConstructors"/>
-    <element name="SyntheticEcosystemConstructors" type="tns:SyntheticEcosystemConstructors"/>
-    <element name="DataService" type="tns:DataService"></element>
+    <element name="DataFormatConverters" type="tns:DataFormatConverters">
+        <annotation i:label="Data Format Converter"/>
+    </element>
+    <element name="DataVisualizers" type="tns:DataVisualizers">
+        <annotation i:label="Data Visualizer"/>
+    </element>
+    <element name="DiseaseForecasters" type="tns:DiseaseForecasters">
+        <annotation i:label="Disease Forecaster"/>
+    </element>
+    <element name="DiseaseTransmissionTreeEstimators" type="tns:DiseaseTransmissionTreeEstimators">
+        <annotation i:label="Disease Transmission Tree Estimator"/>
+    </element>
+    <element name="ModelingPlatforms" type="tns:ModelingPlatforms">
+        <annotation i:label="Modeling Platform"/>
+    </element>
+    <element name="PathogenEvolutionModels" type="tns:PathogenEvolutionModels">
+        <annotation i:label="Pathogen Evolution Model"/>
+    </element>
+    <element name="PhylogeneticTreeConstructors" type="tns:PhylogeneticTreeConstructors">
+        <annotation i:label="Phylogenetic Tree Constructor"/>
+    </element>
+    <element name="SyntheticEcosystemConstructors" type="tns:SyntheticEcosystemConstructors">
+        <annotation i:label="Synthetic Ecosystem Constructor"/>
+    </element>
+    <element name="DataService" type="tns:DataService"/>
 
     <simpleType name="nonZeroLengthString">
         <restriction base="string">
@@ -29,6 +45,8 @@
                      minOccurs="1"/>
             <element name="identifier" type="tns:Identifier" maxOccurs="1" minOccurs="0"/>
             <element name="dataInputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
+                     minOccurs="0"/>
+            <element name="dataOutputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
             <element name="sourceCodeRelease" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="0"/>
@@ -64,7 +82,7 @@
 
     <complexType name="Identifier">
         <sequence>
-            <element name="identifier" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"></element>
+            <element name="identifier" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="identifierSource" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
         </sequence>
     </complexType>
