@@ -46,9 +46,13 @@
                      minOccurs="1"/>
             <element name="identifier" type="tns:Identifier" maxOccurs="1" minOccurs="0"/>
             <element name="dataInputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                     minOccurs="0"/>
+                     minOccurs="0">
+                <annotation i:label="Data Input Format"/>
+            </element>
             <element name="dataOutputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                     minOccurs="0"/>
+                     minOccurs="0">
+                <annotation i:label="Data Output Format"/>
+            </element>
             <element name="sourceCodeRelease" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="0"/>
             <element name="webApplication" type="tns:nonZeroLengthString" maxOccurs="unbounded"
@@ -57,20 +61,30 @@
                      minOccurs="0"/>
             <element name="source" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
             <element name="developers" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                     minOccurs="0"/>
+                     minOccurs="0">
+                <annotation i:label="Developer"/>
+            </element>
             <element name="website" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
             <element name="documentation" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="0"/>
             <element name="publicationsThatUsedRelease" type="tns:nonZeroLengthString"
-                     maxOccurs="unbounded" minOccurs="0"/>
+                     maxOccurs="unbounded" minOccurs="0">
+                     <annotation i:label="Publication That Used Release"/>
+            </element>
             <element name="executables" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                     minOccurs="0"/>
+                     minOccurs="0">
+                <annotation i:label="Executable"/>
+            </element>
             <element name="version" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0"/>
             <element name="publicationsAboutRelease" type="tns:nonZeroLengthString"
-                     maxOccurs="unbounded" minOccurs="0"/>
+                     maxOccurs="unbounded" minOccurs="0">
+                <annotation i:label="Publication About Release"/>
+            </element>
             <element name="grants" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                     minOccurs="0"/>
+                     minOccurs="0">
+                <annotation i:label="Grant"/>
+            </element>
             <element name="availableOnOlympus" type="boolean" maxOccurs="1"
                      minOccurs="1"/>
             <element name="availableOnUIDS" type="boolean" maxOccurs="1"
@@ -121,9 +135,13 @@
             <extension base="tns:Software">
                 <sequence>
                     <element name="controlMeasures" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                             minOccurs="0"/>
+                             minOccurs="0">
+                        <annotation i:label="Control Measure"/>
+                    </element>
                     <element name="hostSpeciesIncluded" type="tns:nonZeroLengthString"
-                             maxOccurs="unbounded" minOccurs="1"/>
+                             maxOccurs="unbounded" minOccurs="1">
+                        <annotation i:label="Host Species Included"/>
+                    </element>
                     <element name="locationCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="1"/>
                     <element name="pathogenCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"
@@ -138,7 +156,9 @@
             <extension base="tns:Software">
                 <sequence>
                     <element name="populationSpeciesIncluded" type="tns:nonZeroLengthString"
-                             maxOccurs="unbounded" minOccurs="1"/>
+                             maxOccurs="unbounded" minOccurs="1">
+                        <annotation i:label="Population Species Included"/>
+                    </element>
                     <element name="locationCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
                 </sequence>
@@ -151,16 +171,24 @@
             <extension base="tns:Software">
                 <sequence>
                     <element name="diseases" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                             minOccurs="0"/>
+                             minOccurs="0">
+                        <annotation i:label="Disease"/>
+                    </element>
                     <element name="nowcasts" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                             minOccurs="0"/>
+                             minOccurs="0">
+                        <annotation i:label="Nowcast"/>
+                    </element>
                     <element name="outcomes" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                             minOccurs="0"/>
+                             minOccurs="0">
+                        <annotation i:label="Outcome"/>
+                    </element>
                     <element name="forecastFrequency" type="tns:nonZeroLengthString" maxOccurs="1"
                              minOccurs="0"/>
                     <element name="type" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
                     <element name="forecasts" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                             minOccurs="1"/>
+                             minOccurs="1">
+                        <annotation i:label="Forecast"/>
+                    </element>
                     <element name="region" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                              minOccurs="0"/>
                 </sequence>
@@ -229,9 +257,13 @@
             <extension base="tns:Software">
                 <sequence>
                     <element name="pathogens" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                             minOccurs="0"/>
+                             minOccurs="0">
+                        <annotation i:label="Pathogen"/>
+                    </element>
                     <element name="locations" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                             minOccurs="0"/>
+                             minOccurs="0">
+                        <annotation i:label="Location"/>
+                    </element>
                 </sequence>
             </extension>
         </complexContent>
