@@ -135,9 +135,9 @@
     <complexType name="Study">
         <sequence>
             <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"></element>
-            <element name="location" type="tns:Location"/>
-            <element name="startDate" type="tns:Date"/>
-            <element name="endDate" type="tns:Date"/>
+            <element name="location" type="tns:Location" minOccurs="0"/>
+            <element name="startDate" type="tns:Date" minOccurs="0"/>
+            <element name="endDate" type="tns:Date" minOccurs="0"/>
 
         </sequence>
     </complexType>
