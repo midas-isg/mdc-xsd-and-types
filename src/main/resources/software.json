@@ -239,7 +239,7 @@
     "pathogenCoverage": [
       {
         "identifier": {
-          "identifier": "communicable human-to-human",
+          "identifier": "Communicable human-to-human",
           "identifierSource": "https://fairsharing.org/bsg-s000154"
         }
       }
@@ -662,7 +662,7 @@
     "pathogenCoverage": [
       {
         "identifier": {
-          "identifier": "communicable human-to-human",
+          "identifier": "Communicable human-to-human",
           "identifierSource": "https://fairsharing.org/bsg-s000154"
         }
       }
@@ -986,7 +986,7 @@
     "pathogenCoverage": [
       {
         "identifier": {
-          "identifier": "influenza-like diseases",
+          "identifier": "Influenza-like diseases",
           "identifierSource": "https://fairsharing.org/bsg-s000154"
         }
       }
@@ -1543,7 +1543,7 @@
     "pathogenCoverage": [
       {
         "identifier": {
-          "identifier": "communicable human-to-human",
+          "identifier": "Communicable human-to-human",
           "identifierSource": "https://fairsharing.org/bsg-s000154"
         }
       }
@@ -1733,7 +1733,7 @@
     "pathogenCoverage": [
       {
         "identifier": {
-          "identifier": "communicable human-to-human",
+          "identifier": "Communicable human-to-human",
           "identifierSource": "https://fairsharing.org/bsg-s000154"
         }
       }
