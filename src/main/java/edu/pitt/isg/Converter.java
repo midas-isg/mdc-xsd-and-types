@@ -3,7 +3,6 @@ package edu.pitt.isg;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
@@ -14,8 +13,6 @@ import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
 
 import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.XMLConstants;
@@ -26,16 +23,14 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 
 
@@ -190,10 +185,14 @@ public class Converter {
 
         jsonObject.addProperty("class", packageNamespace + className);
         json = jsonObject.toString();
+
+        org.jsoup.nodes.Document jsonDocument = Jsoup.parse(json);
+        String parsedJson = jsonDocument.text();
+
         //TODO: Properly decode URL formats
         //json.replace("&lt;", "<").replace("&gt;", ">");
 
-        return json;
+        return parsedJson;
     }
 
 }
