@@ -140,13 +140,13 @@
                         <annotation i:label="Control Measure"/>
                     </element>
                     <element name="hostSpeciesIncluded" type="tns:NestedIdentifier"
-                             maxOccurs="unbounded" minOccurs="1">
+                             maxOccurs="unbounded" minOccurs="0">
                         <annotation i:label="Host Species Included"/>
                     </element>
                     <element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
-                             minOccurs="1"/>
+                             minOccurs="0"/>
                     <element name="pathogenCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
-                             minOccurs="1"/>
+                             minOccurs="0"/>
                 </sequence>
             </extension>
         </complexContent>

@@ -5,7 +5,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import edu.pitt.isg.mdc.dats2_2.Creator;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
+import edu.pitt.isg.mdc.dats2_2.Person;
 import edu.pitt.isg.mdc.v1_0.*;
 import edu.pitt.isg.objectserializer.XMLDeserializer;
 import edu.pitt.isg.objectserializer.XMLSerializer;
@@ -42,6 +44,7 @@ public class Converter {
     private static final String DATS_PACKAGE = "edu.pitt.isg.mdc.dats2_2.";
     private static final String [] DATS_CLASSES = {
         "Dataset",
+        "DatasetWithOrganization",
         "DataStandard"
     };
 
@@ -173,6 +176,16 @@ public class Converter {
                 break;
             }
         }
+
+        /*String output;
+
+        Dataset dataset = new Dataset();
+        Creator creator = new Creator();
+        Person person = new Person();
+        person.setFirstName("Adam");
+        creator.setPerson(person);
+        dataset.getCreators().add(creator);
+        JAXB.marshal(dataset, System.out);*/
 
         Object item = JAXB.unmarshal(new StringReader(xml), Class.forName(packageNamespace + className));
 
