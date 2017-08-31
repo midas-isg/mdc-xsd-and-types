@@ -196,7 +196,7 @@
                              minOccurs="1">
                         <annotation i:label="Forecast"/>
                     </element>
-                    <element name="region" type="tns:NestedIdentifier" maxOccurs="unbounded"
+                    <element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
                              minOccurs="0"/>
                 </sequence>
             </extension>
@@ -267,7 +267,7 @@
                              minOccurs="0">
                         <annotation i:label="Pathogen"/>
                     </element>
-                    <element name="locations" type="tns:NestedIdentifier" maxOccurs="unbounded"
+                    <element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
                              minOccurs="0">
                         <annotation i:label="Location"/>
                     </element>
