@@ -57,7 +57,7 @@ public class FredTest extends TestCase {
         System.out.print(converter.xmlToJson(converter.convertToXml(testDataService)));*/
     }
 
-    @Test
+    /*@Test
     public void testDats() throws IOException, SerializationException, DeserializationException {
         Converter converter = new Converter();
         File dir = new File("./src/main/resources/all-datasets");
@@ -66,5 +66,5 @@ public class FredTest extends TestCase {
             String json = FileUtils.readFileToString(file);
             Dataset dataset = converter.convertToJavaDataset(json);
         }
-    }
+    }*/
 }

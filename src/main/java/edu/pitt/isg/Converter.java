@@ -3,10 +3,11 @@ package edu.pitt.isg;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import edu.pitt.isg.mdc.dats2_2.Creator;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
+import edu.pitt.isg.mdc.dats2_2.Person;
 import edu.pitt.isg.mdc.v1_0.*;
 import edu.pitt.isg.objectserializer.XMLDeserializer;
 import edu.pitt.isg.objectserializer.XMLSerializer;
@@ -14,8 +15,6 @@ import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
 
 import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.XMLConstants;
@@ -26,16 +25,14 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 
 
@@ -47,6 +44,7 @@ public class Converter {
     private static final String DATS_PACKAGE = "edu.pitt.isg.mdc.dats2_2.";
     private static final String [] DATS_CLASSES = {
         "Dataset",
+        "DatasetWithOrganization",
         "DataStandard"
     };
 
@@ -179,6 +177,16 @@ public class Converter {
             }
         }
 
+        /*String output;
+
+        Dataset dataset = new Dataset();
+        Creator creator = new Creator();
+        Person person = new Person();
+        person.setFirstName("Adam");
+        creator.setPerson(person);
+        dataset.getCreators().add(creator);
+        JAXB.marshal(dataset, System.out);*/
+
         Object item = JAXB.unmarshal(new StringReader(xml), Class.forName(packageNamespace + className));
 
         //Object item = xmlDeserializer.getObjectFromMessage(xml, Class.forName(packageNamespace + className));
@@ -190,10 +198,14 @@ public class Converter {
 
         jsonObject.addProperty("class", packageNamespace + className);
         json = jsonObject.toString();
+
+        org.jsoup.nodes.Document jsonDocument = Jsoup.parse(json);
+        String parsedJson = jsonDocument.text();
+
         //TODO: Properly decode URL formats
         //json.replace("&lt;", "<").replace("&gt;", ">");
 
-        return json;
+        return parsedJson;
     }
 
 }
