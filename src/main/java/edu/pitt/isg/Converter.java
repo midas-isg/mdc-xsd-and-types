@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.jsoup.Jsoup;
+import org.openarchives.oai._2.OAIPMHtype;
 import org.w3c.dom.Document;
 
 
@@ -146,6 +147,16 @@ public class Converter {
         classList.add(Software.class);
         XMLSerializer xmlSerializer = new XMLSerializer(classList);
         String xml = xmlSerializer.serializeObject(software);
+        //System.out.println(xml);
+        return xml;
+
+    }
+
+    public String convertToXml(OAIPMHtype oaipmHtype) throws JsonProcessingException, SerializationException {
+        List<Class> classList = new ArrayList<>();
+        classList.add(OAIPMHtype.class);
+        XMLSerializer xmlSerializer = new XMLSerializer(classList);
+        String xml = xmlSerializer.serializeObject(oaipmHtype);
         //System.out.println(xml);
         return xml;
 
