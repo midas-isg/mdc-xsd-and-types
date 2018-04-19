@@ -15,6 +15,7 @@ import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
 
 import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.XMLConstants;
@@ -34,6 +35,7 @@ import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.openarchives.oai._2.OAIPMHtype;
+import org.openarchives.oai._2_0.oai_dc.OaiDcType;
 import org.w3c.dom.Document;
 
 
@@ -154,7 +156,14 @@ public class Converter {
 
     public String convertToXml(OAIPMHtype oaipmHtype) throws JsonProcessingException, SerializationException {
         List<Class> classList = new ArrayList<>();
-        classList.add(OAIPMHtype.class);
+        try {
+            classList.add(OAIPMHtype.class);
+        }
+        catch (Exception e){
+            classList.add(org.openarchives.oai._2_0.oai_dc.OaiDcType.class);
+        }
+        classList.add(org.openarchives.oai._2_0.oai_dc.ObjectFactory.class);
+        classList.add(org.purl.dc.elements._1.ObjectFactory.class);
         XMLSerializer xmlSerializer = new XMLSerializer(classList);
         String xml = xmlSerializer.serializeObject(oaipmHtype);
         //System.out.println(xml);

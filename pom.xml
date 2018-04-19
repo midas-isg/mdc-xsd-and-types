@@ -52,7 +52,7 @@
                         <include>software.xsd</include>
                         <include>dats.xsd</include>
                         <include>oai-pmh.xsd</include>
-                        <include>oai-dc.xsd</include>
+                        <include>oai_dc.xsd</include>
                     </schemaIncludes>
                     <extension>true</extension>
 
@@ -96,7 +96,7 @@
                                         <include>software.xsd</include>
                                         <include>dats.xsd</include>
                                         <include>oai-pmh.xsd</include>
-                                        <include>oai-dc.xsd</include>
+                                        <include>oai_dc.xsd</include>
                                     </includes>
                                     <filtering>true</filtering>
 
