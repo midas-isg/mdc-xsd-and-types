@@ -1,0 +1,42 @@
+Leptospirosis,77377001
+Rubella,36653000
+Junin,26352009
+Pneumonia,233604007
+Meningitis, Viral,58170007
+Polio,398102009
+Listeriosis,4241002
+Dengue Fever,38362002
+Vancomycin,372735009
+Zika,3928002
+Pertussis,27836007
+Machupo,71489006
+West Nile Virus,392662004
+Poliomyelitis,398102009
+Measles,14189004
+Lyme Disease,23502006
+Meningitis,7180009
+Psittacosis,315183007
+Guanarito,311506003
+Encephalitis,45170000
+Smallpox,67924001
+Trichinellosis,709018004
+Malaria,61462000
+Rotavirus,417542000
+Hiv/Aids,19030005
+Dengue,38362002
+Cyclosporiasis,240372001
+Zika Virus,3928002
+Tularemia,19265001
+Diphtheria,397428000
+Plague,58750007
+Hep A,40468003
+Hep B,66071002
+Botulism,414531002
+Chancroid,266143009
+Anthrax,409498004
+Chikungunya,111864006
+Brucellosis,75702008
+Cholera,63650001
+Yellow Fever,16541001
+Hepatitis A,40468003
+Hepatitis B,66071002

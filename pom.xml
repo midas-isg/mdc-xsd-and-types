@@ -121,6 +121,7 @@
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
                 <includes>
+                    <include>diseases.txt</include>
                     <include>**/*.xsd</include>
                 </includes>
 
@@ -128,6 +129,11 @@
         </resources>
     </build>
     <dependencies>
+        <dependency>
+            <groupId>eu.trentorise.opendata</groupId>
+            <artifactId>jackan</artifactId>
+            <version>0.4.3-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
