@@ -16,6 +16,9 @@
     <element name="DiseaseTransmissionTreeEstimators" type="tns:DiseaseTransmissionTreeEstimators">
         <annotation i:label="Disease Transmission Tree Estimator"/>
     </element>
+    <element name="MetagenomicAnalysis" type="tns:MetagenomicAnalysis">
+        <annotation i:label="Metagenomic Analysis"/>
+    </element>
     <element name="ModelingPlatforms" type="tns:ModelingPlatforms">
         <annotation i:label="Modeling Platform"/>
     </element>
@@ -218,6 +221,15 @@
     <!-- The following six software subtypes do not have any distinguishing elements from
         their parent 'Software: -->
 
+    <complexType name="MetagenomicAnalysis">
+        <complexContent>
+            <extension base="tns:Software">
+                <sequence>
+
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
     <complexType name="SyntheticEcosystemConstructors">
         <complexContent>
             <extension base="tns:Software">
