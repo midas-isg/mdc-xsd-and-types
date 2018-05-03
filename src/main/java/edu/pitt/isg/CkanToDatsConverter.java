@@ -5,7 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import edu.pitt.isg.mdc.dats2_2.*;
+import edu.pitt.isg.mdc.dats2_2.Date;
 import eu.trentorise.opendata.jackan.CkanClient;
+import eu.trentorise.opendata.jackan.CkanQuery;
 import eu.trentorise.opendata.jackan.model.CkanDataset;
 import eu.trentorise.opendata.jackan.model.CkanResource;
 import eu.trentorise.opendata.jackan.model.CkanTag;
@@ -17,22 +19,27 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class CkanToDatsConverter {
     private static HashMap<String, String> diseaseMap;
     private static String APIKEY = "f060b29e-fc9a-4dcd-b3be-9741466dbc4a";
+    private static Set<String> failures;
 
     public static void main(String[] args) {
-
         CkanClient ckanClient = new CkanClient("http://catalog.data.gov/");
-        CkanDataset dataset = ckanClient.getDataset("02b5e413-d746-43ee-bd52-eac4e33ecb41");
-        System.out.println(dataset.getNotes());
-        convertCkanToDats(dataset);
+        CkanQuery query = CkanQuery.filter().byTagNames("nndss");
+        List<CkanDataset> filteredDatasets = ckanClient.searchDatasets(query, 100, 0).getResults();
+        List<Dataset> convertedDatasets = new ArrayList<>();
+        for (CkanDataset dataset : filteredDatasets) {
+            convertedDatasets.add(convertCkanToDats(dataset));
+            System.out.println(dataset.getId());
+        }
+//        CkanDataset dataset = ckanClient.getDataset("02b5e413-d746-43ee-bd52-eac4e33ecb41");
+//        System.out.println(dataset.getNotes());
+//        convertCkanToDats(dataset);
+        System.out.println("Done");
     }
 
     public static Dataset convertCkanToDats(CkanDataset ckanDataset) {
@@ -139,6 +146,7 @@ public class CkanToDatsConverter {
 
         if (diseaseMap == null) {
             diseaseMap = new HashMap<>();
+            failures = new HashSet<>();
             try {
                 InputStream file = CkanToDatsConverter.class.getClassLoader().getResourceAsStream("diseases.txt");
                 Scanner diseaseScan = new Scanner(file);
@@ -159,8 +167,6 @@ public class CkanToDatsConverter {
             diseaseInfo[0] = diseaseName;
             diseaseInfo[1] = diseaseMap.get(diseaseName);
         } else {
-            System.out.println(diseaseName);
-
             try {
                 String snomed = lookupSNOMED(diseaseName);
                 if (snomed != "") {
@@ -180,6 +186,9 @@ public class CkanToDatsConverter {
     }
 
     public static String lookupSNOMED(String diseaseName) throws MalformedURLException, IOException {
+        if(failures.contains(diseaseName)) {
+            return "";
+        }
         URL url = new URL("http://data.bioontology.org/search?q=" + URLEncoder.encode(diseaseName, "UTF-8") + "&apikey=" + APIKEY);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
@@ -215,6 +224,10 @@ public class CkanToDatsConverter {
                 snomed = id.substring(id.lastIndexOf('/') + 1);
                 break;
             }
+        }
+        if(snomed.equals("")) {
+            System.out.println("Failed to find SNOMED code for " + diseaseName);
+            failures.add(diseaseName);
         }
         return snomed;
     }
