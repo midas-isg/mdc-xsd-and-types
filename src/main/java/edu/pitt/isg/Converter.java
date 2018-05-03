@@ -154,6 +154,16 @@ public class Converter {
 
     }
 
+    public String convertToXml(Dataset dataset) throws JsonProcessingException, SerializationException {
+        List<Class> classList = new ArrayList<>();
+        classList.add(Dataset.class);
+        XMLSerializer xmlSerializer = new XMLSerializer(classList);
+        String xml = xmlSerializer.serializeObject(dataset);
+        //System.out.println(xml);
+        return xml;
+
+    }
+
     public String convertToXml(OAIPMHtype oaipmHtype) throws JsonProcessingException, SerializationException {
         List<Class> classList = new ArrayList<>();
         try {
