@@ -1,42 +1,70 @@
 Leptospirosis,77377001
-Rubella,36653000
 Junin,26352009
-Pneumonia,233604007
-Meningitis, Viral,58170007
+Western Equine Virus Disease,11428003
 Polio,398102009
-Listeriosis,4241002
+Chikungunya Virus,2423009
 Dengue Fever,38362002
-Vancomycin,372735009
-Zika,3928002
 Pertussis,27836007
 Machupo,71489006
 West Nile Virus,392662004
 Poliomyelitis,398102009
-Measles,14189004
-Lyme Disease,23502006
-Meningitis,7180009
-Psittacosis,315183007
+Hepatitis B Infection Perinatal,276551001
 Guanarito,311506003
-Encephalitis,45170000
+Polio Virus Infection Nonparalytic,710499000
 Smallpox,67924001
-Trichinellosis,709018004
 Malaria,61462000
 Rotavirus,417542000
-Hiv/Aids,19030005
-Dengue,38362002
-Cyclosporiasis,240372001
+Typhoid Fever,4834000
+Powassan Virus Disease,417160009
 Zika Virus,3928002
-Tularemia,19265001
-Diphtheria,397428000
-Plague,58750007
-Hep A,40468003
-Hep B,66071002
+Q Fever,186788009
+Syphilis Congenital Age Lt1 Yr,35742006
+Poliomyelitis Paralytic,64764001
 Botulism,414531002
 Chancroid,266143009
 Anthrax,409498004
+St Louis Virus Disease,58432001
 Chikungunya,111864006
+Rabies Human,398446008
 Brucellosis,75702008
+Rubella,36653000
+Pneumonia,233604007
+Lujo Virus,450622000
+Sabia Associated,311508002
+Listeriosis,4241002
+Hemolytic Uremic Syndrome,111407006
+Vancomycin,372735009
+Haemophilus Influenzae Invasive,713920003
+Marburg Fever,60808000
+Zika,3928002
+Eastern Equine Virus Disease,243601002
+Sars Cov,697932005
+Measles,14189004
+Meningitis,7180009
+Lyme Disease,23502006
+Psittacosis,315183007
+Toxic Shock Syndrome Staphylococcal,240450004
+Crimean Congo,43489008
+Encephalitis,45170000
+Trichinellosis,709018004
+Influenza Associated Pediatric Mortality,273683007
+Hiv/Aids,19030005
+Dengue,38362002
+Cyclosporiasis,240372001
+Streptococcal Toxic Shock Syndrome,240451000
+Tularemia,19265001
+Viral Hemorrhagic Fever,240523007
+Diphtheria,397428000
+Arboviral Diseases,240495006
+Hantavirus Pulmonary Syndrome,120639003
+Lassa Fever,19065005
+Meningococcal Disease Invasive,707225006
+Plague,58750007
+Hep A,40468003
+Hep B,66071002
+California Serogroup Virus Disease,418531007
 Cholera,63650001
 Yellow Fever,16541001
 Hepatitis A,40468003
 Hepatitis B,66071002
+Ebola,37109004

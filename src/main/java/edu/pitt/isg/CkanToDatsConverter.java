@@ -159,8 +159,6 @@ public class CkanToDatsConverter {
             diseaseInfo[0] = diseaseName;
             diseaseInfo[1] = diseaseMap.get(diseaseName);
         } else {
-            System.out.println(diseaseName);
-
             try {
                 String snomed = lookupSNOMED(diseaseName);
                 if (snomed != "") {
@@ -215,6 +213,9 @@ public class CkanToDatsConverter {
                 snomed = id.substring(id.lastIndexOf('/') + 1);
                 break;
             }
+        }
+        if(snomed.equals("")) {
+            System.out.println("Failed to find SNOMED code for " + diseaseName);
         }
         return snomed;
     }
