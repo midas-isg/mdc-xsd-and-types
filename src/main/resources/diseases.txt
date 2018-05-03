@@ -1,70 +1,199 @@
-Leptospirosis,77377001
-Junin,26352009
-Western Equine Virus Disease,11428003
-Polio,398102009
+Jamestown Canyon Virus,404238002
+Invasive Disease All Ages,707225006
 Chikungunya Virus,2423009
-Dengue Fever,38362002
-Pertussis,27836007
-Machupo,71489006
-West Nile Virus,392662004
-Poliomyelitis,398102009
+Paralytic,30410001
+La Crosse Virus Disease,707929009
 Hepatitis B Infection Perinatal,276551001
-Guanarito,311506003
-Polio Virus Infection Nonparalytic,710499000
-Smallpox,67924001
-Malaria,61462000
-Rotavirus,417542000
-Typhoid Fever,4834000
-Powassan Virus Disease,417160009
+Mumps,36989005
+Paratyphoid Fever,85904008
+Campylobacteriosis,86500004
 Zika Virus,3928002
-Q Fever,186788009
-Syphilis Congenital Age Lt1 Yr,35742006
-Poliomyelitis Paralytic,64764001
-Botulism,414531002
-Chancroid,266143009
-Anthrax,409498004
+Eastern Equine Encephalitis Virus Disease,243601002
+Tuberculosis,56717001
 St Louis Virus Disease,58432001
-Chikungunya,111864006
 Rabies Human,398446008
-Brucellosis,75702008
-Rubella,36653000
+Week,258705008
+Hemolytic Uremic Syndrome Post Diarrheal,111407006
 Pneumonia,233604007
-Lujo Virus,450622000
-Sabia Associated,311508002
-Listeriosis,4241002
-Hemolytic Uremic Syndrome,111407006
+Infant,133931009
+Legionellosis,240449004
 Vancomycin,372735009
-Haemophilus Influenzae Invasive,713920003
-Marburg Fever,60808000
-Zika,3928002
-Eastern Equine Virus Disease,243601002
-Sars Cov,697932005
-Measles,14189004
-Meningitis,7180009
+Ehrlichiosis Anaplasmosis,13906002
+Coccidioidomycosis,60826002
+Syphilis,76272004
+Shiga Toxin Producing Escherichia Coli,444771000124108
 Lyme Disease,23502006
 Psittacosis,315183007
-Toxic Shock Syndrome Staphylococcal,240450004
-Crimean Congo,43489008
 Encephalitis,45170000
-Trichinellosis,709018004
-Influenza Associated Pediatric Mortality,273683007
-Hiv/Aids,19030005
-Dengue,38362002
+Western Equine Encephalitis Virus Disease,710549002
+Undetermined,373068000
 Cyclosporiasis,240372001
 Streptococcal Toxic Shock Syndrome,240451000
 Tularemia,19265001
+Hepatitis Viral Acute,45042004
+Ehrlichia Chaffeensis,59250001
+Serogroup B,103480009
 Viral Hemorrhagic Fever,240523007
-Diphtheria,397428000
-Arboviral Diseases,240495006
-Hantavirus Pulmonary Syndrome,120639003
-Lassa Fever,19065005
+Ehrlichia Chaffeensis Infection,59250001
+Shigellosis,36188001
 Meningococcal Disease Invasive,707225006
-Plague,58750007
 Hep A,40468003
 Hep B,66071002
+Serotype B,277452004
+Crimean Congo Hemorrhagic Fever Virus,79875007
+Tetanus,76902006
+Junin,26352009
+Polio,398102009
+Shiga Toxin Producing E Coli,444771000124108
+Tb,182975000
+Pertussis,27836007
+West Nile Virus,392662004
+West Nile Virus Disease,57311007
+Polio Virus Infection,710499000
+Anaplasma Phagocytophilum Infection,420364006
+Varicella,38907003
+Guanarito,311506003
+Viral Hemorrhagic Fevers,240523007
+Salmonellosis Excluding Typhoid Fever And Paratyphoid Fever,85904008
+Malaria,61462000
+Rotavirus,417542000
+Typhoid Fever,4834000
+Congenital,255399007
+Powassan Virus Disease,417160009
+Nonparalytic,95196002
+Perinatal Virus Infection,206444004
+Q Fever,186788009
+Invasive Pneumococcal Disease,16814004
+Jamestown Canyon Virus Disease,41723001
+Poliomyelitis Paralytic,64764001
+Syphilis Congenital,35742006
+Surveillance,225419007
+Rabies Animal,14168008
+Rubella Congenital Syndrome,1857005
+Giardiasis,58265007
+Enterobacter Spp,58683007
+Chikungunya,111864006
+St Louis Encephalitis Virus Disease,58432001
+Congenital Syndrome,190511001
+Unknown Serotype,276770009
+Anaplasma Phagocytophilum,420364006
+Listeriosis,4241002
+By Type C,128717008
+Haemophilus Influenzae Invasive,713920003
+Zika,3928002
+Haemophilus Influenza,71268004
+Zika Virus Disease,3928002
+Sars Cov,697932005
+Escherichia Coli,112283007
+Measles,14189004
+Babesiosis,21061004
+Toxic Shock Syndrome Staphylococcal,240450004
+Streptococcal Toxic S Shock Syndrome,240451000
+Machupo Virus,71489006
+Hantavirus Pulmonary Syndrome Hps,120639003
+Perinatal Infection,206444004
+Hiv/Aids,19030005
 California Serogroup Virus Disease,418531007
+Ebola Virus,707857003
+Stec,116395006
 Cholera,63650001
+Chlamydia Trachomatis Infection,240589008
 Yellow Fever,16541001
+Toxic Shock Syndrome Other Than Streptococcal,240451000
+Chikungunya Virus Disease,2423009
+Invasive Disease Age Lt5 Yrs,707225006
+Carbapenemase Producing Carbapenem Resistant Enterobacteriaceae,715881003
+Western Equine Virus Disease,11428003
+Dengue Fever,38362002
+Varicella Morbidity,38907003
+Ehrlichia Ewingii Infection,441554001
+Machupo,71489006
+Hepatitis,442374005
+La Crosse Virus,707929009
+Foodborne,398523009
+Poliomyelitis,398102009
+Other Than Toxigenic Vibrio Cholerae O1 Or O139,710347001
+Age Lt5,397669002
+Primary And Secondary,16876006
+Klebsiella Spp,75032006
+Syphilis Primary And Secondary,240557004
+Eastern Equinevirus Disease,417496004
+Non B Serotype,277452004
+Marburg Virus,77503002
+Invasive Pneumococcal Diseases,10179008
+By Type A Amp B,707992005
+Botulism,414531002
+Chancroid,266143009
+Brucellosis,75702008
+Dengue Virus Infection,34348001
+Invasive,10179008
+Hansen039s Disease,64572001
+Lujo Virus,450622000
+Vancomycin Intermediate Staphylococcus Aureus,406962002
+Marburg Fever,60808000
+Spotted Fever Rickettsiosis,472822008
+Eastern Equine Virus Disease,243601002
+Cryptosporidiosis,240370009
+Meningococcal Disease,707225006
+Meningococcal Invasive All Serogroups,707225006
+Neuroinvasive And Nonneuroinvasive,420090003
+Streptococcal Toxic S Hock Syndrome,240451000
+Junin Virus,26352009
+Trichinellosis,709018004
+Chickenpox,195911009
+Lassa Virus,85944001
+Arboviral Diseases,240495006
+Chronic,90734009
+Rabies,14168008
+Haemophilus Influenzae,713920003
+Leptospirosis,77377001
+Hepatitis Viral Acute Type A,25102003
+Typhoid Fever Caused By Salmonella Typhi,4834000
+Hepatitis Viral Acute Type B,76795007
+Dengue Hemorrhagic Fever,20927009
+Reported Diseases,447071000124102
+All Serogroups,900000000000452009
+Hepatitis Viral Acute Type C,76795007
+Vibriosis,398557001
+Novel Influenza A Virus Infections,181000124108
+Polio Virus Infection Nonparalytic,710499000
+Non Hantavirus Pulmonary Syndrome,120639003
+Smallpox,67924001
+Poliovirus Infection,721764008
+Unknown Serogroups,261665006
+Meningococcal Disease Neisseria Meningitidis,17872004
+Syphilis Congenital Age Lt1 Yr,35742006
+Guanarito Virus,311506003
+Anthrax,409498004
+Non Congenital,52487006
+All Serotypes,277484006
+Ebola,37109004
+Rubella,36653000
+Sabia Virus,311508002
+Sabia Associated,311508002
+Rmsf,186772009
+All Ages,900000000000452009
+Hemolytic Uremic Syndrome,111407006
+Serogroups Acwy,277536004
+Vibriosis Any Species Of The Family Vibrionaceae,115077009
+Vancomycin Resistant Staphylococcus Aureus,404680007
+Meningitis,7180009
+Salmonellosis,90974009
+Crimean Congo,43489008
+Influenza Associated Pediatric Mortality,273683007
+Crimean Congo Hemorrhagic Fever,43489008
+Nontypeable,117820008
+Dengue,38362002
+Other Serogroups,74964007
+Hepatitis Viral,3738000
+Gonorrhea,15628003
+Ehrlichiosis And Anaplasmosis,13906002
+Diphtheria,397428000
+Hantavirus Pulmonary Syndrome,120639003
+Lassa Fever,19065005
+Severe Dengue,38362002
+Plague,58750007
+Non Hps,406584008
+Total,255619001
 Hepatitis A,40468003
 Hepatitis B,66071002
-Ebola,37109004
