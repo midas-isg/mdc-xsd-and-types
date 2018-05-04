@@ -38,6 +38,9 @@ import org.openarchives.oai._2.OAIPMHtype;
 import org.openarchives.oai._2_0.oai_dc.OaiDcType;
 import org.w3c.dom.Document;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
 
 /**
  * Created by jdl50 on 5/2/17.
@@ -179,6 +182,33 @@ public class Converter {
         //System.out.println(xml);
         return xml;
 
+    }
+
+    public JsonObject datasetToJSonObject(Dataset dataset){
+        JsonObject jsonObject = null;
+        String xmlString = null;
+        try {
+            xmlString = convertToXml(dataset);
+            xmlString = xmlString.replaceAll("(?s)&lt;.*?&gt;", "");
+        } catch(Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        xmlString = xmlString.substring(0, xmlString.lastIndexOf('>') + 1);
+
+        String jsonString = null;
+        try {
+            jsonString = xmlToJson(xmlString);
+        }
+        catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
+        if(jsonString.length() > 0) {
+            JsonParser parser = new JsonParser();
+            jsonObject = parser.parse(jsonString).getAsJsonObject();
+        }
+        return  jsonObject;
     }
 
     public Software convertFromXml(String xml) throws DeserializationException {
