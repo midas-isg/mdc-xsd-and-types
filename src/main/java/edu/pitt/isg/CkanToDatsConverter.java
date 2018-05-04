@@ -23,17 +23,24 @@ import java.util.*;
 
 
 public class CkanToDatsConverter {
-    private static HashMap<String, String> diseaseMap;
+    private static HashMap<String, String> snomedMap;
+    private static HashMap<String, String> ncbiMap;
     private static String APIKEY = "f060b29e-fc9a-4dcd-b3be-9741466dbc4a";
     private static Set<String> failures;
 
     public static void main(String[] args) {
         CkanClient ckanClient = new CkanClient("http://catalog.data.gov/");
         CkanQuery query = CkanQuery.filter().byTagNames("nndss");
+//        CkanQuery query = CkanQuery.filter().byTagNames("vaccination");
+
         List<CkanDataset> filteredDatasets = ckanClient.searchDatasets(query, 100, 0).getResults();
         List<Dataset> convertedDatasets = new ArrayList<>();
         for (CkanDataset dataset : filteredDatasets) {
-            convertedDatasets.add(convertCkanToDats(dataset));
+            Dataset convertedDataset = convertCkanToDats(dataset);
+            if(convertedDataset != null) {
+                convertedDatasets.add(convertedDataset);
+            }
+
             System.out.println(dataset.getId());
         }
 //        CkanDataset dataset = ckanClient.getDataset("02b5e413-d746-43ee-bd52-eac4e33ecb41");
@@ -45,6 +52,42 @@ public class CkanToDatsConverter {
     public static Dataset convertCkanToDats(CkanDataset ckanDataset) {
         Dataset dataset = new Dataset();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        //Set Distributions
+        List<CkanResource> resources = ckanDataset.getResources();
+        for (CkanResource resource : resources) {
+            //If the resources contained in the ckan dataset are not csv, rdf, json, or xml then it is not the type we want in the MDC
+            if(resource.getFormat().equals("CSV") || resource.getFormat().equals("RDF") || resource.getFormat().equals("JSON") || resource.getFormat().equals("XML")) {
+                Distribution distribution = new Distribution();
+
+                Identifier distributionIdentifier = new Identifier();
+                distributionIdentifier.setIdentifier(resource.getId());
+                distributionIdentifier.setIdentifierSource("https://catalog.data.gov");
+                distribution.setIdentifier(distributionIdentifier);
+
+                Access access = new Access();
+                access.setAccessURL(resource.getUrl());
+                access.setLandingPage(ckanDataset.getExtrasAsHashMap().get("landingPage"));
+                distribution.setAccess(access);
+
+                Date date = new Date();
+                Annotation distributionType = new Annotation();
+                java.util.Date datetime = new java.util.Date(resource.getCreated().getTime());
+                date.setDate(sdf.format(datetime));
+                distributionType.setValue("created");
+                distributionType.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
+                date.setType(distributionType);
+                distribution.getDates().add(date);
+
+                dataset.getDistributions().add(distribution);
+            }
+        }
+
+        //if no distributions are added then the ckan dataset is not the format we want to convert, return null
+        if(dataset.getDistributions().isEmpty()) {
+            return null;
+        }
+
 
         dataset.setTitle(ckanDataset.getTitle());
         dataset.setDescription(ckanDataset.getNotes());
@@ -88,37 +131,10 @@ public class CkanToDatsConverter {
 
         dataset.setProducedBy(study);
 
-        //Set Distributions
-        List<CkanResource> resources = ckanDataset.getResources();
-        for (CkanResource resource : resources) {
-            Distribution distribution = new Distribution();
-
-            Identifier distributionIdentifier = new Identifier();
-            distributionIdentifier.setIdentifier(resource.getId());
-            distributionIdentifier.setIdentifierSource("https://catalog.data.gov");
-            distribution.setIdentifier(distributionIdentifier);
-
-            Access access = new Access();
-            access.setAccessURL(resource.getUrl());
-            access.setLandingPage(ckanDataset.getExtrasAsHashMap().get("landingPage"));
-            distribution.setAccess(access);
-
-            Date date = new Date();
-            Annotation distributionType = new Annotation();
-            java.util.Date datetime = new java.util.Date(resource.getCreated().getTime());
-            date.setDate(sdf.format(datetime));
-            distributionType.setValue("created");
-            distributionType.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
-            date.setType(distributionType);
-            distribution.getDates().add(date);
-
-            dataset.getDistributions().add(distribution);
-        }
-
         //Set isAbout
         List<CkanTag> tags = ckanDataset.getTags();
         for (CkanTag tag : tags) {
-            String diseaseInfo[] = lookupDiseaseInformation(tag.getDisplayName());
+            String diseaseInfo[] = lookupIsAboutInformation(tag.getDisplayName());
             if (diseaseInfo != null) {
 
                 BiologicalEntity entity = new BiologicalEntity();
@@ -126,9 +142,9 @@ public class CkanToDatsConverter {
                 entity.setName(diseaseInfo[0]);
                 Identifier tagIdentifier = new Identifier();
                 tagIdentifier.setIdentifier(diseaseInfo[1]);
-                tagIdentifier.setIdentifierSource("https://biosharing.org/bsg-s000098");
+                tagIdentifier.setIdentifierSource(diseaseInfo[2]);
                 entity.setIdentifier(tagIdentifier);
-
+//"https://biosharing.org/bsg-s000098
                 dataset.getIsAbout().add(entity);
             }
         }
@@ -138,15 +154,20 @@ public class CkanToDatsConverter {
         return dataset;
     }
 
-    public static String[] lookupDiseaseInformation(String diseaseName) {
-        String diseaseInfo[] = new String[2];
+    public static String[] lookupIsAboutInformation(String diseaseName) {
+        //Disease name, snomed or ncbi code, identifier source
+        String diseaseInfo[] = new String[3];
         //Normalize name
         diseaseName = diseaseName.replace("-", " ");
         diseaseName = WordUtils.capitalize(diseaseName);
+        if(diseaseName.equals("Hansen039s Disease")) {
+            diseaseName = "Hansen Disease";
+        }
 
-        if (diseaseMap == null) {
-            diseaseMap = new HashMap<>();
+        if (snomedMap == null) {
+            snomedMap = new HashMap<>();
             failures = new HashSet<>();
+            populateNcbiMap();
             try {
                 InputStream file = CkanToDatsConverter.class.getClassLoader().getResourceAsStream("diseases.txt");
                 Scanner diseaseScan = new Scanner(file);
@@ -154,7 +175,7 @@ public class CkanToDatsConverter {
                     String diseaseInFile = diseaseScan.nextLine();
                     String[] diseaseArray = diseaseInFile.split(",");
                     if (diseaseArray.length > 1) {
-                        diseaseMap.put(diseaseArray[0], diseaseArray[1]);
+                        snomedMap.put(diseaseArray[0], diseaseArray[1]);
                     }
                 }
                 diseaseScan.close();
@@ -163,14 +184,19 @@ public class CkanToDatsConverter {
             }
         }
         //If it is a disease
-        if (diseaseMap.containsKey(diseaseName)) {
+        if (snomedMap.containsKey(diseaseName)) {
             diseaseInfo[0] = diseaseName;
-            diseaseInfo[1] = diseaseMap.get(diseaseName);
+            diseaseInfo[1] = snomedMap.get(diseaseName);
+            diseaseInfo[2] = "https://biosharing.org/bsg-s000098";
+        } else if (ncbiMap.containsKey(diseaseName)) {
+            diseaseInfo[0] = diseaseName;
+            diseaseInfo[1] = ncbiMap.get(diseaseName);
+            diseaseInfo[2] = "https://biosharing.org/bsg-s000154";
         } else {
             try {
                 String snomed = lookupSNOMED(diseaseName);
                 if (snomed != "") {
-                    diseaseMap.put(diseaseName, snomed);
+                    snomedMap.put(diseaseName, snomed);
                     diseaseInfo[0] = diseaseName;
                     diseaseInfo[1] = snomed;
                 } else {
@@ -186,7 +212,7 @@ public class CkanToDatsConverter {
     }
 
     public static String lookupSNOMED(String diseaseName) throws MalformedURLException, IOException {
-        if(failures.contains(diseaseName)) {
+        if (failures.contains(diseaseName)) {
             return "";
         }
         URL url = new URL("http://data.bioontology.org/search?q=" + URLEncoder.encode(diseaseName, "UTF-8") + "&apikey=" + APIKEY);
@@ -195,7 +221,7 @@ public class CkanToDatsConverter {
         connection.setRequestProperty("Accept", "application/json");
 
         if (connection.getResponseCode() != 200) {
-            System.out.println("Failed : HTTP error code : " + connection.getResponseCode() + ".  Searching with: "  + diseaseName);
+            System.out.println("Failed : HTTP error code : " + connection.getResponseCode() + ".  Searching with: " + diseaseName);
 //            throw new RuntimeException("Failed : HTTP error code : "
 //                    + connection.getResponseCode());
             return "";
@@ -225,7 +251,7 @@ public class CkanToDatsConverter {
                 break;
             }
         }
-        if(snomed.equals("")) {
+        if (snomed.equals("")) {
             System.out.println("Failed to find SNOMED code for " + diseaseName);
             failures.add(diseaseName);
         }
@@ -233,8 +259,9 @@ public class CkanToDatsConverter {
     }
 
     private static void writeDiseaseFile() {
+        //This writes to the diseases.txt file in target. Copy to diseases.txt in resources to update cache
         StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, String> kvp : diseaseMap.entrySet()) {
+        for (Map.Entry<String, String> kvp : snomedMap.entrySet()) {
             builder.append(kvp.getKey());
             builder.append(",");
             builder.append(kvp.getValue());
@@ -249,5 +276,10 @@ public class CkanToDatsConverter {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    private static void populateNcbiMap() {
+        ncbiMap = new HashMap<>();
+        ncbiMap.put("Human", "9606");
     }
 }

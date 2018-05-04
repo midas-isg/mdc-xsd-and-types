@@ -14,6 +14,7 @@ St Louis Virus Disease,58432001
 Rabies Human,398446008
 Week,258705008
 Hemolytic Uremic Syndrome Post Diarrheal,111407006
+Postdiarrheal,111407006
 Pneumonia,233604007
 Infant,133931009
 Legionellosis,240449004
@@ -127,7 +128,6 @@ Chancroid,266143009
 Brucellosis,75702008
 Dengue Virus Infection,34348001
 Invasive,10179008
-Hansen039s Disease,64572001
 Lujo Virus,450622000
 Vancomycin Intermediate Staphylococcus Aureus,406962002
 Marburg Fever,60808000
@@ -168,6 +168,16 @@ Anthrax,409498004
 Non Congenital,52487006
 All Serotypes,277484006
 Ebola,37109004
+Ebola Hemorrhagic Fever,37109004
+Sabia Associated Hemorrhagic Fever,240524001
+Junin Hemorrhagic Fever,58868000
+Guanarito Hemorrhagic Fever,359673001
+Hansen Disease,81004002
+Novel Influenza A,359829002
+Machupo Hemorrhagic Fever,67247008
+Hantavirus,49445003
+Hantavirus Infection,359761005
+Pneumococcal,9861002
 Rubella,36653000
 Sabia Virus,311508002
 Sabia Associated,311508002
