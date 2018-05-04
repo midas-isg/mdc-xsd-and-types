@@ -107,14 +107,12 @@ public class CkanToDatsConverter {
         //Set Produced By
         Study study = new Study();
         study.setName(ckanDataset.getExtrasAsHashMap().get("publisher"));
-//        java.util.Date metaDataDate = new java.util.Date(ckanDataset.getMetadataCreated().getTime());
-//        Date startDate = new Date();
-//        Date endDate = new Date();
-//        Annotation type = new Annotation();
-//        type.setValue("created");
-//        type.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
-//        startDate.setDate(sdf.format(metaDataDate));
-//        startDate.setType(type);
+        Date modifiedDate = new Date();
+        Annotation type = new Annotation();
+        type.setValue("modified");
+        type.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001874");
+        modifiedDate.setDate(ckanDataset.getExtrasAsHashMap().get("modified"));
+        modifiedDate.setType(type);
 
 //        if (ckanDataset.getExtrasAsHashMap().containsKey("modified") && ckanDataset.getExtrasAsHashMap().get("modified") != null) {
 //            endDate.setDate(ckanDataset.getExtrasAsHashMap().get("modified"));
@@ -126,7 +124,7 @@ public class CkanToDatsConverter {
 //            endDate.setDate(sdf.format(metaDataDate));
 //            endDate.setType(type);
 //        }
-//        study.setStartDate(startDate);
+        study.setStartDate(modifiedDate);
 //        study.setEndDate(endDate);
 
         dataset.setProducedBy(study);
