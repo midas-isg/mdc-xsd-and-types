@@ -253,6 +253,9 @@
             <element name="storedIn" type="tns:DataRepository" minOccurs="0" maxOccurs="1"></element>
             <element name="size" type="int" minOccurs="0" maxOccurs="1"/>
             <element name="unit" type="tns:Annotation" minOccurs="0" maxOccurs="1"/>
+            <element name="formats" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:maxRepeats="1"/>
+            </element>
         </sequence>
     </complexType>
 </schema>

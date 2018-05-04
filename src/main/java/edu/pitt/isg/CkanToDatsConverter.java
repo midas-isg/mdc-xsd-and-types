@@ -34,9 +34,9 @@ public class CkanToDatsConverter {
 //        CkanQuery query = CkanQuery.filter().byTagNames("vaccination");
 
         List<CkanDataset> filteredDatasets = ckanClient.searchDatasets(query, 100, 0).getResults();
-        List<Dataset> convertedDatasets = new ArrayList<>();
+        List<DatasetWithOrganization> convertedDatasets = new ArrayList<>();
         for (CkanDataset dataset : filteredDatasets) {
-            Dataset convertedDataset = convertCkanToDats(dataset);
+            DatasetWithOrganization convertedDataset = convertCkanToDats(dataset);
             if(convertedDataset != null) {
                 convertedDatasets.add(convertedDataset);
             }
@@ -49,8 +49,8 @@ public class CkanToDatsConverter {
         System.out.println("Done");
     }
 
-    public static Dataset convertCkanToDats(CkanDataset ckanDataset) {
-        Dataset dataset = new Dataset();
+    public static DatasetWithOrganization convertCkanToDats(CkanDataset ckanDataset) {
+        DatasetWithOrganization dataset = new DatasetWithOrganization();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         //Set Distributions
@@ -60,6 +60,7 @@ public class CkanToDatsConverter {
             if(resource.getFormat().equals("CSV") || resource.getFormat().equals("RDF") || resource.getFormat().equals("JSON") || resource.getFormat().equals("XML")) {
                 Distribution distribution = new Distribution();
 
+                distribution.getFormats().add(resource.getFormat());
                 Identifier distributionIdentifier = new Identifier();
                 distributionIdentifier.setIdentifier(resource.getId());
                 distributionIdentifier.setIdentifierSource("https://catalog.data.gov");
@@ -93,10 +94,9 @@ public class CkanToDatsConverter {
         dataset.setDescription(ckanDataset.getNotes());
 
         //Set Creator
-        Person person = new Person();
-        person.setEmail(ckanDataset.getMaintainerEmail());
-        person.setFirstName(ckanDataset.getMaintainer());
-        dataset.getCreators().add(person);
+        Organization organization = new Organization();
+        organization.setName(ckanDataset.getExtrasAsHashMap().get("publisher"));
+        dataset.getCreators().add(organization);
 
         //Set Identifier
         Identifier identifier = new Identifier();
@@ -107,27 +107,27 @@ public class CkanToDatsConverter {
         //Set Produced By
         Study study = new Study();
         study.setName(ckanDataset.getExtrasAsHashMap().get("publisher"));
-        java.util.Date metaDataDate = new java.util.Date(ckanDataset.getMetadataCreated().getTime());
-        Date startDate = new Date();
-        Date endDate = new Date();
-        Annotation type = new Annotation();
-        type.setValue("created");
-        type.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
-        startDate.setDate(sdf.format(metaDataDate));
-        startDate.setType(type);
+//        java.util.Date metaDataDate = new java.util.Date(ckanDataset.getMetadataCreated().getTime());
+//        Date startDate = new Date();
+//        Date endDate = new Date();
+//        Annotation type = new Annotation();
+//        type.setValue("created");
+//        type.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
+//        startDate.setDate(sdf.format(metaDataDate));
+//        startDate.setType(type);
 
-        if (ckanDataset.getExtrasAsHashMap().containsKey("modified") && ckanDataset.getExtrasAsHashMap().get("modified") != null) {
-            endDate.setDate(ckanDataset.getExtrasAsHashMap().get("modified"));
-            Annotation endDateType = new Annotation();
-            endDateType.setValue("modified");
-            endDateType.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001874");
-            endDate.setType(endDateType);
-        } else {
-            endDate.setDate(sdf.format(metaDataDate));
-            endDate.setType(type);
-        }
-        study.setStartDate(startDate);
-        study.setEndDate(endDate);
+//        if (ckanDataset.getExtrasAsHashMap().containsKey("modified") && ckanDataset.getExtrasAsHashMap().get("modified") != null) {
+//            endDate.setDate(ckanDataset.getExtrasAsHashMap().get("modified"));
+//            Annotation endDateType = new Annotation();
+//            endDateType.setValue("modified");
+//            endDateType.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001874");
+//            endDate.setType(endDateType);
+//        } else {
+//            endDate.setDate(sdf.format(metaDataDate));
+//            endDate.setType(type);
+//        }
+//        study.setStartDate(startDate);
+//        study.setEndDate(endDate);
 
         dataset.setProducedBy(study);
 
@@ -144,7 +144,6 @@ public class CkanToDatsConverter {
                 tagIdentifier.setIdentifier(diseaseInfo[1]);
                 tagIdentifier.setIdentifierSource(diseaseInfo[2]);
                 entity.setIdentifier(tagIdentifier);
-//"https://biosharing.org/bsg-s000098
                 dataset.getIsAbout().add(entity);
             }
         }
