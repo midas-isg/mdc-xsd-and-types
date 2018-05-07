@@ -212,6 +212,9 @@
             <element name="distributions" type="tns:Distribution" minOccurs="0" maxOccurs="unbounded">
                 <annotation i:label="Distribution" i:maxRepeats="1"/>
             </element>
+            <element name="extraProperties" type="tns:CategoryValuePair" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:label="CategoryValuePair" i:maxRepeats="1"></annotation>
+            </element>
         </sequence>
     </complexType>
 
@@ -229,6 +232,9 @@
             <element name="producedBy" type="tns:Study" minOccurs="0" maxOccurs="1"/>
             <element name="distributions" type="tns:Distribution" minOccurs="0" maxOccurs="unbounded">
                 <annotation i:label="Distribution" i:maxRepeats="1"/>
+            </element>
+            <element name="extraProperties" type="tns:CategoryValuePair" minOccurs="0" maxOccurs="unbounded">
+                <annotation i:label="CategoryValuePair" i:maxRepeats="1"></annotation>
             </element>
         </sequence>
     </complexType>

@@ -38,7 +38,7 @@ public class CkanToDatsConverter {
         for (CkanDataset dataset : filteredDatasets) {
             DatasetWithOrganization convertedDataset = convertCkanToDats(dataset);
             if(convertedDataset != null) {
-                convertedDatasets.add(convertedDataset);
+                convertedDatasets.add(convertedDataset, ckanClient.getCatalogUrl());
             }
 
             System.out.println(dataset.getId());
@@ -49,7 +49,7 @@ public class CkanToDatsConverter {
         System.out.println("Done");
     }
 
-    public static DatasetWithOrganization convertCkanToDats(CkanDataset ckanDataset) {
+    public static DatasetWithOrganization convertCkanToDats(CkanDataset ckanDataset, String catalogUrl) {
         DatasetWithOrganization dataset = new DatasetWithOrganization();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -63,7 +63,7 @@ public class CkanToDatsConverter {
                 distribution.getFormats().add(resource.getFormat());
                 Identifier distributionIdentifier = new Identifier();
                 distributionIdentifier.setIdentifier(resource.getId());
-                distributionIdentifier.setIdentifierSource("https://catalog.data.gov");
+                distributionIdentifier.setIdentifierSource(catalogUrl);
                 distribution.setIdentifier(distributionIdentifier);
 
                 Access access = new Access();
@@ -114,20 +114,31 @@ public class CkanToDatsConverter {
         modifiedDate.setDate(ckanDataset.getExtrasAsHashMap().get("modified"));
         modifiedDate.setType(type);
 
-//        if (ckanDataset.getExtrasAsHashMap().containsKey("modified") && ckanDataset.getExtrasAsHashMap().get("modified") != null) {
-//            endDate.setDate(ckanDataset.getExtrasAsHashMap().get("modified"));
-//            Annotation endDateType = new Annotation();
-//            endDateType.setValue("modified");
-//            endDateType.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001874");
-//            endDate.setType(endDateType);
-//        } else {
-//            endDate.setDate(sdf.format(metaDataDate));
-//            endDate.setType(type);
-//        }
         study.setStartDate(modifiedDate);
-//        study.setEndDate(endDate);
-
         dataset.setProducedBy(study);
+
+        //Set extraProperties
+        CategoryValuePair createdMetaData = new CategoryValuePair();
+        createdMetaData.setCategory("Metadata created");
+        createdMetaData.setCategoryIRI("");
+        Annotation createdMetaDataAnnotation = new Annotation();
+        createdMetaDataAnnotation.setValue( sdf.format(ckanDataset.getMetadataCreated()));
+        createdMetaDataAnnotation.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
+        createdMetaData.getValues().add(createdMetaDataAnnotation);
+        dataset.getExtraProperties().add(createdMetaData);
+
+        if(ckanDataset.getMetadataModified() != null) {
+            CategoryValuePair modifiedMetaData = new CategoryValuePair();
+            modifiedMetaData.setCategory("Metadata modified");
+            modifiedMetaData.setCategoryIRI("");
+            Annotation modifiedMetaDataAnnotation = new Annotation();
+            modifiedMetaDataAnnotation.setValue(sdf.format(ckanDataset.getMetadataModified()));
+            modifiedMetaDataAnnotation.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001874");
+            modifiedMetaData.getValues().add(modifiedMetaDataAnnotation);
+            dataset.getExtraProperties().add(modifiedMetaData);
+        }
+
+
 
         //Set isAbout
         List<CkanTag> tags = ckanDataset.getTags();
