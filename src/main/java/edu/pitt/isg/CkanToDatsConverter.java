@@ -119,8 +119,7 @@ public class CkanToDatsConverter {
 
         //Set extraProperties
         CategoryValuePair createdMetaData = new CategoryValuePair();
-        createdMetaData.setCategory("Metadata created");
-        createdMetaData.setCategoryIRI("dcat:Dataset");
+        createdMetaData.setCategory("CKAN metadata_created");
         Annotation createdMetaDataAnnotation = new Annotation();
         createdMetaDataAnnotation.setValue( sdf.format(ckanDataset.getMetadataCreated()));
         createdMetaDataAnnotation.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
@@ -129,8 +128,7 @@ public class CkanToDatsConverter {
 
         if(ckanDataset.getMetadataModified() != null) {
             CategoryValuePair modifiedMetaData = new CategoryValuePair();
-            modifiedMetaData.setCategory("Metadata modified");
-            modifiedMetaData.setCategoryIRI("dcat:Dataset");
+            modifiedMetaData.setCategory("CKAN metadata_modified");
             Annotation modifiedMetaDataAnnotation = new Annotation();
             modifiedMetaDataAnnotation.setValue(sdf.format(ckanDataset.getMetadataModified()));
             modifiedMetaDataAnnotation.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001874");
@@ -138,6 +136,12 @@ public class CkanToDatsConverter {
             dataset.getExtraProperties().add(modifiedMetaData);
         }
 
+        CategoryValuePair revisionMetaData = new CategoryValuePair();
+        revisionMetaData.setCategory("CKAN revision_id");
+        Annotation revisionAnnotation = new Annotation();
+        revisionAnnotation.setValue(ckanDataset.getRevisionId());
+        revisionMetaData.getValues().add(revisionAnnotation);
+        dataset.getExtraProperties().add(revisionMetaData);
 
 
         //Set isAbout
