@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import edu.pitt.isg.mdc.dats2_2.Creator;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
+import edu.pitt.isg.mdc.dats2_2.DatasetWithOrganization;
 import edu.pitt.isg.mdc.dats2_2.Person;
 import edu.pitt.isg.mdc.v1_0.*;
 import edu.pitt.isg.objectserializer.XMLDeserializer;
@@ -125,6 +126,11 @@ public class Converter {
         return dataset;
     }
 
+    public DatasetWithOrganization convertToJavaDatasetWithOrganization(String str) {
+        DatasetWithOrganization dataset = new Gson().fromJson(str, DatasetWithOrganization.class);
+        return dataset;
+    }
+
     public boolean validate(String xml) throws MalformedURLException {
         URL schemaFile = getClass().getClassLoader().getResource("software.xsd");
 // or File schemaFile = new File("/location/to/xsd"); // etc.
@@ -167,6 +173,16 @@ public class Converter {
 
     }
 
+    public String convertToXml(DatasetWithOrganization dataset) throws JsonProcessingException, SerializationException {
+        List<Class> classList = new ArrayList<>();
+        classList.add(DatasetWithOrganization.class);
+        XMLSerializer xmlSerializer = new XMLSerializer(classList);
+        String xml = xmlSerializer.serializeObject(dataset);
+        //System.out.println(xml);
+        return xml;
+
+    }
+
     public String convertToXml(OAIPMHtype oaipmHtype) throws JsonProcessingException, SerializationException {
         List<Class> classList = new ArrayList<>();
         try {
@@ -185,6 +201,33 @@ public class Converter {
     }
 
     public JsonObject datasetToJSonObject(Dataset dataset){
+        JsonObject jsonObject = null;
+        String xmlString = null;
+        try {
+            xmlString = convertToXml(dataset);
+            xmlString = xmlString.replaceAll("(?s)&lt;.*?&gt;", "");
+        } catch(Exception e) {
+            System.out.println("Error: " + e);
+        }
+
+        xmlString = xmlString.substring(0, xmlString.lastIndexOf('>') + 1);
+
+        String jsonString = null;
+        try {
+            jsonString = xmlToJson(xmlString);
+        }
+        catch(Exception exception) {
+            exception.printStackTrace();
+        }
+
+        if(jsonString.length() > 0) {
+            JsonParser parser = new JsonParser();
+            jsonObject = parser.parse(jsonString).getAsJsonObject();
+        }
+        return  jsonObject;
+    }
+
+    public JsonObject datasetWithOrganizationToJSonObject(DatasetWithOrganization dataset){
         JsonObject jsonObject = null;
         String xmlString = null;
         try {
