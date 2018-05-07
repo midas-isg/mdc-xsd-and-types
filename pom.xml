@@ -121,7 +121,7 @@
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
                 <includes>
-                    <include>diseases.txt</include>
+                    <include>diseases.csv</include>
                     <include>**/*.xsd</include>
                 </includes>
 

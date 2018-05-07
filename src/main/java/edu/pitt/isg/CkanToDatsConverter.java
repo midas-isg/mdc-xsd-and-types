@@ -203,7 +203,7 @@ public class CkanToDatsConverter {
             failures = new HashSet<>();
             populateNcbiMap();
             try {
-                InputStream file = CkanToDatsConverter.class.getClassLoader().getResourceAsStream("diseases.txt");
+                InputStream file = CkanToDatsConverter.class.getClassLoader().getResourceAsStream("diseases.csv");
                 Scanner diseaseScan = new Scanner(file);
                 while (diseaseScan.hasNextLine()) {
                     String diseaseInFile = diseaseScan.nextLine();
@@ -311,7 +311,7 @@ public class CkanToDatsConverter {
     }
 
     private void writeDiseaseFile() {
-        //This writes to the diseases.txt file in target. Copy to diseases.txt in resources to update cache
+        //This writes to the diseases.csv file in target. Copy to diseases.csv in resources to update cache
         StringBuilder builder = new StringBuilder();
         for (Map.Entry<String, List<String>> kvp : snomedMap.entrySet()) {
             builder.append(kvp.getKey());
@@ -324,7 +324,7 @@ public class CkanToDatsConverter {
 
         String content = builder.toString().trim();
         try {
-            PrintWriter writer = new PrintWriter(new File(CkanToDatsConverter.class.getClassLoader().getResource("diseases.txt").getPath()));
+            PrintWriter writer = new PrintWriter(new File(CkanToDatsConverter.class.getClassLoader().getResource("diseases.csv").getPath()));
             writer.println(content);
             writer.close();
         } catch (FileNotFoundException e) {
@@ -371,7 +371,7 @@ public class CkanToDatsConverter {
                 }
             }
 
-            BufferedWriter bw  = new BufferedWriter(new FileWriter(CkanToDatsConverter.class.getClassLoader().getResource("diseases.txt").getPath(), true));
+            BufferedWriter bw  = new BufferedWriter(new FileWriter(CkanToDatsConverter.class.getClassLoader().getResource("diseases.csv").getPath(), true));
             bw.write(diseaseName + "," + snomedCode + ",Searching for: " + diseaseName + ". Found: " + memberObject.get("prefLabel").getAsString() + ". Synonyms are: " + builder.toString());
             bw.newLine();
             bw.flush();
