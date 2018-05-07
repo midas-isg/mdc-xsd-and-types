@@ -14,21 +14,42 @@ import eu.trentorise.opendata.jackan.model.CkanTag;
 import org.apache.commons.lang.WordUtils;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 
 public class CkanToDatsConverter {
-    private static HashMap<String, String> snomedMap;
+    private static HashMap<String, List<String>> snomedMap;
     private static HashMap<String, String> ncbiMap;
     private static String APIKEY = "f060b29e-fc9a-4dcd-b3be-9741466dbc4a";
     private static Set<String> failures;
 
+    public class ConverterResult {
+        public List<String> getDiseaseLookupLogMessages() {
+            return diseaseLookupLogMessages;
+        }
+
+        public void setDiseaseLookupLogMessages(List<String> diseaseLookupLogMessages) {
+            this.diseaseLookupLogMessages = diseaseLookupLogMessages;
+        }
+
+        public Object getDataset() {
+            return dataset;
+        }
+
+        public void setDataset(Object dataset) {
+            this.dataset = dataset;
+        }
+
+        private List<String> diseaseLookupLogMessages;
+        private Object dataset;
+    }
+
     public static void main(String[] args) {
+//        CkanToDatsConverter converter = new CkanToDatsConverter();
+//        converter.manuallyAddToDiseaseCache("Pneumococcal", "9861002");
+
         CkanClient ckanClient = new CkanClient("http://catalog.data.gov/");
         CkanQuery query = CkanQuery.filter().byTagNames("nndss");
 //        CkanQuery query = CkanQuery.filter().byTagNames("vaccination");
@@ -36,9 +57,9 @@ public class CkanToDatsConverter {
         List<CkanDataset> filteredDatasets = ckanClient.searchDatasets(query, 100, 0).getResults();
         List<DatasetWithOrganization> convertedDatasets = new ArrayList<>();
         for (CkanDataset dataset : filteredDatasets) {
-            DatasetWithOrganization convertedDataset = convertCkanToDats(dataset, ckanClient.getCatalogUrl());
+            ConverterResult convertedDataset = new CkanToDatsConverter().convertCkanToDats(dataset, ckanClient.getCatalogUrl());
             if (convertedDataset != null) {
-                convertedDatasets.add(convertedDataset);
+                convertedDatasets.add((DatasetWithOrganization) convertedDataset.getDataset());
             }
 
 //            System.out.println(dataset.getId());
@@ -47,7 +68,8 @@ public class CkanToDatsConverter {
         System.out.println("Done");
     }
 
-    public static DatasetWithOrganization convertCkanToDats(CkanDataset ckanDataset, String catalogUrl) {
+    public ConverterResult convertCkanToDats(CkanDataset ckanDataset, String catalogUrl) {
+        ConverterResult result = new ConverterResult();
         DatasetWithOrganization dataset = new DatasetWithOrganization();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -144,10 +166,11 @@ public class CkanToDatsConverter {
 
         //Set isAbout
         List<CkanTag> tags = ckanDataset.getTags();
-        for (CkanTag tag : tags) {
-            String diseaseInfo[] = lookupIsAboutInformation(tag.getDisplayName());
-            if (diseaseInfo != null) {
+        result.diseaseLookupLogMessages = new ArrayList<>();
 
+        for (CkanTag tag : tags) {
+            String diseaseInfo[] = lookupIsAboutInformation(tag.getDisplayName(), result.diseaseLookupLogMessages);
+            if (diseaseInfo != null) {
                 BiologicalEntity entity = new BiologicalEntity();
 
                 entity.setName(diseaseInfo[0]);
@@ -161,10 +184,11 @@ public class CkanToDatsConverter {
 
         writeDiseaseFile();
 
-        return dataset;
+        result.setDataset(dataset);
+        return result;
     }
 
-    public static String[] lookupIsAboutInformation(String diseaseName) {
+    public String[] lookupIsAboutInformation(String diseaseName, List<String> diseaseLookupLogMessages) {
         //Disease name, snomed or ncbi code, identifier source
         String diseaseInfo[] = new String[3];
         //Normalize name
@@ -185,7 +209,10 @@ public class CkanToDatsConverter {
                     String diseaseInFile = diseaseScan.nextLine();
                     String[] diseaseArray = diseaseInFile.split(",");
                     if (diseaseArray.length > 1) {
-                        snomedMap.put(diseaseArray[0], diseaseArray[1]);
+                        List<String> list = new ArrayList<>();
+                        list.add(diseaseArray[1]);
+                        list.add(diseaseArray[2]);
+                        snomedMap.put(diseaseArray[0], list);
                     }
                 }
                 diseaseScan.close();
@@ -196,7 +223,9 @@ public class CkanToDatsConverter {
         //If it is a disease
         if (snomedMap.containsKey(diseaseName)) {
             diseaseInfo[0] = diseaseName;
-            diseaseInfo[1] = snomedMap.get(diseaseName);
+            List<String> diseaseInfoList = snomedMap.get(diseaseName);
+            diseaseInfo[1] = diseaseInfoList.get(0);
+            diseaseLookupLogMessages.add(diseaseInfoList.get(1));
             diseaseInfo[2] = "https://biosharing.org/bsg-s000098";
         } else if (ncbiMap.containsKey(diseaseName)) {
             diseaseInfo[0] = diseaseName;
@@ -204,9 +233,12 @@ public class CkanToDatsConverter {
             diseaseInfo[2] = "https://biosharing.org/bsg-s000154";
         } else {
             try {
-                String snomed = lookupSNOMED(diseaseName);
+                String snomed = lookupSNOMED(diseaseName, diseaseLookupLogMessages);
                 if (snomed != "") {
-                    snomedMap.put(diseaseName, snomed);
+                    List<String> diseaseInfoList = new ArrayList<>();
+                    diseaseInfoList.add(snomed);
+                    diseaseInfoList.add(diseaseLookupLogMessages.get(diseaseLookupLogMessages.size()-1));
+                    snomedMap.put(diseaseName, diseaseInfoList);
                     diseaseInfo[0] = diseaseName;
                     diseaseInfo[1] = snomed;
                 } else {
@@ -221,7 +253,7 @@ public class CkanToDatsConverter {
         return diseaseInfo;
     }
 
-    public static String lookupSNOMED(String diseaseName) throws MalformedURLException, IOException {
+    public String lookupSNOMED(String diseaseName, List<String> diseaseLookupLogMessages) throws MalformedURLException, IOException {
         if (failures.contains(diseaseName)) {
             return "";
         }
@@ -231,9 +263,7 @@ public class CkanToDatsConverter {
         connection.setRequestProperty("Accept", "application/json");
 
         if (connection.getResponseCode() != 200) {
-            System.out.println("Failed : HTTP error code : " + connection.getResponseCode() + ".  Searching with: " + diseaseName);
-//            throw new RuntimeException("Failed : HTTP error code : "
-//                    + connection.getResponseCode());
+            diseaseLookupLogMessages.add("Failed : HTTP error code : " + connection.getResponseCode() + ".  Searching with: " + diseaseName);
             return "";
         }
 
@@ -261,31 +291,34 @@ public class CkanToDatsConverter {
                 if (memberObject.get("synonym") != null) {
                     for (JsonElement synonym : memberObject.get("synonym").getAsJsonArray()) {
                         if (builder.length() > 0) {
-                            builder.append(", vc");
+                            builder.append("; ");
                         }
                         builder.append(synonym.getAsString());
                     }
                 }
                 snomed = id.substring(id.lastIndexOf('/') + 1);
-                System.out.println("Searching for: " + diseaseName + ". Found: " + memberObject.get("prefLabel").getAsString() + ". Synonyms are: " + builder.toString());
+                diseaseLookupLogMessages.add("Searching for: " + diseaseName + ". Found: " + memberObject.get("prefLabel").getAsString() + ". Synonyms are: " + builder.toString());
 
                 break;
             }
         }
         if (snomed.equals("")) {
             System.out.println("Failed to find SNOMED code for " + diseaseName);
+            diseaseLookupLogMessages.add("Failed to find SNOMED code for " + diseaseName);
             failures.add(diseaseName);
         }
         return snomed;
     }
 
-    private static void writeDiseaseFile() {
+    private void writeDiseaseFile() {
         //This writes to the diseases.txt file in target. Copy to diseases.txt in resources to update cache
         StringBuilder builder = new StringBuilder();
-        for (Map.Entry<String, String> kvp : snomedMap.entrySet()) {
+        for (Map.Entry<String, List<String>> kvp : snomedMap.entrySet()) {
             builder.append(kvp.getKey());
             builder.append(",");
-            builder.append(kvp.getValue());
+            builder.append(kvp.getValue().get(0));
+            builder.append(",");
+            builder.append(kvp.getValue().get(1));
             builder.append("\r\n");
         }
 
@@ -299,7 +332,63 @@ public class CkanToDatsConverter {
         }
     }
 
-    private static void populateNcbiMap() {
+    private void manuallyAddToDiseaseCache(String diseaseName, String snomedCode){
+        try {
+            URL url = new URL("http://data.bioontology.org/search?q=" + URLEncoder.encode(snomedCode, "UTF-8") + "&apikey=" + APIKEY);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setRequestProperty("Accept", "application/json");
+
+            if (connection.getResponseCode() != 200) {
+                System.out.println("Failed : HTTP error code : " + connection.getResponseCode() + ".  Searching with: " + diseaseName);
+                return;
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(
+                    (connection.getInputStream())));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+
+            connection.disconnect();
+
+            JsonObject obj = new JsonParser().parse(response.toString()).getAsJsonObject();
+
+            //iterate over "collection" until we find @id with SNOMEDCT in it
+            JsonArray collection = obj.get("collection").getAsJsonArray();
+            String snomed = "";
+            JsonObject memberObject = collection.get(0).getAsJsonObject();
+            StringBuilder builder = new StringBuilder();
+            if (memberObject.get("synonym") != null) {
+                for (JsonElement synonym : memberObject.get("synonym").getAsJsonArray()) {
+                    if (builder.length() > 0) {
+                        builder.append("; ");
+                    }
+                    builder.append(synonym.getAsString());
+                }
+            }
+
+            BufferedWriter bw  = new BufferedWriter(new FileWriter(CkanToDatsConverter.class.getClassLoader().getResource("diseases.txt").getPath(), true));
+            bw.write(diseaseName + "," + snomedCode + ",Searching for: " + diseaseName + ". Found: " + memberObject.get("prefLabel").getAsString() + ". Synonyms are: " + builder.toString());
+            bw.newLine();
+            bw.flush();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void populateNcbiMap() {
         ncbiMap = new HashMap<>();
         ncbiMap.put("Human", "9606");
     }
