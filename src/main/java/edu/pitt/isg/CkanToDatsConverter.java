@@ -37,15 +37,13 @@ public class CkanToDatsConverter {
         List<DatasetWithOrganization> convertedDatasets = new ArrayList<>();
         for (CkanDataset dataset : filteredDatasets) {
             DatasetWithOrganization convertedDataset = convertCkanToDats(dataset, ckanClient.getCatalogUrl());
-            if(convertedDataset != null) {
+            if (convertedDataset != null) {
                 convertedDatasets.add(convertedDataset);
             }
 
-            System.out.println(dataset.getId());
+//            System.out.println(dataset.getId());
         }
-//        CkanDataset dataset = ckanClient.getDataset("02b5e413-d746-43ee-bd52-eac4e33ecb41");
-//        System.out.println(dataset.getNotes());
-//        convertCkanToDats(dataset);
+
         System.out.println("Done");
     }
 
@@ -57,7 +55,7 @@ public class CkanToDatsConverter {
         List<CkanResource> resources = ckanDataset.getResources();
         for (CkanResource resource : resources) {
             //If the resources contained in the ckan dataset are not csv, rdf, json, or xml then it is not the type we want in the MDC
-            if(resource.getFormat().equals("CSV") || resource.getFormat().equals("RDF") || resource.getFormat().equals("JSON") || resource.getFormat().equals("XML")) {
+            if (resource.getFormat().equals("CSV") || resource.getFormat().equals("RDF") || resource.getFormat().equals("JSON") || resource.getFormat().equals("XML")) {
                 Distribution distribution = new Distribution();
 
                 distribution.getFormats().add(resource.getFormat());
@@ -85,7 +83,7 @@ public class CkanToDatsConverter {
         }
 
         //if no distributions are added then the ckan dataset is not the format we want to convert, return null
-        if(dataset.getDistributions().isEmpty()) {
+        if (dataset.getDistributions().isEmpty()) {
             return null;
         }
 
@@ -121,12 +119,12 @@ public class CkanToDatsConverter {
         CategoryValuePair createdMetaData = new CategoryValuePair();
         createdMetaData.setCategory("CKAN metadata_created");
         Annotation createdMetaDataAnnotation = new Annotation();
-        createdMetaDataAnnotation.setValue( sdf.format(ckanDataset.getMetadataCreated()));
+        createdMetaDataAnnotation.setValue(sdf.format(ckanDataset.getMetadataCreated()));
         createdMetaDataAnnotation.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
         createdMetaData.getValues().add(createdMetaDataAnnotation);
         dataset.getExtraProperties().add(createdMetaData);
 
-        if(ckanDataset.getMetadataModified() != null) {
+        if (ckanDataset.getMetadataModified() != null) {
             CategoryValuePair modifiedMetaData = new CategoryValuePair();
             modifiedMetaData.setCategory("CKAN metadata_modified");
             Annotation modifiedMetaDataAnnotation = new Annotation();
@@ -172,7 +170,7 @@ public class CkanToDatsConverter {
         //Normalize name
         diseaseName = diseaseName.replace("-", " ");
         diseaseName = WordUtils.capitalize(diseaseName);
-        if(diseaseName.equals("Hansen039s Disease")) {
+        if (diseaseName.equals("Hansen039s Disease")) {
             diseaseName = "Hansen Disease";
         }
 
@@ -259,7 +257,18 @@ public class CkanToDatsConverter {
             JsonObject memberObject = member.getAsJsonObject();
             String id = memberObject.get("@id").getAsString();
             if (id.contains("SNOMEDCT")) {
+                StringBuilder builder = new StringBuilder();
+                if (memberObject.get("synonym") != null) {
+                    for (JsonElement synonym : memberObject.get("synonym").getAsJsonArray()) {
+                        if (builder.length() > 0) {
+                            builder.append(", vc");
+                        }
+                        builder.append(synonym.getAsString());
+                    }
+                }
                 snomed = id.substring(id.lastIndexOf('/') + 1);
+                System.out.println("Searching for: " + diseaseName + ". Found: " + memberObject.get("prefLabel").getAsString() + ". Synonyms are: " + builder.toString());
+
                 break;
             }
         }
