@@ -24,6 +24,7 @@ public class CkanToDatsConverter {
     private static HashMap<String, String> ncbiMap;
     private static String APIKEY = "f060b29e-fc9a-4dcd-b3be-9741466dbc4a";
     private static Set<String> failures;
+    private static Set<String> blacklist;
 
     public class ConverterResult {
         public List<String> getDiseaseLookupLogMessages() {
@@ -48,7 +49,7 @@ public class CkanToDatsConverter {
 
     public static void main(String[] args) {
 //        CkanToDatsConverter converter = new CkanToDatsConverter();
-//        converter.manuallyAddToDiseaseCache("Pneumococcal", "9861002");
+//        converter.manuallyAddToDiseaseCache("Shiga Toxin Producing Escherichia Coli", "116395006");
 
         CkanClient ckanClient = new CkanClient("http://catalog.data.gov/");
         CkanQuery query = CkanQuery.filter().byTagNames("nndss");
@@ -61,9 +62,9 @@ public class CkanToDatsConverter {
             if (convertedDataset != null) {
                 convertedDatasets.add((DatasetWithOrganization) convertedDataset.getDataset());
             }
-
-//            System.out.println(dataset.getId());
         }
+//
+//        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("c56779f0-c6e0-47bb-8dac-a23b1dc1d893"), ckanClient.getCatalogUrl());
 
         System.out.println("Done");
     }
@@ -201,10 +202,11 @@ public class CkanToDatsConverter {
         if (snomedMap == null) {
             snomedMap = new HashMap<>();
             failures = new HashSet<>();
+            populateBlacklist();
             populateNcbiMap();
             try {
                 InputStream file = CkanToDatsConverter.class.getClassLoader().getResourceAsStream("diseases.csv");
-                Scanner diseaseScan = new Scanner(file);
+                Scanner diseaseScan = new Scanner(file, "UTF-8");
                 while (diseaseScan.hasNextLine()) {
                     String diseaseInFile = diseaseScan.nextLine();
                     String[] diseaseArray = diseaseInFile.split(",");
@@ -212,7 +214,7 @@ public class CkanToDatsConverter {
                         List<String> list = new ArrayList<>();
                         list.add(diseaseArray[1]);
                         list.add(diseaseArray[2]);
-                        snomedMap.put(diseaseArray[0], list);
+                        snomedMap.put(diseaseArray[0].trim(), list);
                     }
                 }
                 diseaseScan.close();
@@ -221,7 +223,11 @@ public class CkanToDatsConverter {
             }
         }
         //If it is a disease
-        if (snomedMap.containsKey(diseaseName)) {
+        if (blacklist.contains(diseaseName)) {
+            //skip
+            diseaseInfo = null;
+        }
+        else if (snomedMap.containsKey(diseaseName)) {
             diseaseInfo[0] = diseaseName;
             List<String> diseaseInfoList = snomedMap.get(diseaseName);
             diseaseInfo[1] = diseaseInfoList.get(0);
@@ -391,5 +397,44 @@ public class CkanToDatsConverter {
     private void populateNcbiMap() {
         ncbiMap = new HashMap<>();
         ncbiMap.put("Human", "9606");
+    }
+
+    private void populateBlacklist() {
+        blacklist = new HashSet<>();
+        blacklist.add("Invasive Disease All Ages");
+        blacklist.add("Paralytic");
+        blacklist.add("Week");
+        blacklist.add("Undetermined");
+        blacklist.add("Serogroup B");
+        blacklist.add("Serotype B");
+        blacklist.add("Congenital");
+        blacklist.add("Nonparalytic");
+        blacklist.add("Perinatal Virus Infection");
+        blacklist.add("Surveillance");
+        blacklist.add("Congenital Syndrome");
+        blacklist.add("Unknown Serotype");
+        blacklist.add("By Type C");
+        blacklist.add("Perinatal Infection");
+        blacklist.add("Invasive Disease Age Lt5 Yrs");
+        blacklist.add("Foodborne");
+        blacklist.add("Other Than Toxigenic Vibrio Cholerae O1 Or O139");
+        blacklist.add("Age Lt5");
+        blacklist.add("Primary And Secondary");
+        blacklist.add("By Type A Amp B");
+        blacklist.add("Neuroinvasive And Nonneuroinvasive");
+        blacklist.add("Reported Diseases");
+        blacklist.add("All Serogroups");
+        blacklist.add("Non Hantavirus Pulmonary Syndrome");
+        blacklist.add("Unknown Serogroups");
+        blacklist.add("Non Congenital");
+        blacklist.add("All Serotypes");
+        blacklist.add("All Ages");
+        blacklist.add("Nontypeable");
+        blacklist.add("Other Serogroups");
+        blacklist.add("Non Hps");
+        blacklist.add("Total");
+        blacklist.add("Influenza Associated Pediatric Mortality");
+        blacklist.add("Meningococcal Disease Neisseria Meningitidis");
+        blacklist.add("Non B Serotype");
     }
 }
