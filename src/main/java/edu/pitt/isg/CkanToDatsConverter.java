@@ -55,16 +55,16 @@ public class CkanToDatsConverter {
         CkanQuery query = CkanQuery.filter().byTagNames("nndss");
 //        CkanQuery query = CkanQuery.filter().byTagNames("vaccination");
 
-        List<CkanDataset> filteredDatasets = ckanClient.searchDatasets(query, 100, 0).getResults();
-        List<DatasetWithOrganization> convertedDatasets = new ArrayList<>();
-        for (CkanDataset dataset : filteredDatasets) {
-            ConverterResult convertedDataset = new CkanToDatsConverter().convertCkanToDats(dataset, ckanClient.getCatalogUrl());
-            if (convertedDataset != null) {
-                convertedDatasets.add((DatasetWithOrganization) convertedDataset.getDataset());
-            }
-        }
+//        List<CkanDataset> filteredDatasets = ckanClient.searchDatasets(query, 100, 0).getResults();
+//        List<DatasetWithOrganization> convertedDatasets = new ArrayList<>();
+//        for (CkanDataset dataset : filteredDatasets) {
+//            ConverterResult convertedDataset = new CkanToDatsConverter().convertCkanToDats(dataset, ckanClient.getCatalogUrl());
+//            if (convertedDataset != null) {
+//                convertedDatasets.add((DatasetWithOrganization) convertedDataset.getDataset());
+//            }
+//        }
 //
-//        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("c56779f0-c6e0-47bb-8dac-a23b1dc1d893"), ckanClient.getCatalogUrl());
+        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("1e92fedd-b2a8-4fd7-96a4-8de9a6791bfa"), ckanClient.getCatalogUrl());
 
         System.out.println("Done");
     }
@@ -303,6 +303,7 @@ public class CkanToDatsConverter {
                     }
                 }
                 snomed = id.substring(id.lastIndexOf('/') + 1);
+                System.out.println("Searching for: " + diseaseName + ". Found: " + memberObject.get("prefLabel").getAsString() + ". Synonyms are: " + builder.toString());
                 diseaseLookupLogMessages.add("Searching for: " + diseaseName + ". Found: " + memberObject.get("prefLabel").getAsString() + ". Synonyms are: " + builder.toString());
 
                 break;
