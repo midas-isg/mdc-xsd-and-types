@@ -64,7 +64,7 @@ public class CkanToDatsConverter {
 //            }
 //        }
 //
-        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("1e92fedd-b2a8-4fd7-96a4-8de9a6791bfa"), ckanClient.getCatalogUrl());
+        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("c6fbb89d-2fbc-45e1-a87c-f719189c0755"), ckanClient.getCatalogUrl());
 
         System.out.println("Done");
     }
@@ -437,5 +437,7 @@ public class CkanToDatsConverter {
         blacklist.add("Influenza Associated Pediatric Mortality");
         blacklist.add("Meningococcal Disease Neisseria Meningitidis");
         blacklist.add("Non B Serotype");
+        blacklist.add("Environmental Health");
+        blacklist.add("Kindergarten");
     }
 }
