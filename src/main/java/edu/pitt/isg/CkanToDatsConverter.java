@@ -48,8 +48,8 @@ public class CkanToDatsConverter {
     }
 
     public static void main(String[] args) {
-//        CkanToDatsConverter converter = new CkanToDatsConverter();
-//        converter.manuallyAddToDiseaseCache("Shiga Toxin Producing Escherichia Coli", "116395006");
+        CkanToDatsConverter converter = new CkanToDatsConverter();
+        converter.manuallyAddToDiseaseCache("Spotted Fever Rickettsiosis", "186772009");
 
         CkanClient ckanClient = new CkanClient("http://catalog.data.gov/");
         CkanQuery query = CkanQuery.filter().byTagNames("nndss");
@@ -247,7 +247,7 @@ public class CkanToDatsConverter {
                     snomedMap.put(diseaseName, diseaseInfoList);
                     diseaseInfo[0] = diseaseName;
                     diseaseInfo[1] = snomed;
-                    diseaseInfo[2] = "https://biosharing.org/bsg-s000154";
+                    diseaseInfo[2] = "https://biosharing.org/bsg-s000098";
                 } else {
                     diseaseInfo = null;
                 }
