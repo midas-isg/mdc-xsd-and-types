@@ -213,7 +213,7 @@
                 <annotation i:label="Distribution" i:maxRepeats="5"/>
             </element>
             <element name="extraProperties" type="tns:CategoryValuePair" minOccurs="0" maxOccurs="unbounded">
-                <annotation i:label="CategoryValuePair" i:maxRepeats="1"></annotation>
+                <annotation i:label="CategoryValuePair" i:maxRepeats="5"></annotation>
             </element>
         </sequence>
     </complexType>
