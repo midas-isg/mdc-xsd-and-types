@@ -452,5 +452,24 @@ public class CkanToDatsConverter {
         blacklist.add("Air Quality Index");
         blacklist.add("Air Quality System");
         blacklist.add("Caa 109 Clean Air Act Section 109");
+        blacklist.add("Daily 24 Hour Average Concentration");
+        blacklist.add("Daily Maximum 8 Hour Average Concentration");
+        blacklist.add("Hourly Observations");
+        blacklist.add("National Ambient Air Quality Standards");
+        blacklist.add("National Environmental Health Tracking Network");
+        blacklist.add("O3");
+        blacklist.add("Ozone Residual");
+        blacklist.add("Particle Pollution");
+        blacklist.add("Particulate Matter");
+        blacklist.add("Particulate Matter Pm2 5");
+        blacklist.add("Particulate Matter Lt 2 5 Um");
+        blacklist.add("Pm Fine 0 2 5 Um Stp");
+        blacklist.add("Pm2 5");
+        blacklist.add("Pm2 5 Local Conditions");
+        blacklist.add("Site Monitoring Data");
+        blacklist.add("Tracking");
+        blacklist.add("Tracking Network");
+        blacklist.add("Tracking Program");
+
     }
 }
