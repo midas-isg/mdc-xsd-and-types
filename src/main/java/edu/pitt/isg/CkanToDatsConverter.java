@@ -64,7 +64,7 @@ public class CkanToDatsConverter {
 //            }
 //        }
 //
-        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("c6fbb89d-2fbc-45e1-a87c-f719189c0755"), ckanClient.getCatalogUrl());
+        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("1cc4500e-20b3-4bd8-839a-d26a5ba7f96e"), ckanClient.getCatalogUrl());
 
         System.out.println("Done");
     }
@@ -247,6 +247,7 @@ public class CkanToDatsConverter {
                     snomedMap.put(diseaseName, diseaseInfoList);
                     diseaseInfo[0] = diseaseName;
                     diseaseInfo[1] = snomed;
+                    diseaseInfo[2] = "https://biosharing.org/bsg-s000154";
                 } else {
                     diseaseInfo = null;
                 }
@@ -439,5 +440,7 @@ public class CkanToDatsConverter {
         blacklist.add("Non B Serotype");
         blacklist.add("Environmental Health");
         blacklist.add("Kindergarten");
+        blacklist.add("Location");
+        blacklist.add("Child Health");
     }
 }
