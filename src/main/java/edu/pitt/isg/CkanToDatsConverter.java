@@ -64,7 +64,7 @@ public class CkanToDatsConverter {
 //            }
 //        }
 //
-        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("1cc4500e-20b3-4bd8-839a-d26a5ba7f96e"), ckanClient.getCatalogUrl());
+        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("70dca0aa-1598-4925-af8c-5464fdb212b1"), ckanClient.getCatalogUrl());
 
         System.out.println("Done");
     }
@@ -442,5 +442,15 @@ public class CkanToDatsConverter {
         blacklist.add("Kindergarten");
         blacklist.add("Location");
         blacklist.add("Child Health");
+        blacklist.add("San Francisco");
+        blacklist.add("Lifelong Learning");
+        blacklist.add("Statistic");
+        blacklist.add("Youth");
+        blacklist.add("Zip");
+        blacklist.add("Zip Code");
+        blacklist.add("Air Quality");
+        blacklist.add("Air Quality Index");
+        blacklist.add("Air Quality System");
+        blacklist.add("Caa 109 Clean Air Act Section 109");
     }
 }
