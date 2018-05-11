@@ -470,6 +470,6 @@ public class CkanToDatsConverter {
         blacklist.add("Tracking");
         blacklist.add("Tracking Network");
         blacklist.add("Tracking Program");
-
+        blacklist.add("Code");
     }
 }
