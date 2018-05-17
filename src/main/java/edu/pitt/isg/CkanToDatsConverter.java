@@ -96,7 +96,7 @@ public class CkanToDatsConverter {
                 Annotation distributionType = new Annotation();
                 java.util.Date datetime = new java.util.Date(resource.getCreated().getTime());
                 date.setDate(sdf.format(datetime));
-                distributionType.setValue("created");
+                distributionType.setValue("creation");
                 distributionType.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
                 date.setType(distributionType);
                 distribution.getDates().add(date);
