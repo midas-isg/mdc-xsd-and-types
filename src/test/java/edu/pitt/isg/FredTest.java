@@ -33,7 +33,7 @@ public class FredTest extends TestCase {
         List<String> invalidSoftwareList = new ArrayList<String>();
 
         for (Software sw : softwareList) {
-            String xml = converter.convertToXml(sw);
+            String xml = converter.convertToXml(Software.class, sw);
             //System.out.println(xml);
             boolean isValid = converter.validate(xml);
 

@@ -1,25 +1,24 @@
 package edu.pitt.isg;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import edu.pitt.isg.mdc.dats2_2.Creator;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
 import edu.pitt.isg.mdc.dats2_2.DatasetWithOrganization;
-import edu.pitt.isg.mdc.dats2_2.Person;
 import edu.pitt.isg.mdc.v1_0.*;
 import edu.pitt.isg.objectserializer.XMLDeserializer;
 import edu.pitt.isg.objectserializer.XMLSerializer;
 import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
+import org.jsoup.Jsoup;
+import org.w3c.dom.Document;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.XMLConstants;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -34,14 +33,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.jsoup.Jsoup;
-import org.openarchives.oai._2.OAIPMHtype;
-import org.openarchives.oai._2_0.oai_dc.OaiDcType;
-import org.w3c.dom.Document;
-
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 
 /**
  * Created by jdl50 on 5/2/17.
@@ -49,15 +40,15 @@ import com.google.gson.JsonParser;
 public class Converter {
     private static final String MDC_PACKAGE = "edu.pitt.isg.mdc.v1_0.";
     private static final String DATS_PACKAGE = "edu.pitt.isg.mdc.dats2_2.";
-    private static final String [] DATS_CLASSES = {
-        "Dataset",
-        "DatasetWithOrganization",
-        "DataStandard"
+    private static final String[] DATS_CLASSES = {
+            "Dataset",
+            "DatasetWithOrganization",
+            "DataStandard"
     };
 
     private static final HashMap<String, String> classTypeToJsonType;
-    static
-    {
+
+    static {
         classTypeToJsonType = new HashMap<String, String>();
         classTypeToJsonType.put("PhylogeneticTreeConstructors", "Phylogenetic tree constructors");
         classTypeToJsonType.put("SyntheticEcosystemConstructors", "Synthetic ecosystem constructors");
@@ -73,12 +64,13 @@ public class Converter {
     }
 
     public List<Software> convertToJava(String str) {
-        List<HashMap<String,Object>> softwareListFromJson = new Gson().fromJson(
-                str, new TypeToken<List<HashMap<String,Object>>>() {}.getType()
+        List<HashMap<String, Object>> softwareListFromJson = new Gson().fromJson(
+                str, new TypeToken<List<HashMap<String, Object>>>() {
+                }.getType()
         );
 
         List softwareList = new ArrayList<Software>();
-        for ( HashMap<String,Object> map : softwareListFromJson ) {
+        for (HashMap<String, Object> map : softwareListFromJson) {
             GsonBuilder gsonBuilder = new GsonBuilder().serializeNulls();
             Gson gson = gsonBuilder.create();
 
@@ -87,38 +79,42 @@ public class Converter {
 
             boolean hasSubtype = true;
             Software sw = new Software();
-            if(subtype.equals("Disease transmission models")) {
+            if (subtype.equals("Disease transmission models")) {
                 sw = gson.fromJson(representation, DiseaseTransmissionModel.class);
-            } else if(subtype.equals("Disease forecasters")) {
+            } else if (subtype.equals("Disease forecasters")) {
                 sw = gson.fromJson(representation, DiseaseForecasters.class);
-            } else if(subtype.equals("Pathogen evolution models")) {
+            } else if (subtype.equals("Pathogen evolution models")) {
                 sw = gson.fromJson(representation, PathogenEvolutionModels.class);
-            } else if(subtype.equals("Population dynamics models")) {
+            } else if (subtype.equals("Population dynamics models")) {
                 sw = gson.fromJson(representation, PopulationDynamicsModel.class);
-            } else if(subtype.equals("Synthetic ecosystem constructors")) {
+            } else if (subtype.equals("Synthetic ecosystem constructors")) {
                 sw = gson.fromJson(representation, SyntheticEcosystemConstructors.class);
-            } else if(subtype.equals("Disease transmission tree estimators")) {
+            } else if (subtype.equals("Disease transmission tree estimators")) {
                 sw = gson.fromJson(representation, DiseaseTransmissionTreeEstimators.class);
-            } else if(subtype.equals("Phylogenetic tree constructors")) {
+            } else if (subtype.equals("Phylogenetic tree constructors")) {
                 sw = gson.fromJson(representation, PhylogeneticTreeConstructors.class);
-            } else if(subtype.equals("Data visualizers")) {
+            } else if (subtype.equals("Data visualizers")) {
                 sw = gson.fromJson(representation, DataVisualizers.class);
-            } else if(subtype.equals("Modeling platforms")) {
+            } else if (subtype.equals("Modeling platforms")) {
                 sw = gson.fromJson(representation, ModelingPlatforms.class);
-            } else if(subtype.equals("Data-format converters")) {
+            } else if (subtype.equals("Data-format converters")) {
                 sw = gson.fromJson(representation, DataFormatConverters.class);
-            } else if(subtype.equals("Data services")) {
+            } else if (subtype.equals("Data services")) {
                 sw = gson.fromJson(representation, DataService.class);
             } else {
                 hasSubtype = false;
             }
 
-            if(hasSubtype) {
+            if (hasSubtype) {
                 softwareList.add(sw);
             }
         }
 
         return softwareList;
+    }
+
+    public Object convertFromJsonToClass(String json, Class clazz) {
+        return new Gson().fromJson(json, clazz);
     }
 
     public Dataset convertToJavaDataset(String str) {
@@ -145,7 +141,7 @@ public class Converter {
             //System.out.println(xmlFile.getSystemId() + " is valid");
         } catch (Exception e) {
             System.out.println(xmlFile.getSystemId() + " is NOT valid reason:" + e);
-            System.out.println("\nXML is:\n"+xml);
+            System.out.println("\nXML is:\n" + xml);
 
             return false;
         }
@@ -153,105 +149,46 @@ public class Converter {
     }
 
 
-    public String convertToXml(Software software) throws JsonProcessingException, SerializationException {
+    public String convertToXml(Class clazz, Object object) throws SerializationException {
         List<Class> classList = new ArrayList<>();
-        classList.add(Software.class);
+        classList.add(clazz);
         XMLSerializer xmlSerializer = new XMLSerializer(classList);
-        String xml = xmlSerializer.serializeObject(software);
-        //System.out.println(xml);
+        String xml = xmlSerializer.serializeObject(object);
         return xml;
 
     }
 
-    public String convertToXml(Dataset dataset) throws JsonProcessingException, SerializationException {
-        List<Class> classList = new ArrayList<>();
-        classList.add(Dataset.class);
-        XMLSerializer xmlSerializer = new XMLSerializer(classList);
-        String xml = xmlSerializer.serializeObject(dataset);
-        //System.out.println(xml);
-        return xml;
 
+    public JsonObject toJsonObject(Class clazz, Object object) {
+        return toJsonObject(clazz, object, false);
     }
 
-    public String convertToXml(DatasetWithOrganization dataset) throws JsonProcessingException, SerializationException {
-        List<Class> classList = new ArrayList<>();
-        classList.add(DatasetWithOrganization.class);
-        XMLSerializer xmlSerializer = new XMLSerializer(classList);
-        String xml = xmlSerializer.serializeObject(dataset);
-        //System.out.println(xml);
-        return xml;
-
-    }
-
-    public String convertToXml(OAIPMHtype oaipmHtype) throws JsonProcessingException, SerializationException {
-        List<Class> classList = new ArrayList<>();
-        try {
-            classList.add(OAIPMHtype.class);
-        }
-        catch (Exception e){
-            classList.add(org.openarchives.oai._2_0.oai_dc.OaiDcType.class);
-        }
-        classList.add(org.openarchives.oai._2_0.oai_dc.ObjectFactory.class);
-        classList.add(org.purl.dc.elements._1.ObjectFactory.class);
-        XMLSerializer xmlSerializer = new XMLSerializer(classList);
-        String xml = xmlSerializer.serializeObject(oaipmHtype);
-        //System.out.println(xml);
-        return xml;
-
-    }
-
-    public JsonObject datasetToJSonObject(Dataset dataset){
+    public JsonObject toJsonObject(Class clazz, Object object, boolean stripHtml) {
         JsonObject jsonObject = null;
         String xmlString = null;
         try {
-            xmlString = convertToXml(dataset);
-            xmlString = xmlString.replaceAll("(?s)&lt;.*?&gt;", "");
-        } catch(Exception e) {
+            xmlString = convertToXml(clazz, object);
+            if (stripHtml)
+                xmlString = xmlString.replaceAll("(?s)&lt;.*?&gt;", "");
+        } catch (Exception e) {
             System.out.println("Error: " + e);
         }
 
-        xmlString = xmlString.substring(0, xmlString.lastIndexOf('>') + 1);
+        if (stripHtml)
+            xmlString = xmlString.substring(0, xmlString.lastIndexOf('>') + 1);
 
         String jsonString = null;
         try {
             jsonString = xmlToJson(xmlString);
-        }
-        catch(Exception exception) {
+        } catch (Exception exception) {
             exception.printStackTrace();
         }
 
-        if(jsonString.length() > 0) {
+        if (jsonString.length() > 0) {
             JsonParser parser = new JsonParser();
             jsonObject = parser.parse(jsonString).getAsJsonObject();
         }
-        return  jsonObject;
-    }
-
-    public JsonObject datasetWithOrganizationToJSonObject(DatasetWithOrganization dataset){
-        JsonObject jsonObject = null;
-        String xmlString = null;
-        try {
-            xmlString = convertToXml(dataset);
-            xmlString = xmlString.replaceAll("(?s)&lt;.*?&gt;", "");
-        } catch(Exception e) {
-            System.out.println("Error: " + e);
-        }
-
-        xmlString = xmlString.substring(0, xmlString.lastIndexOf('>') + 1);
-
-        String jsonString = null;
-        try {
-            jsonString = xmlToJson(xmlString);
-        }
-        catch(Exception exception) {
-            exception.printStackTrace();
-        }
-
-        if(jsonString.length() > 0) {
-            JsonParser parser = new JsonParser();
-            jsonObject = parser.parse(jsonString).getAsJsonObject();
-        }
-        return  jsonObject;
+        return jsonObject;
     }
 
     public Software convertFromXml(String xml) throws DeserializationException {
@@ -272,8 +209,8 @@ public class Converter {
         String json = "";
         boolean packageFound = false;
 
-        for(int i = 0; i < DATS_CLASSES.length; i++) {
-            if(className.equals(DATS_CLASSES[i])) {
+        for (int i = 0; i < DATS_CLASSES.length; i++) {
+            if (className.equals(DATS_CLASSES[i])) {
                 packageNamespace = DATS_PACKAGE;
                 packageFound = true;
                 break;
@@ -295,7 +232,7 @@ public class Converter {
         //Object item = xmlDeserializer.getObjectFromMessage(xml, Class.forName(packageNamespace + className));
         JsonObject jsonObject = gson.toJsonTree((Class.forName(packageNamespace + className)).cast(item)).getAsJsonObject();
 
-        if(!packageFound) {
+        if (!packageFound) {
             jsonObject.addProperty("subtype", classTypeToJsonType.get(className));
         }
 
