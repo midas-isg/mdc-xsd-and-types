@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns:tns="http://mdc.isg.pitt.edu/dats2_2/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:i="http://moten.david.org/xsd-forms"
+<?xml version="1.1" encoding="UTF-8"?>
+<schema xmlns:tns="http://mdc.isg.pitt.edu/dats2_2/" xmlns:i="http://moten.david.org/xsd-forms" xmlns="http://www.w3.org/2001/XMLSchema"
         targetNamespace="http://mdc.isg.pitt.edu/dats2_2/" elementFormDefault="qualified" attributeFormDefault="qualified">
 
     <element name="Dataset" type="tns:Dataset"/>
@@ -197,8 +197,26 @@
         </sequence>
     </complexType>
 
+    <complexType name="Grant">
+        <sequence>
+            <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"/>
+            <element name="funders" type="tns:Organization"></element>
+
+        </sequence>
+    </complexType>
+
+    <complexType name="Acknowledges">
+        <sequence>
+            <element name="name" type="tns:nonZeroLengthString"></element>
+            <element name="funders" type="tns:Grant" minOccurs="0" maxOccurs="unbounded"></element>
+            <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"></element>
+        </sequence>
+    </complexType>
+
+
     <complexType name="Dataset">
         <sequence>
+            <element name="acknowledges" type="tns:Acknowledges" minOccurs="0" maxOccurs="unbounded"/>
             <element name="title" type="tns:nonZeroLengthString" minOccurs="1"/>
             <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"/>

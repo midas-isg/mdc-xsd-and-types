@@ -168,13 +168,13 @@ public class Converter {
         String xmlString = null;
         try {
             xmlString = convertToXml(clazz, object);
-            if (stripHtml)
+            if (true)
                 xmlString = xmlString.replaceAll("(?s)&lt;.*?&gt;", "");
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
 
-        if (stripHtml)
+        if (true)
             xmlString = xmlString.substring(0, xmlString.lastIndexOf('>') + 1);
 
         String jsonString = null;
