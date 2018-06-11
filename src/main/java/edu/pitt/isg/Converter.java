@@ -153,34 +153,12 @@ public class Converter {
     }
 
 
-    public String convertToXml(Software software) throws JsonProcessingException, SerializationException {
+    public String convertToXml(Object object) throws SerializationException {
         List<Class> classList = new ArrayList<>();
-        classList.add(Software.class);
+        classList.add(object.getClass());
         XMLSerializer xmlSerializer = new XMLSerializer(classList);
-        String xml = xmlSerializer.serializeObject(software);
-        //System.out.println(xml);
+        String xml = xmlSerializer.serializeObject(object);
         return xml;
-
-    }
-
-    public String convertToXml(Dataset dataset) throws JsonProcessingException, SerializationException {
-        List<Class> classList = new ArrayList<>();
-        classList.add(Dataset.class);
-        XMLSerializer xmlSerializer = new XMLSerializer(classList);
-        String xml = xmlSerializer.serializeObject(dataset);
-        //System.out.println(xml);
-        return xml;
-
-    }
-
-    public String convertToXml(DatasetWithOrganization dataset) throws JsonProcessingException, SerializationException {
-        List<Class> classList = new ArrayList<>();
-        classList.add(DatasetWithOrganization.class);
-        XMLSerializer xmlSerializer = new XMLSerializer(classList);
-        String xml = xmlSerializer.serializeObject(dataset);
-        //System.out.println(xml);
-        return xml;
-
     }
 
     public String convertToXml(OAIPMHtype oaipmHtype) throws JsonProcessingException, SerializationException {
@@ -200,38 +178,11 @@ public class Converter {
 
     }
 
-    public JsonObject datasetToJSonObject(Dataset dataset){
+    public JsonObject objectToJSonObject(Object object){
         JsonObject jsonObject = null;
         String xmlString = null;
         try {
-            xmlString = convertToXml(dataset);
-            xmlString = xmlString.replaceAll("(?s)&lt;.*?&gt;", "");
-        } catch(Exception e) {
-            System.out.println("Error: " + e);
-        }
-
-        xmlString = xmlString.substring(0, xmlString.lastIndexOf('>') + 1);
-
-        String jsonString = null;
-        try {
-            jsonString = xmlToJson(xmlString);
-        }
-        catch(Exception exception) {
-            exception.printStackTrace();
-        }
-
-        if(jsonString.length() > 0) {
-            JsonParser parser = new JsonParser();
-            jsonObject = parser.parse(jsonString).getAsJsonObject();
-        }
-        return  jsonObject;
-    }
-
-    public JsonObject datasetWithOrganizationToJSonObject(DatasetWithOrganization dataset){
-        JsonObject jsonObject = null;
-        String xmlString = null;
-        try {
-            xmlString = convertToXml(dataset);
+            xmlString = convertToXml(object);
             xmlString = xmlString.replaceAll("(?s)&lt;.*?&gt;", "");
         } catch(Exception e) {
             System.out.println("Error: " + e);
