@@ -72,7 +72,7 @@
                      minOccurs="0"/>
             <element name="publicationsThatUsedRelease" type="tns:nonZeroLengthString"
                      maxOccurs="unbounded" minOccurs="0">
-                     <annotation i:label="Publication That Used Release"/>
+                <annotation i:label="Publication That Used Release"/>
             </element>
             <element name="executables" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0">
@@ -94,6 +94,9 @@
                      minOccurs="1"/>
             <element name="signInRequired" type="boolean" maxOccurs="1"
                      minOccurs="1"/>
+            <element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
+                     minOccurs="0"/>
+
         </sequence>
     </complexType>
 
@@ -146,8 +149,8 @@
                              maxOccurs="unbounded" minOccurs="0">
                         <annotation i:label="Host Species Included"/>
                     </element>
-                    <element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
-                             minOccurs="0"/>
+                    <!--<element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"-->
+                    <!--minOccurs="0"/>-->
                     <element name="pathogenCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
                              minOccurs="0"/>
                 </sequence>
@@ -163,8 +166,8 @@
                              maxOccurs="unbounded" minOccurs="1">
                         <annotation i:label="Population Species Included"/>
                     </element>
-                    <element name="locationCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"
-                             minOccurs="0"/>
+                    <!--<element name="locationCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"-->
+                    <!--minOccurs="0"/>-->
                 </sequence>
             </extension>
         </complexContent>
@@ -199,8 +202,8 @@
                              minOccurs="1">
                         <annotation i:label="Forecast"/>
                     </element>
-                    <element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
-                             minOccurs="0"/>
+                    <!--<element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"-->
+                    <!--minOccurs="0"/>-->
                 </sequence>
             </extension>
         </complexContent>
@@ -244,6 +247,14 @@
         <complexContent>
             <extension base="tns:Software">
                 <sequence>
+                    <element name="hostSpeciesIncluded" type="tns:NestedIdentifier" maxOccurs="unbounded"
+                             minOccurs="0">
+                        <annotation i:label="Host Species Included"/>
+                    </element>
+                    <element name="pathogenCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
+                             minOccurs="0">
+                        <annotation i:label="Pathogen Coverage"/>
+                    </element>
 
                 </sequence>
             </extension>
@@ -279,10 +290,10 @@
                              minOccurs="0">
                         <annotation i:label="Pathogen"/>
                     </element>
-                    <element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
-                             minOccurs="0">
-                        <annotation i:label="Location"/>
-                    </element>
+                    <!--<element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"-->
+                    <!--minOccurs="0">-->
+                    <!--<annotation i:label="Location"/>-->
+                    <!--</element>-->
                 </sequence>
             </extension>
         </complexContent>
