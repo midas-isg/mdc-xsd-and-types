@@ -13,6 +13,7 @@ import edu.pitt.isg.objectserializer.XMLSerializer;
 import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
 import org.jsoup.Jsoup;
+import org.jsoup.parser.Parser;
 import org.w3c.dom.Document;
 
 import javax.xml.XMLConstants;
@@ -168,18 +169,18 @@ public class Converter {
         String xmlString = null;
         try {
             xmlString = convertToXml(clazz, object);
-            if (true)
+            if (stripHtml)
                 xmlString = xmlString.replaceAll("(?s)&lt;.*?&gt;", "");
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
 
-        if (true)
+        if (stripHtml)
             xmlString = xmlString.substring(0, xmlString.lastIndexOf('>') + 1);
 
         String jsonString = null;
         try {
-            jsonString = xmlToJson(xmlString);
+            jsonString = xmlToJson(xmlString, !stripHtml);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -197,14 +198,15 @@ public class Converter {
         return software;
     }
 
-    public String xmlToJson(String xml) throws Exception {
+    public String xmlToJson(String xml, boolean keepHtml) throws Exception {
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
         Document doc = dBuilder.parse(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
         String className = doc.getDocumentElement().getTagName();
 
         XMLDeserializer xmlDeserializer = new XMLDeserializer();
-        Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        //Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+        Gson gson = new GsonBuilder().create();
         String packageNamespace = MDC_PACKAGE;
         String json = "";
         boolean packageFound = false;
@@ -239,13 +241,19 @@ public class Converter {
         jsonObject.addProperty("class", packageNamespace + className);
         json = jsonObject.toString();
 
-        org.jsoup.nodes.Document jsonDocument = Jsoup.parse(json);
-        String parsedJson = jsonDocument.text();
+        if (keepHtml)
+            return json;
+        else {
 
-        //TODO: Properly decode URL formats
-        //json.replace("&lt;", "<").replace("&gt;", ">");
+            org.jsoup.nodes.Document jsonDocument =
+                    Jsoup.parse(json, "", Parser.xmlParser());
+            String parsedJson = jsonDocument.text();
 
-        return parsedJson;
+            //TODO: Properly decode URL formats
+            //json.replace("&lt;", "<").replace("&gt;", ">");
+
+            return parsedJson;
+        }
     }
 
 }
