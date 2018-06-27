@@ -86,8 +86,8 @@
     <complexType name="Person">
         <sequence>
             <element name="firstName" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
-            <element name="lastName" type="tns:nonZeroLengthString"  minOccurs="0" maxOccurs="1"></element>
-            <element name="email" type="tns:nonZeroLengthString"  minOccurs="0" maxOccurs="1"></element>
+            <element name="lastName" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
+            <element name="email" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="fullName" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="middleInitial" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"></element>
@@ -106,21 +106,29 @@
     </complexType>
 
     <complexType name="Annotation">
-        <sequence>
-            <element name="value" type="tns:nonZeroLengthString"></element>
-            <element name="valueIRI" type="tns:nonZeroLengthString"></element>
-        </sequence>
+        <complexContent>
+            <extension base="tns:IsAbout">
+                <sequence>
+                    <element name="value" type="tns:nonZeroLengthString"></element>
+                    <element name="valueIRI" type="tns:nonZeroLengthString"></element>
+                </sequence>
+            </extension>
+        </complexContent>
     </complexType>
 
     <complexType name="BiologicalEntity">
-        <sequence>
-            <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"></element>
-            <element name="description" type="tns:nonZeroLengthString" minOccurs="0"></element>
-            <element name="identifier" type="tns:Identifier" minOccurs="0"/>
-            <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded">
-                <annotation i:label="Alternate Identifier"/>
-            </element>
-        </sequence>
+        <complexContent>
+            <extension base="tns:IsAbout">
+                <sequence>
+                    <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"></element>
+                    <element name="description" type="tns:nonZeroLengthString" minOccurs="0"></element>
+                    <element name="identifier" type="tns:Identifier" minOccurs="0"/>
+                    <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded">
+                        <annotation i:label="Alternate Identifier"/>
+                    </element>
+                </sequence>
+            </extension>
+        </complexContent>
     </complexType>
 
     <complexType name="Date">
@@ -257,6 +265,12 @@
         </sequence>
     </complexType>
 
+    <complexType name="IsAbout">
+
+        <sequence>
+
+        </sequence>
+    </complexType>
 
     <complexType name="Dataset">
         <sequence>
@@ -274,7 +288,7 @@
             <element name="types" type="tns:Type" minOccurs="1" maxOccurs="unbounded">
                 <annotation i:label="Type"/>
             </element>
-            <element name="isAbout" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"></element>
+            <element name="isAbout" type="tns:IsAbout" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="spatialCoverage" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"/>
             <element name="producedBy" type="tns:Study" minOccurs="0" maxOccurs="1"/>
             <element name="citationCount" type="float" minOccurs="0" maxOccurs="1"/> <!--- SHOULD BE INT -->
@@ -301,7 +315,7 @@
             <element name="types" type="tns:Type" minOccurs="1" maxOccurs="unbounded">
                 <annotation i:label="Type"/>
             </element>
-            <element name="isAbout" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"></element>
+            <element name="isAbout" type="tns:IsAbout" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="spatialCoverage" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"/>
             <element name="producedBy" type="tns:Study" minOccurs="0" maxOccurs="1"/>
             <element name="distributions" type="tns:Distribution" minOccurs="0" maxOccurs="unbounded">

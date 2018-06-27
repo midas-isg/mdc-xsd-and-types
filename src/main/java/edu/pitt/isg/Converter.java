@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
 import edu.pitt.isg.mdc.dats2_2.DatasetWithOrganization;
+import edu.pitt.isg.mdc.dats2_2.IsAbout;
 import edu.pitt.isg.mdc.v1_0.*;
 import edu.pitt.isg.objectserializer.XMLDeserializer;
 import edu.pitt.isg.objectserializer.XMLSerializer;
@@ -190,6 +191,12 @@ public class Converter {
             jsonObject = parser.parse(jsonString).getAsJsonObject();
         }
         return jsonObject;
+    }
+
+
+    public Object fromJson(String json, Class clazz) {
+        Gson gson = new GsonBuilder().serializeNulls().enableComplexMapKeySerialization().registerTypeHierarchyAdapter(IsAbout.class, new IsAboutDeserializer()).create();
+        return gson.fromJson(json, clazz);
     }
 
     public Software convertFromXml(String xml) throws DeserializationException {
