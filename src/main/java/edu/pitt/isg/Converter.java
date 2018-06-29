@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
 import edu.pitt.isg.mdc.dats2_2.DatasetWithOrganization;
 import edu.pitt.isg.mdc.dats2_2.IsAbout;
+import edu.pitt.isg.mdc.dats2_2.PersonComprisedEntity;
 import edu.pitt.isg.mdc.v1_0.*;
 import edu.pitt.isg.objectserializer.XMLDeserializer;
 import edu.pitt.isg.objectserializer.XMLSerializer;
@@ -195,7 +196,7 @@ public class Converter {
 
 
     public Object fromJson(String json, Class clazz) {
-        Gson gson = new GsonBuilder().serializeNulls().enableComplexMapKeySerialization().registerTypeHierarchyAdapter(IsAbout.class, new IsAboutDeserializer()).create();
+        Gson gson = new GsonBuilder().serializeNulls().enableComplexMapKeySerialization().registerTypeHierarchyAdapter(PersonComprisedEntity.class, new PersonComprisedEntityDeserializer()).registerTypeHierarchyAdapter(IsAbout.class, new IsAboutDeserializer()).create();
         return gson.fromJson(json, clazz);
     }
 

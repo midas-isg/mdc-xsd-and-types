@@ -60,17 +60,28 @@
         </sequence>
     </complexType>
 
-    <complexType name="Organization">
+    <complexType name="PersonComprisedEntity">
         <sequence>
             <element name="identifier" type="tns:Identifier" minOccurs="0"/>
-            <!--<element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>-->
-            <!--<element name="relatedIdentifiers" type="tns:RelatedIdentifier" minOccurs="0" maxOccurs="unbounded"/>-->
-            <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"/>
-            <element name="abbreviation" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
-            <element name="location" type="tns:Place" minOccurs="0" maxOccurs="1"/>
-
-            <!--<element name="roles" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"></element>-->
+            <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
+    </complexType>
+
+    <complexType name="Organization">
+        <complexContent>
+            <extension base="tns:PersonComprisedEntity">
+                <sequence>
+
+
+                    <!--<element name="relatedIdentifiers" type="tns:RelatedIdentifier" minOccurs="0" maxOccurs="unbounded"/>-->
+                    <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"/>
+                    <element name="abbreviation" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
+                    <element name="location" type="tns:Place" minOccurs="0" maxOccurs="1"/>
+
+                    <!--<element name="roles" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"></element>-->
+                </sequence>
+            </extension>
+        </complexContent>
     </complexType>
 
     <complexType name="RelatedIdentifier">
@@ -84,16 +95,19 @@
     </complexType>
 
     <complexType name="Person">
-        <sequence>
-            <element name="firstName" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
-            <element name="lastName" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
-            <element name="email" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
-            <element name="fullName" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
-            <element name="middleInitial" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
-            <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"></element>
-            <element name="affiliations" type="tns:Organization" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="roles" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"/>
-        </sequence>
+        <complexContent>
+            <extension base="tns:PersonComprisedEntity">
+                <sequence>
+                    <element name="firstName" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
+                    <element name="lastName" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
+                    <element name="email" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
+                    <element name="fullName" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
+                    <element name="middleInitial" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
+                    <element name="affiliations" type="tns:Organization" minOccurs="0" maxOccurs="unbounded"/>
+                    <element name="roles" type="tns:Annotation" minOccurs="0" maxOccurs="unbounded"/>
+                </sequence>
+            </extension>
+        </complexContent>
     </complexType>
 
 
@@ -223,7 +237,7 @@
             <element name="dates" type="tns:Date" minOccurs="0" maxOccurs="unbounded"/>
             <element name="title" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
             <element name="authors" type="tns:Person" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="acknowledges" type="tns:GrantToPerson" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="acknowledges" type="tns:Grant" minOccurs="0" maxOccurs="unbounded"/>
             <element name="publicationVenue" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0"/>
 
 
@@ -233,35 +247,11 @@
     <complexType name="Grant">
         <sequence>
             <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"/>
-            <element name="funders" type="tns:Organization"></element>
+            <element name="funders" type="tns:PersonComprisedEntity" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="abbreviation" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"></element>
             <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>
-
-        </sequence>
-    </complexType>
-
-    <complexType name="GrantToOrganization">
-        <sequence>
-            <element name="name" type="tns:nonZeroLengthString"></element>
-            <element name="funders" type="tns:Grant" minOccurs="0" maxOccurs="unbounded"></element>
-            <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"></element>
-            <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="awardees" type="tns:Organization" minOccurs="0" maxOccurs="unbounded"/>
-
-
-        </sequence>
-    </complexType>
-
-    <complexType name="GrantToPerson">
-        <sequence>
-            <element name="name" type="tns:nonZeroLengthString"></element>
-            <element name="funders" type="tns:Grant" minOccurs="0" maxOccurs="unbounded"></element>
-            <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"></element>
-            <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="awardees" type="tns:Person" minOccurs="0" maxOccurs="unbounded"/>
-
-
+            <element name="awardees" type="tns:PersonComprisedEntity" minOccurs="0" maxOccurs="unbounded"/>
         </sequence>
     </complexType>
 
@@ -275,12 +265,13 @@
     <complexType name="Dataset">
         <sequence>
             <element name="dates" type="tns:Date" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="acknowledges" type="tns:GrantToPerson" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="acknowledges" type="tns:Grant" minOccurs="0" maxOccurs="unbounded"/>
             <element name="title" type="tns:nonZeroLengthString" minOccurs="1"/>
             <element name="refinement" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
             <element name="aggregation" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
             <element name="version" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
             <element name="availability" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
+            <element name="citations" type="tns:Publication" minOccurs="0" maxOccurs="unbounded"/>
 
             <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"/>
@@ -308,13 +299,14 @@
         <sequence>
             <element name="dates" type="tns:Date" minOccurs="0" maxOccurs="unbounded"/>
             <element name="title" type="tns:nonZeroLengthString" minOccurs="1"/>
-            <element name="acknowledges" type="tns:GrantToOrganization" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="acknowledges" type="tns:Grant" minOccurs="0" maxOccurs="unbounded"/>
             <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"></element>
             <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"/>
             <element name="creators" type="tns:Organization" minOccurs="1" maxOccurs="unbounded"/>
             <element name="types" type="tns:Type" minOccurs="1" maxOccurs="unbounded">
                 <annotation i:label="Type"/>
             </element>
+            <element name="citations" type="tns:Publication" minOccurs="0" maxOccurs="unbounded"/>
             <element name="isAbout" type="tns:IsAbout" minOccurs="0" maxOccurs="unbounded"></element>
             <element name="spatialCoverage" type="tns:BiologicalEntity" minOccurs="0" maxOccurs="unbounded"/>
             <element name="producedBy" type="tns:Study" minOccurs="0" maxOccurs="1"/>
@@ -363,6 +355,7 @@
             <element name="formats" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="unbounded">
                 <annotation i:maxRepeats="1"/>
             </element>
+
         </sequence>
     </complexType>
 </schema>
