@@ -135,7 +135,6 @@
                     <element name="description" type="tns:nonZeroLengthString" minOccurs="0"></element>
                     <element name="identifier" type="tns:Identifier" minOccurs="0"/>
                     <element name="alternateIdentifiers" type="tns:Identifier" minOccurs="0" maxOccurs="unbounded">
-                        <annotation i:label="Alternate Identifier"/>
                     </element>
                 </sequence>
             </extension>

@@ -56,11 +56,11 @@ public class CkanToDatsConverter {
 //        CkanQuery query = CkanQuery.filter().byTagNames("vaccination");
 
 //        List<CkanDataset> filteredDatasets = ckanClient.searchDatasets(query, 100, 0).getResults();
-//        List<DatasetWithOrganization> convertedDatasets = new ArrayList<>();
+//        List<Dataset> convertedDatasets = new ArrayList<>();
 //        for (CkanDataset dataset : filteredDatasets) {
 //            ConverterResult convertedDataset = new CkanToDatsConverter().convertCkanToDats(dataset, ckanClient.getCatalogUrl());
 //            if (convertedDataset != null) {
-//                convertedDatasets.add((DatasetWithOrganization) convertedDataset.getDataset());
+//                convertedDatasets.add((Dataset) convertedDataset.getDataset());
 //            }
 //        }
 //
@@ -71,7 +71,7 @@ public class CkanToDatsConverter {
 
     public ConverterResult convertCkanToDats(CkanDataset ckanDataset, String catalogUrl) {
         ConverterResult result = new ConverterResult();
-        DatasetWithOrganization dataset = new DatasetWithOrganization();
+        Dataset dataset = new Dataset();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         //Set Distributions
