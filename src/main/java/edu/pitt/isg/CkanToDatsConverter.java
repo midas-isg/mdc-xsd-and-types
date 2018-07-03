@@ -64,7 +64,7 @@ public class CkanToDatsConverter {
 //            }
 //        }
 //
-        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("1cc4500e-20b3-4bd8-839a-d26a5ba7f96e"), ckanClient.getCatalogUrl());
+        ConverterResult result = new CkanToDatsConverter().convertCkanToDats( ckanClient.getDataset("70dca0aa-1598-4925-af8c-5464fdb212b1"), ckanClient.getCatalogUrl());
 
         System.out.println("Done");
     }
@@ -96,7 +96,7 @@ public class CkanToDatsConverter {
                 Annotation distributionType = new Annotation();
                 java.util.Date datetime = new java.util.Date(resource.getCreated().getTime());
                 date.setDate(sdf.format(datetime));
-                distributionType.setValue("created");
+                distributionType.setValue("creation");
                 distributionType.setValueIRI("http://purl.obolibrary.org/obo/GENEPIO_0001882");
                 date.setType(distributionType);
                 distribution.getDates().add(date);
@@ -442,5 +442,34 @@ public class CkanToDatsConverter {
         blacklist.add("Kindergarten");
         blacklist.add("Location");
         blacklist.add("Child Health");
+        blacklist.add("San Francisco");
+        blacklist.add("Lifelong Learning");
+        blacklist.add("Statistic");
+        blacklist.add("Youth");
+        blacklist.add("Zip");
+        blacklist.add("Zip Code");
+        blacklist.add("Air Quality");
+        blacklist.add("Air Quality Index");
+        blacklist.add("Air Quality System");
+        blacklist.add("Caa 109 Clean Air Act Section 109");
+        blacklist.add("Daily 24 Hour Average Concentration");
+        blacklist.add("Daily Maximum 8 Hour Average Concentration");
+        blacklist.add("Hourly Observations");
+        blacklist.add("National Ambient Air Quality Standards");
+        blacklist.add("National Environmental Health Tracking Network");
+        blacklist.add("O3");
+        blacklist.add("Ozone Residual");
+        blacklist.add("Particle Pollution");
+        blacklist.add("Particulate Matter");
+        blacklist.add("Particulate Matter Pm2 5");
+        blacklist.add("Particulate Matter Lt 2 5 Um");
+        blacklist.add("Pm Fine 0 2 5 Um Stp");
+        blacklist.add("Pm2 5");
+        blacklist.add("Pm2 5 Local Conditions");
+        blacklist.add("Site Monitoring Data");
+        blacklist.add("Tracking");
+        blacklist.add("Tracking Network");
+        blacklist.add("Tracking Program");
+        blacklist.add("Code");
     }
 }

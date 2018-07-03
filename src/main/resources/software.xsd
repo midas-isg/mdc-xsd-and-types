@@ -72,7 +72,7 @@
                      minOccurs="0"/>
             <element name="publicationsThatUsedRelease" type="tns:nonZeroLengthString"
                      maxOccurs="unbounded" minOccurs="0">
-                     <annotation i:label="Publication That Used Release"/>
+                <annotation i:label="Publication That Used Release"/>
             </element>
             <element name="executables" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0">
@@ -150,7 +150,9 @@
                         <annotation i:label="Host Species Included"/>
                     </element>
                     <!--<element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"-->
+
                              <!--minOccurs="0"/>-->
+
                     <element name="pathogenCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
                              minOccurs="0"/>
                 </sequence>
@@ -167,7 +169,9 @@
                         <annotation i:label="Population Species Included"/>
                     </element>
                     <!--<element name="locationCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"-->
+
                              <!--minOccurs="0"/>-->
+
                 </sequence>
             </extension>
         </complexContent>
@@ -203,7 +207,9 @@
                         <annotation i:label="Forecast"/>
                     </element>
                     <!--<element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"-->
+
                              <!--minOccurs="0"/>-->
+
                 </sequence>
             </extension>
         </complexContent>
@@ -291,8 +297,10 @@
                         <annotation i:label="Pathogen"/>
                     </element>
                     <!--<element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"-->
-                             <!--minOccurs="0">-->
-                        <!--<annotation i:label="Location"/>-->
+
+                    <!--minOccurs="0">-->
+                    <!--<annotation i:label="Location"/>-->
+
                     <!--</element>-->
                 </sequence>
             </extension>

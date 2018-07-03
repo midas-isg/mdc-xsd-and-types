@@ -152,15 +152,6 @@ public class Converter {
     }
 
 
-    public String convertToXml(Class clazz, Object object) throws SerializationException {
-        List<Class> classList = new ArrayList<>();
-        classList.add(clazz);
-        XMLSerializer xmlSerializer = new XMLSerializer(classList);
-        String xml = xmlSerializer.serializeObject(object);
-        return xml;
-
-    }
-
 
     public JsonObject toJsonObject(Class clazz, Object object) {
         return toJsonObject(clazz, object, false);
@@ -194,7 +185,32 @@ public class Converter {
         return jsonObject;
     }
 
+    public String convertToXml(Object object) throws SerializationException {
+        List<Class> classList = new ArrayList<>();
+        classList.add(object.getClass());
+        XMLSerializer xmlSerializer = new XMLSerializer(classList);
+        String xml = xmlSerializer.serializeObject(object);
+        return xml;
+    }
 
+    public String convertToXml(OAIPMHtype oaipmHtype) throws JsonProcessingException, SerializationException {
+        List<Class> classList = new ArrayList<>();
+        try {
+            classList.add(OAIPMHtype.class);
+        }
+        catch (Exception e){
+            classList.add(org.openarchives.oai._2_0.oai_dc.OaiDcType.class);
+        }
+        classList.add(org.openarchives.oai._2_0.oai_dc.ObjectFactory.class);
+        classList.add(org.purl.dc.elements._1.ObjectFactory.class);
+        XMLSerializer xmlSerializer = new XMLSerializer(classList);
+        String xml = xmlSerializer.serializeObject(oaipmHtype);
+        //System.out.println(xml);
+        return xml;
+
+    }
+
+   
     public Object fromJson(String json, Class clazz) {
         Gson gson = new GsonBuilder().serializeNulls().enableComplexMapKeySerialization().registerTypeHierarchyAdapter(PersonComprisedEntity.class, new PersonComprisedEntityDeserializer()).registerTypeHierarchyAdapter(IsAbout.class, new IsAboutDeserializer()).create();
         return gson.fromJson(json, clazz);
