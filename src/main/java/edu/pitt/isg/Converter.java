@@ -1,10 +1,9 @@
 package edu.pitt.isg;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.MalformedJsonException;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
 import edu.pitt.isg.mdc.dats2_2.DatasetWithOrganization;
 import edu.pitt.isg.mdc.dats2_2.IsAbout;
@@ -16,6 +15,7 @@ import edu.pitt.isg.objectserializer.exceptions.DeserializationException;
 import edu.pitt.isg.objectserializer.exceptions.SerializationException;
 import org.jsoup.Jsoup;
 import org.jsoup.parser.Parser;
+import org.openarchives.oai._2.OAIPMHtype;
 import org.w3c.dom.Document;
 
 import javax.xml.XMLConstants;
@@ -35,6 +35,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.PrimitiveIterator;
+import java.util.stream.IntStream;
 
 
 /**
@@ -50,6 +52,9 @@ public class Converter {
     };
 
     private static final HashMap<String, String> classTypeToJsonType;
+
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
     static {
         classTypeToJsonType = new HashMap<String, String>();
@@ -125,14 +130,8 @@ public class Converter {
         return dataset;
     }
 
-    public DatasetWithOrganization convertToJavaDatasetWithOrganization(String str) {
-        DatasetWithOrganization dataset = new Gson().fromJson(str, DatasetWithOrganization.class);
-        return dataset;
-    }
-
     public boolean validate(String xml) throws MalformedURLException {
         URL schemaFile = getClass().getClassLoader().getResource("software.xsd");
-// or File schemaFile = new File("/location/to/xsd"); // etc.
         Source xmlFile = new StreamSource(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)));
         SchemaFactory schemaFactory = SchemaFactory
                 .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -185,12 +184,65 @@ public class Converter {
         return jsonObject;
     }
 
-    public String convertToXml(Object object) throws SerializationException {
+    public String convertToXml(Class clazz, Object object) throws SerializationException {
         List<Class> classList = new ArrayList<>();
         classList.add(object.getClass());
+        classList.add(clazz);
         XMLSerializer xmlSerializer = new XMLSerializer(classList);
         String xml = xmlSerializer.serializeObject(object);
         return xml;
+    }
+
+    enum CharacterIndexBehavior {
+        GET_CHARACTER_INDEX_FROM_INDEX_COUNTING_WHITESPACE,
+        SEEK_TO_CHARACTER_INDEX
+
+    }
+
+    private static int getOrFindCharactersGivenIndex(String string, int index, CharacterIndexBehavior characterIndexBehavior) {
+        IntStream stream = string.chars();
+        PrimitiveIterator.OfInt it = stream.iterator();
+        int nonWhitespaceCharacterCount = 0;
+        int characterCount = 0;
+        while (it.hasNext()) {
+            Integer cur = it.next();
+            if (!Character.isWhitespace(cur)) nonWhitespaceCharacterCount++;
+            characterCount++;
+
+            if (characterIndexBehavior.equals(CharacterIndexBehavior.GET_CHARACTER_INDEX_FROM_INDEX_COUNTING_WHITESPACE) && characterCount == index)
+                return nonWhitespaceCharacterCount;
+            else if (characterIndexBehavior.equals(CharacterIndexBehavior.SEEK_TO_CHARACTER_INDEX) && nonWhitespaceCharacterCount == index)
+                return characterCount;
+        }
+        return -1;
+
+    }
+
+
+    public static void printHelpfulJsonError(String json, JsonSyntaxException syntaxException, MalformedJsonException malformedException) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String prettyJson = gson.toJson(new JsonParser().parse(json));
+
+        Exception e = syntaxException != null ? syntaxException : malformedException;
+        String errStr = e.getMessage();
+        Integer begin = errStr.indexOf("1 column ") + 9;
+        Integer end = errStr.indexOf(" path $");
+        Integer errorPos = Integer.valueOf(errStr.substring(begin, end));
+
+        int characterIndexOfError = getOrFindCharactersGivenIndex(json, errorPos, CharacterIndexBehavior.GET_CHARACTER_INDEX_FROM_INDEX_COUNTING_WHITESPACE);
+        int indexOfErrorInPretty = getOrFindCharactersGivenIndex(prettyJson, characterIndexOfError, CharacterIndexBehavior.SEEK_TO_CHARACTER_INDEX);
+
+        System.out.println(prettyJson.substring(1, indexOfErrorInPretty) + ANSI_CYAN + "(!!!-- " + e.getMessage() + "--!!!)\n" + prettyJson.substring(indexOfErrorInPretty, prettyJson.length()) + ANSI_RESET);
+    }
+
+    public Object fromJson(String json, Class clazz) {
+        try {
+            Gson gson = new GsonBuilder().serializeNulls().enableComplexMapKeySerialization().registerTypeHierarchyAdapter(PersonComprisedEntity.class, new PersonComprisedEntityDeserializer()).registerTypeHierarchyAdapter(IsAbout.class, new IsAboutDeserializer()).create();
+            return gson.fromJson(json, clazz);
+        } catch (JsonSyntaxException e) {
+            printHelpfulJsonError(json, e, null);
+            throw e;
+        }
     }
 
     public String convertToXml(OAIPMHtype oaipmHtype) throws JsonProcessingException, SerializationException {
@@ -208,12 +260,6 @@ public class Converter {
         //System.out.println(xml);
         return xml;
 
-    }
-
-   
-    public Object fromJson(String json, Class clazz) {
-        Gson gson = new GsonBuilder().serializeNulls().enableComplexMapKeySerialization().registerTypeHierarchyAdapter(PersonComprisedEntity.class, new PersonComprisedEntityDeserializer()).registerTypeHierarchyAdapter(IsAbout.class, new IsAboutDeserializer()).create();
-        return gson.fromJson(json, clazz);
     }
 
     public Software convertFromXml(String xml) throws DeserializationException {
