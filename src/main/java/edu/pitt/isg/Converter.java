@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.MalformedJsonException;
+import edu.pitt.isg.deserializers.IsAboutDeserializer;
+import edu.pitt.isg.deserializers.PersonComprisedEntityDeserializer;
 import edu.pitt.isg.mdc.dats2_2.Dataset;
 import edu.pitt.isg.mdc.dats2_2.IsAbout;
 import edu.pitt.isg.mdc.dats2_2.PersonComprisedEntity;
