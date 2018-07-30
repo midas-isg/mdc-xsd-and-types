@@ -152,7 +152,7 @@
 
     <complexType name="License">
         <sequence>
-            <element name="identifier" type="tns:Identifier"></element>
+            <element name="identifier" type="tns:Identifier" minOccurs="0" maxOccurs="1"></element>
             <element name="name" type="tns:nonZeroLengthString" minOccurs="1" maxOccurs="1"/>
             <element name="version" type="tns:nonZeroLengthString" minOccurs="0"/>
             <element name="creators" type="tns:PersonComprisedEntity" minOccurs="0" maxOccurs="unbounded"/>
