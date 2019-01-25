@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schema xmlns:tns="http://mdc.isg.pitt.edu/v1_0/" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:i="http://moten.david.org/xsd-forms"
+<schema xmlns:tns="http://mdc.isg.pitt.edu/v1_0/" xmlns:i="http://moten.david.org/xsd-forms" xmlns="http://www.w3.org/2001/XMLSchema"
         targetNamespace="http://mdc.isg.pitt.edu/v1_0/" elementFormDefault="qualified" attributeFormDefault="qualified">
 
     <element name="DiseaseTransmissionModel" type="tns:DiseaseTransmissionModel"/>
@@ -39,6 +39,33 @@
         </restriction>
     </simpleType>
 
+    <complexType name="DataInputOrOutputSpecification">
+        <sequence>
+            <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
+            <element name="dataFormats" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+
+    <complexType name="DataInputs">
+        <complexContent>
+            <extension base="tns:DataInputOrOutputSpecification">
+                <sequence>
+                    <element name="inputNumber" type="positiveInteger" minOccurs="0" maxOccurs="1"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="DataOutputs">
+        <complexContent>
+            <extension base="tns:DataInputOrOutputSpecification">
+                <sequence>
+                    <element name="outputNumber" type="positiveInteger" minOccurs="0" maxOccurs="1"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
     <complexType name="Software">
         <sequence>
             <element name="product" type="tns:nonZeroLengthString" maxOccurs="1" minOccurs="0">
@@ -48,10 +75,12 @@
             <element name="humanReadableSynopsis" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="1"/>
             <element name="identifier" type="tns:Identifier" maxOccurs="1" minOccurs="0"/>
+            <element name="inputs" type="tns:DataInputs" minOccurs="0" maxOccurs="unbounded"/>
             <element name="dataInputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0">
                 <annotation i:label="Data Input Format"/>
             </element>
+            <element name="outputs" type="tns:DataOutputs" minOccurs="0" maxOccurs="unbounded"/>
             <element name="dataOutputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0">
                 <annotation i:label="Data Output Format"/>
@@ -151,7 +180,7 @@
                     </element>
                     <!--<element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"-->
 
-                             <!--minOccurs="0"/>-->
+                    <!--minOccurs="0"/>-->
 
                     <element name="pathogenCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"
                              minOccurs="0"/>
@@ -170,7 +199,7 @@
                     </element>
                     <!--<element name="locationCoverage" type="tns:nonZeroLengthString" maxOccurs="unbounded"-->
 
-                             <!--minOccurs="0"/>-->
+                    <!--minOccurs="0"/>-->
 
                 </sequence>
             </extension>
@@ -208,7 +237,7 @@
                     </element>
                     <!--<element name="locationCoverage" type="tns:NestedIdentifier" maxOccurs="unbounded"-->
 
-                             <!--minOccurs="0"/>-->
+                    <!--minOccurs="0"/>-->
 
                 </sequence>
             </extension>
