@@ -21,5 +21,11 @@
         </annox:annotate>
     </jaxb:bindings>
 
+    <jaxb:bindings schemaLocation="../xsd/software.xsd" node="xs:complexType[*]" multiple="true" >
+        <annox:annotate>
+            <annox:annotate annox:class="lombok.Data"/>
+        </annox:annotate>
+    </jaxb:bindings>
+
 
 </jaxb:bindings>
