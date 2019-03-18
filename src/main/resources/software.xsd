@@ -39,10 +39,19 @@
         </restriction>
     </simpleType>
 
+    <simpleType name="YesNoUnknownEnum" final="restriction">
+        <restriction base="string">
+            <enumeration value="yes"/>
+            <enumeration value="no"/>
+            <enumeration value="unknown"/>
+        </restriction>
+    </simpleType>
+
     <complexType name="DataInputOrOutputSpecification">
         <sequence>
             <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
             <element name="dataFormats" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="isListOfDataFormatsComplete" type="tns:YesNoUnknownEnum" minOccurs="0" maxOccurs="1"/>
         </sequence>
     </complexType>
 
@@ -76,6 +85,7 @@
                      minOccurs="1"/>
             <element name="identifier" type="tns:Identifier" maxOccurs="1" minOccurs="0"/>
             <element name="inputs" type="tns:DataInputs" minOccurs="0" maxOccurs="unbounded"/>
+            <element name="isListOfInputsComplete" type="tns:YesNoUnknownEnum" minOccurs="0" maxOccurs="1"/>
             <element name="dataInputFormats" type="tns:nonZeroLengthString" maxOccurs="unbounded"
                      minOccurs="0">
                 <annotation i:label="Data Input Format"/>
@@ -85,6 +95,7 @@
                      minOccurs="0">
                 <annotation i:label="Data Output Format"/>
             </element>
+            <element name="isListOfOutputsComplete" type="tns:YesNoUnknownEnum" minOccurs="0" maxOccurs="1"/>
             <element name="sourceCodeRelease" type="tns:nonZeroLengthString" maxOccurs="1"
                      minOccurs="0"/>
             <element name="webApplication" type="tns:nonZeroLengthString" maxOccurs="unbounded"
