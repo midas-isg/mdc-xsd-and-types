@@ -228,12 +228,16 @@ public class Converter {
         String errStr = e.getMessage();
         Integer begin = errStr.indexOf("1 column ") + 9;
         Integer end = errStr.indexOf(" path $");
-        Integer errorPos = Integer.valueOf(errStr.substring(begin, end));
+        if(begin < 0 || end < 0){
+            System.out.println("Error parsing json error messages:" + errStr);
+        } else {
+            Integer errorPos = Integer.valueOf(errStr.substring(begin, end));
 
-        int characterIndexOfError = getOrFindCharactersGivenIndex(json, errorPos, CharacterIndexBehavior.GET_CHARACTER_INDEX_FROM_INDEX_COUNTING_WHITESPACE);
-        int indexOfErrorInPretty = getOrFindCharactersGivenIndex(prettyJson, characterIndexOfError, CharacterIndexBehavior.SEEK_TO_CHARACTER_INDEX);
+            int characterIndexOfError = getOrFindCharactersGivenIndex(json, errorPos, CharacterIndexBehavior.GET_CHARACTER_INDEX_FROM_INDEX_COUNTING_WHITESPACE);
+            int indexOfErrorInPretty = getOrFindCharactersGivenIndex(prettyJson, characterIndexOfError, CharacterIndexBehavior.SEEK_TO_CHARACTER_INDEX);
 
-        System.out.println(prettyJson.substring(1, indexOfErrorInPretty) + ANSI_CYAN + "(!!!-- " + e.getMessage() + "--!!!)\n" + prettyJson.substring(indexOfErrorInPretty, prettyJson.length()) + ANSI_RESET);
+            System.out.println(prettyJson.substring(1, indexOfErrorInPretty) + ANSI_CYAN + "(!!!-- " + e.getMessage() + "--!!!)\n" + prettyJson.substring(indexOfErrorInPretty, prettyJson.length()) + ANSI_RESET);
+        }
     }
 
     public Object fromJson(String json, Class clazz) {
