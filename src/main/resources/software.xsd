@@ -51,7 +51,7 @@
         <sequence>
             <element name="description" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="1"/>
             <element name="dataFormats" type="tns:nonZeroLengthString" minOccurs="0" maxOccurs="unbounded"/>
-            <element name="isInputOptional" type="tns:YesNoUnknownEnum" minOccurs="0" maxOccurs="1"/>
+            <element name="isOptional" type="tns:YesNoUnknownEnum" minOccurs="0" maxOccurs="1"/>
             <element name="isListOfDataFormatsComplete" type="tns:YesNoUnknownEnum" minOccurs="0" maxOccurs="1"/>
         </sequence>
     </complexType>
