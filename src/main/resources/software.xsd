@@ -358,4 +358,13 @@
         </complexContent>
     </complexType>
 
+    <complexType name="Validators">
+        <complexContent>
+            <extension base="tns:Software">
+                <sequence>
+
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
 </schema>
